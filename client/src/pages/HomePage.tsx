@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import NavigationBar from "../components/NavigationBar";
+import FeedCard from "../components/FeedCard";
 
 const PageLayout = styled.div`
   height: 100vh;
@@ -12,6 +13,7 @@ export default function HomePage() {
   return (
     <PageLayout>
       <NavigationBar />
+      <FeedCard />
     </PageLayout>
   );
 }
