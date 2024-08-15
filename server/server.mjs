@@ -36,7 +36,7 @@ app.post('/api/auth/register', async (req, res) => {
         res.status(500).json("Please complete all fields.")
     }
 
-    if (password === confirmPassword){
+    if (!existingUser && name && email && password.length>5 && password === confirmPassword){
         const userCreated = await newUser.save()
         res.status(200).json("User created")
         console.log("User successfully created")
