@@ -6,6 +6,7 @@ import ExplorePage from "../pages/ExplorePage";
 import MessagesPage from "../pages/MessagesPage";
 import ProfilePage from "../pages/ProfilePage";
 import SettingsPage from "../pages/SettingsPage";
+import ProtectedRoute from "../services/ProtectedRoute";
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -19,23 +20,43 @@ const Router = () => {
     },
     {
       path: "/home",
-      element: <HomePage />,
+      element: (
+        <ProtectedRoute>
+          <HomePage />
+        </ProtectedRoute>
+      ),
     },
     {
       path: "/explore",
-      element: <ExplorePage />,
+      element: (
+        <ProtectedRoute>
+          <ExplorePage />
+        </ProtectedRoute>
+      ),
     },
     {
       path: "/messages",
-      element: <MessagesPage />,
+      element: (
+        <ProtectedRoute>
+          <MessagesPage />
+        </ProtectedRoute>
+      ),
     },
     {
       path: "/profile",
-      element: <ProfilePage />,
+      element: (
+        <ProtectedRoute>
+          <ProfilePage />
+        </ProtectedRoute>
+      ),
     },
     {
       path: "/settings",
-      element: <SettingsPage />,
+      element: (
+        <ProtectedRoute>
+          <SettingsPage />
+        </ProtectedRoute>
+      ),
     },
   ]);
 
