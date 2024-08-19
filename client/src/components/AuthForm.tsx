@@ -100,8 +100,12 @@ export const AuthForm = ({ auth }: { auth: string }) => {
         const data = await res.json();
         setError(data);
       } else {
+        const data = await res.json();
+        const token = window.localStorage.setItem("token", data.token);
+
         navigate("/home");
         console.log("Logged in!");
+        // set token
       }
     }
 
@@ -114,7 +118,7 @@ export const AuthForm = ({ auth }: { auth: string }) => {
 
       if (!res.ok) {
         const data = await res.json();
-        setError(data);
+        setError(data.message);
       } else {
         navigate("/home");
       }
