@@ -20,10 +20,11 @@ app.get('/', (req, res) => {
 
 app.post('/api/auth/register', async (req, res) => {
     try {
-    const {name, email, password, confirmPassword} = req.body
+    const {firstName, lastName, email, password, confirmPassword} = req.body
     const hashedpassword = await bcrypt.hash(password, 10)
     const newUser = new userModel({
-        name, 
+        firstName,
+        lastName,
         email, 
         password: hashedpassword
     })
@@ -37,10 +38,17 @@ app.post('/api/auth/register', async (req, res) => {
         })
     } 
 
-    if (!name){
+    if (!firstName){
         return res.status(500).json({
             success: false,
-            message: "You must enter a username"
+            message: "You must enter a first name"
+        })
+    }
+
+    if (!lastName){
+        return res.status(500).json({
+            success: false,
+            message: "You must enter a last name"
         })
     }
 
@@ -94,7 +102,8 @@ app.post("/api/auth/login", async(req, res) => {
 
 
     const payload = {
-        name: user.name,
+        firstName: user.firstName,
+        lastName: user.lastName,
         email: user.email,
         password: user.password,
     }
@@ -117,16 +126,16 @@ app.get("/api/auth/getUser", async(req, res) => {
         const secretKey = process.env.SECRET_KEY
         const decodedToken = jwt.verify(token, secretKey)
 
-        const name = decodedToken.name
+        const firstName = decodedToken.firstName
+        const lastName = decodedToken.lastName
         const email = decodedToken.email
 
         return res.status(200).json({
             success: true,
             message: "User details identified",
-            payload: { name, email }
+            payload: { firstName, lastName, email }
         })
 
-        console.log(decodedToken.name)
     } else {
         res.status(500).json({
             success: false,
