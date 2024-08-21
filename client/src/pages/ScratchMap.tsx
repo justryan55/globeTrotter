@@ -10,12 +10,20 @@ const PageLayout = styled.div`
 `;
 
 const CardLayout = styled.div`
+  padding: 2rem;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  overflow: scroll;
 `;
 
 const CountryCard = styled.div`
+  padding: 1rem;
+  margin: 0.5rem;
+  background-color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+
   &:hover {
+    font-weight: 500;
     cursor: pointer;
   }
 `;
