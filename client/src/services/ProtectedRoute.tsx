@@ -1,11 +1,12 @@
 import { jwtDecode } from "jwt-decode";
 import { useEffect } from "react";
 import { Navigate, useNavigate } from "react-router";
+import AuthContext from "./AuthContext";
 
 export default function ProtectedRoute({ children }) {
   const token = window.localStorage.getItem("token");
   const navigate = useNavigate();
-  console.log(token);
+
   const isTokenExpired = (token) => {
     if (!token) {
       return true;
@@ -30,5 +31,9 @@ export default function ProtectedRoute({ children }) {
     }
   }, [token, navigate]);
 
-  return <div>{token ? <div>{children}</div> : <Navigate to="/" />}</div>;
+  return (
+    <div>
+      {token ? <AuthContext>{children}</AuthContext> : <Navigate to="/" />}
+    </div>
+  );
 }
