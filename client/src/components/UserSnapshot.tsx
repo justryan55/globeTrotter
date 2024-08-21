@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import { UserContext } from "../services/AuthContext";
 
 const Layout = styled.div`
   display: flex;
@@ -58,12 +60,14 @@ const AvatarImg = styled.img`
 `;
 
 export default function UserSnapshot() {
+  const [user] = useContext(UserContext);
+
   return (
     <Layout>
       <Box>
         <FirstRow>
           <AvatarImg src="/images/avatar.png" />
-          <Text>Ryan Irani</Text>
+          <Text>{user.name}</Text>
         </FirstRow>
         <SecondRow>
           <Column>
