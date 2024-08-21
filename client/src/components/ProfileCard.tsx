@@ -1,4 +1,6 @@
+import { useContext } from "react";
 import styled from "styled-components";
+import { UserContext } from "../services/AuthContext";
 
 const Layout = styled.div`
   display: flex;
@@ -76,10 +78,12 @@ const LocationLayout = styled.div`
 const LocationIcon = styled.img``;
 
 export default function ProfileCard() {
+  const [user] = useContext(UserContext);
+
   return (
     <Layout>
       <AvatarImg src="/images/avatar.png" />
-      <Header>Ryan Irani</Header>
+      <Header>{user.name}</Header>
       <LocationLayout>
         <LocationIcon src="images/map-pin.svg" />
         <Text>Current Location</Text>
