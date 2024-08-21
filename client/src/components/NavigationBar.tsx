@@ -116,9 +116,9 @@ export default function NavigationBar() {
           viewBox="0 0 24 24"
           fill="none"
           stroke="black"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           className="nav-icon"
         >
           <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
@@ -137,9 +137,9 @@ export default function NavigationBar() {
           viewBox="0 0 24 24"
           fill="none"
           stroke="black"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           className="nav-icon"
         >
           <circle cx="12" cy="12" r="10"></circle>
@@ -158,9 +158,9 @@ export default function NavigationBar() {
           viewBox="0 0 24 24"
           fill="none"
           stroke="black"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           className="nav-icon"
         >
           <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
@@ -178,9 +178,9 @@ export default function NavigationBar() {
           viewBox="0 0 24 24"
           fill="none"
           stroke="black"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           className="nav-icon"
         >
           <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -200,9 +200,9 @@ export default function NavigationBar() {
           viewBox="0 0 24 24"
           fill="none"
           stroke="black"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           className="nav-icon"
         >
           <circle cx="12" cy="12" r="3"></circle>
@@ -218,9 +218,9 @@ export default function NavigationBar() {
           viewBox="0 0 24 24"
           fill="none"
           stroke="black"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
+          strokeWidth="2"
+          strokeLinecap="round"
+          strokeLinejoin="round"
           className="nav-icon"
         >
           <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
