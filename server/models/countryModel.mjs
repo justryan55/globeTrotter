@@ -1,23 +1,20 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema } from 'mongoose';
 
 const countrySchema = new Schema({
-    name: {
-        type: String,
-        required: true,
-        unique: true,
-    },
-    code: {
-        type: String,
-        required: true,
-        unique: true
-    }
-})
+  name: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  code: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+});
 
-const countryModel = mongoose.model("Country", countrySchema)
+const countryModel = mongoose.model('Country', countrySchema);
 
-export default countryModel
+export default countryModel;
 
-
-
-
-// Country model with countries and ids of all the countries. Have country property with array in user model. 
+// Country model with countries and ids of all the countries. Have country property with array in user model.

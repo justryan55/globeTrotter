@@ -1,152 +1,145 @@
-import express from 'express'
-import bodyParser from 'body-parser'
-import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
-import connectDB from './config/db.mjs'
-import userModel from './models/userModel.mjs'
-import cors from 'cors'
+import express from "express";
+import bodyParser from "body-parser";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import connectDB from "./config/db.mjs";
+import userModel from "./models/userModel.mjs";
+import cors from "cors";
 
-const app = express()
-const port = 3000
+const app = express();
+const port = 3000;
 
-app.use(bodyParser.json())
-app.use(cors())
+app.use(bodyParser.json());
+app.use(cors());
 
-connectDB()
+connectDB();
 
-app.get('/', (req, res) => {
-    res.send('Hello!')
-})
+app.get("/", (req, res) => {
+  res.send("Hello!");
+});
 
-app.post('/api/auth/register', async (req, res) => {
-    try {
-    const {firstName, lastName, email, password, confirmPassword} = req.body
-    const hashedpassword = await bcrypt.hash(password, 10)
+app.post("/api/auth/register", async (req, res) => {
+  try {
+    const { firstName, lastName, email, password, confirmPassword } = req.body;
+    const hashedpassword = await bcrypt.hash(password, 10);
     const newUser = new userModel({
-        firstName,
-        lastName,
-        email, 
-        password: hashedpassword
-    })
+      firstName,
+      lastName,
+      email,
+      password: hashedpassword,
+    });
 
-    const existingUser = await userModel.findOne({email})
-    
-    if (existingUser){
-        return res.status(500).json({
-            success: false,
-            message: "An account with this email address already exists"
-        })
-    } 
+    const existingUser = await userModel.findOne({ email });
 
-    if (!firstName){
-        return res.status(500).json({
-            success: false,
-            message: "You must enter a first name"
-        })
+    if (existingUser) {
+      return res.status(500).json({
+        success: false,
+        message: "An account with this email address already exists",
+      });
     }
 
-    if (!lastName){
-        return res.status(500).json({
-            success: false,
-            message: "You must enter a last name"
-        })
+    if (!firstName) {
+      return res.status(500).json({
+        success: false,
+        message: "You must enter a first name",
+      });
     }
 
-    if (!email){
-        return res.status(500).json({
-            success: false,
-            message: "You must enter an email address"
-        })
+    if (!lastName) {
+      return res.status(500).json({
+        success: false,
+        message: "You must enter a last name",
+      });
     }
 
-    if (!password || password.length < 5){
-        return res.status(500).json({
-            success: false,
-            message: "You must enter a valid password"
-        })
+    if (!email) {
+      return res.status(500).json({
+        success: false,
+        message: "You must enter an email address",
+      });
     }
 
-    if (password !== confirmPassword){
-        return res.status(500).json({
-            success: false,
-            message: "Passwords do not match"
-        })
+    if (!password || password.length < 5) {
+      return res.status(500).json({
+        success: false,
+        message: "You must enter a valid password",
+      });
+    }
+
+    if (password !== confirmPassword) {
+      return res.status(500).json({
+        success: false,
+        message: "Passwords do not match",
+      });
     } else {
-        const userCreated = await newUser.save()
-        return res.status(200).json({
-            success: true,
-            message: "User created"
-        })
+      const userCreated = await newUser.save();
+      return res.status(200).json({
+        success: true,
+        message: "User created",
+      });
     }
-    } catch (err){
-        console.log(err.message)
-    }
-})
+  } catch (err) {
+    console.log(err.message);
+  }
+});
 
-app.post("/api/auth/login", async(req, res) => {
-    const { email, password } = req.body
+app.post("/api/auth/login", async (req, res) => {
+  const { email, password } = req.body;
 
-    const user = await userModel.findOne({ email })
+  const user = await userModel.findOne({ email });
 
-    if (!user){
-        return res.status(401).json("No user associated with that email address")
-    } 
+  if (!user) {
+    return res.status(401).json("No user associated with that email address");
+  }
 
-    const isPasswordCorrect = await bcrypt.compare(password, user.password)
+  const isPasswordCorrect = await bcrypt.compare(password, user.password);
 
-    if (!isPasswordCorrect){
-        return res.status(401).json("Invalid password")
-    }
+  if (!isPasswordCorrect) {
+    return res.status(401).json("Invalid password");
+  }
 
-    const secretKey = process.env.SECRET_KEY
+  const secretKey = process.env.SECRET_KEY;
 
+  const payload = {
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email,
+    password: user.password,
+  };
 
-    const payload = {
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        password: user.password,
-    }
+  const token = jwt.sign(payload, secretKey, { expiresIn: "1d" });
 
-    const token = jwt.sign(payload, secretKey, { expiresIn: "1d" })
+  res.status(200).json({
+    message: "User is logged in",
+    token: token,
+  });
+});
 
+app.get("/api/auth/getUser", async (req, res) => {
+  const authHeader = req.headers["authorisation"];
 
-    res.status(200).json({
-        message: "User is logged in",
-        token: token
-    })
+  if (authHeader) {
+    const token = authHeader.split(" ")[1];
+    const secretKey = process.env.SECRET_KEY;
+    const decodedToken = jwt.verify(token, secretKey);
 
-})
+    const firstName = decodedToken.firstName;
+    const lastName = decodedToken.lastName;
+    const email = decodedToken.email;
 
-app.get("/api/auth/getUser", async(req, res) => {
-    const authHeader = req.headers['authorisation']
-    
-    if (authHeader){
-        const token = authHeader.split(" ")[1]
-        const secretKey = process.env.SECRET_KEY
-        const decodedToken = jwt.verify(token, secretKey)
-
-        const firstName = decodedToken.firstName
-        const lastName = decodedToken.lastName
-        const email = decodedToken.email
-
-        return res.status(200).json({
-            success: true,
-            message: "User details identified",
-            payload: { firstName, lastName, email }
-        })
-
-    } else {
-        res.status(500).json({
-            success: false,
-            message: "Unauthorised"
-        })
-    }
-
-
-
-})
+    return res.status(200).json({
+      success: true,
+      message: "User details identified",
+      payload: { firstName, lastName, email },
+    });
+  } else {
+    res.status(500).json({
+      success: false,
+      message: "Unauthorised",
+    });
+  }
+});
 
 app.listen(port, () => {
-    console.log(`Server is running on port ${port}`)
-})
+  console.log(`Server is running on port ${port}`);
+});
