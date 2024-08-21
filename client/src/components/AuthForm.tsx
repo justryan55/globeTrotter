@@ -102,10 +102,8 @@ export const AuthForm = ({ auth }: { auth: string }) => {
       } else {
         const data = await res.json();
         const token = window.localStorage.setItem("token", data.token);
-
         navigate("/home");
         console.log("Logged in!");
-        // set token
       }
     }
 
