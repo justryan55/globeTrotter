@@ -1,8 +1,5 @@
-export const fetchData = async (url, method, payload) => {
+export const fetchData = async (url, method, payload = {}) => {
   try {
-    //add token to local storage. Check if token exists
-    // if token, set payload.token = to the token
-
     const token = window.localStorage.getItem("token");
 
     if (token) {
@@ -13,17 +10,16 @@ export const fetchData = async (url, method, payload) => {
       method: method,
       headers: new Headers({
         "Content-Type": "application/json",
+        Authorisation: `Bearer ${token}`,
       }),
       token: token,
-      body: JSON.stringify(payload),
     };
 
-    const res = await fetch(url, params);
-    // if (res.status !== 200) {
-    //   return [];
-    // }
+    if (method !== "GET") {
+      params.body = JSON.stringify(payload);
+    }
 
-    // const data = await res.json();
+    const res = await fetch(url, params);
 
     return res;
   } catch (err) {
