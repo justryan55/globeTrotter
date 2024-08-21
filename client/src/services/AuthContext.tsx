@@ -17,8 +17,6 @@ export default function AuthContext({ children }) {
 
         const res = await fetchData(`${backendURL}/api/auth/getUser`, "GET");
         const data = await res.json();
-        console.log(data);
-
         const { firstName, lastName, email } = data.payload;
 
         setUser({ firstName, lastName, email });
