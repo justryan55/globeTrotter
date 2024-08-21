@@ -67,7 +67,9 @@ export default function UserSnapshot() {
       <Box>
         <FirstRow>
           <AvatarImg src="/images/avatar.png" />
-          <Text>{user.name}</Text>
+          <Text>
+            {user.firstName} {user.lastName}
+          </Text>
         </FirstRow>
         <SecondRow>
           <Column>
