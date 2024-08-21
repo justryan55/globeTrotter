@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 
 const Layout = styled.div`
@@ -47,9 +48,14 @@ const Description = styled.p`
   padding-left: 10px;
 `;
 
-export default function ExploreCard({ title, image, description }) {
+export default function ExploreCard({ title, image, description, link }) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/explore/${link}`);
+  };
   return (
-    <Layout>
+    <Layout onClick={handleClick}>
       <Header>{title}</Header>
       <SubLayout>
         <Line />
@@ -61,5 +67,3 @@ export default function ExploreCard({ title, image, description }) {
     </Layout>
   );
 }
-
-// Itinerary creator, google map restaurant tool, map selector
