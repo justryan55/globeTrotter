@@ -99,7 +99,7 @@ app.post("/api/auth/login", async(req, res) => {
         password: user.password,
     }
 
-    const token = jwt.sign(payload, secretKey, { expiresIn: "5d" })
+    const token = jwt.sign(payload, secretKey, { expiresIn: "1d" })
 
 
     res.status(200).json({
@@ -109,7 +109,34 @@ app.post("/api/auth/login", async(req, res) => {
 
 })
 
+app.get("/api/auth/getUser", async(req, res) => {
+    const authHeader = req.headers['authorisation']
+    
+    if (authHeader){
+        const token = authHeader.split(" ")[1]
+        const secretKey = process.env.SECRET_KEY
+        const decodedToken = jwt.verify(token, secretKey)
 
+        const name = decodedToken.name
+        const email = decodedToken.email
+
+        return res.status(200).json({
+            success: true,
+            message: "User details identified",
+            payload: { name, email }
+        })
+
+        console.log(decodedToken.name)
+    } else {
+        res.status(500).json({
+            success: false,
+            message: "Unauthorised"
+        })
+    }
+
+
+
+})
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`)
