@@ -62,7 +62,8 @@ const ErrorText = styled.p`
 
 export const AuthForm = ({ auth }: { auth: string }) => {
   const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
     confirmPassword: "",
@@ -129,14 +130,25 @@ export const AuthForm = ({ auth }: { auth: string }) => {
       <Form>
         {auth === "register" && (
           <Input
-            id="name"
-            name="name"
+            id="first-name"
+            name="firstName"
             type="text"
             onChange={handleChange}
-            value={formData.name}
-            placeholder="Name"
+            value={formData.firstName}
+            placeholder="First Name"
           />
         )}
+        {auth === "register" && (
+          <Input
+            id="last-name"
+            name="lastName"
+            type="text"
+            onChange={handleChange}
+            value={formData.lastName}
+            placeholder="Last Name"
+          />
+        )}
+
         <Input
           id="email"
           name="email"
