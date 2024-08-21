@@ -83,7 +83,9 @@ export default function ProfileCard() {
   return (
     <Layout>
       <AvatarImg src="/images/avatar.png" />
-      <Header>{user.name}</Header>
+      <Header>
+        {user.firstName} {user.lastName}
+      </Header>
       <LocationLayout>
         <LocationIcon src="images/map-pin.svg" />
         <Text>Current Location</Text>
