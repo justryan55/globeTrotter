@@ -149,6 +149,6 @@ app.listen(port, () => {
 
 // Todo - 08 - Add the endpoint here to add return the current users countries_visited
 
-// Todo - 09 - Instead of having all the backend routes in this one file, you can split the routes out to different files to 
+// Todo - 10 - Instead of having all the backend routes in this one file, you can split the routes out to different files to 
 //             oranise them easier. So I would have a folder called routes and then a file called auth-routes.mjs, and maybe
 //             countries-routes.mjs. You can follow this answer https://stackoverflow.com/a/37309212/2518608
