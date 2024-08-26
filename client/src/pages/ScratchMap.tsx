@@ -41,6 +41,7 @@ const CountryCard = styled.div`
 
 export default function ScratchMap() {
   const [countries, setCountries] = useState([]);
+  const [countriesVisited, setCountriesVisited] = useState([]);
   const backendURL = import.meta.env.VITE_BACKEND_URL;
 
   // Todo - 07 - Now that you have country codes saving to the user model, we want to load them and highlight them
@@ -67,26 +68,54 @@ export default function ScratchMap() {
         setCountries(data.payload.countries);
       };
 
+      const getCountriesVisitedByUser = async () => {
+        const res = await fetchData(
+          `${backendURL}/api/getCountriesVisited`,
+          "GET"
+        );
+
+        if (!res.ok) {
+          throw new Error(`Response status: ${res.status}`);
+        }
+
+        const data = await res.json();
+        const countriesVisitedByUser = data.payload.countriesVisitedByUser;
+        setCountriesVisited(countriesVisitedByUser);
+      };
+
       getData();
+      getCountriesVisitedByUser();
     } catch (err) {
       console.log(err);
     }
   }, []);
+
+  const hasVisited = (countryName) => {
+    return countriesVisited.includes(countryName);
+  };
 
   // Todo - 06 - Now you have the country object from the model, you need to do a post request to the server
   //             which will append this country code to the current users countries_visited
 
   const handleClick = async (countryName, countryCode) => {
     try {
+      if (!hasVisited(countryName)) {
+        setCountriesVisited((prevVisited) => [...prevVisited, countryName]);
+      }
+
       const res = await fetchData(`${backendURL}/api/addCountry`, "POST", {
         countryName,
         countryCode,
       });
 
-      if (res.ok) {
-        const data = await res.json();
-        console.log(data);
+      if (!res.ok) {
+        setCountriesVisited((prevVisited) =>
+          prevVisited.filter((name) => name !== countryName)
+        );
+        throw new Error(`Response status: ${res.status}`);
       }
+
+      const data = await res.json();
     } catch (err) {
       console.log(err);
     }
@@ -105,7 +134,14 @@ export default function ScratchMap() {
                 handleClick(countryName, countryCode);
               }}
             >
-              {countryName}
+              {countryName} -
+              {hasVisited(countryName) ? (
+                <span style={{ color: "green", fontWeight: "500" }}>
+                  Visited
+                </span>
+              ) : (
+                <span style={{ color: "red" }}> Not Visited</span>
+              )}
             </CountryCard>
           );
         })}
