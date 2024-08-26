@@ -1,5 +1,5 @@
-import express from 'express';
-import { Schema, mongoose } from 'mongoose';
+import express from "express";
+import { Schema, mongoose } from "mongoose";
 
 const userSchema = new Schema(
   {
@@ -11,8 +11,9 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-const userModel = mongoose.model('User', userSchema);
+const userModel = mongoose.model("User", userSchema);
 
 export default userModel;
 
-// Country model with countries and ids of all the countries. Have country property with array in user model. WIth liked posts, would add liked post to your user schema. In the post schema, would have total likes.
+// Todo - 05 - Create a new property on the user model called something like countries_visited which is an array of strings, these strings will eventually
+//             map to the country model code
