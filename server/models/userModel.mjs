@@ -17,3 +17,6 @@ export default userModel;
 
 // Todo - 05 - Create a new property on the user model called something like countries_visited which is an array of strings, these strings will eventually
 //             map to the country model code
+
+// Todo - 05 - Create a new property on the user model called something like countries_visited which is an array of strings, these strings will eventually
+//             map to the country model code
