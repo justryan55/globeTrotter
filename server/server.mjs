@@ -106,6 +106,7 @@ app.post("/api/auth/login", async (req, res) => {
     lastName: user.lastName,
     email: user.email,
     password: user.password,
+    countries_visited: user.countries_visited,
   };
 
   const token = jwt.sign(payload, secretKey, { expiresIn: "1d" });
@@ -127,11 +128,12 @@ app.get("/api/auth/getUser", async (req, res) => {
     const firstName = decodedToken.firstName;
     const lastName = decodedToken.lastName;
     const email = decodedToken.email;
+    const countriesVisited = decodedToken.countries_visited;
 
     return res.status(200).json({
       success: true,
       message: "User details identified",
-      payload: { firstName, lastName, email },
+      payload: { firstName, lastName, email, countriesVisited },
     });
   } else {
     res.status(500).json({
