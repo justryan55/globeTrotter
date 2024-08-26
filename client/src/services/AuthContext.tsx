@@ -8,6 +8,7 @@ export default function AuthContext({ children }) {
     firstName: "",
     lastName: "",
     email: "",
+    countriesVisited: "",
   });
 
   useEffect(() => {
@@ -17,9 +18,9 @@ export default function AuthContext({ children }) {
 
         const res = await fetchData(`${backendURL}/api/auth/getUser`, "GET");
         const data = await res.json();
-        const { firstName, lastName, email } = data.payload;
+        const { firstName, lastName, email, countriesVisited } = data.payload;
 
-        setUser({ firstName, lastName, email });
+        setUser({ firstName, lastName, email, countriesVisited });
       } catch (err) {
         console.log("Error fetching user data:", err);
       }
@@ -27,5 +28,9 @@ export default function AuthContext({ children }) {
     getUserData();
   }, []);
 
-  return <UserContext.Provider value={[user]}>{children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider value={[user, setUser]}>
+      {children}
+    </UserContext.Provider>
+  );
 }
