@@ -158,6 +158,27 @@ app.get("/api/getCountry", async (req, res) => {
   }
 });
 
+app.post("/api/addCountry", async (req, res) => {
+  try {
+    const { countryName, countryCode, token } = req.body;
+    const secretKey = process.env.SECRET_KEY;
+    const decodedToken = jwt.verify(token, secretKey);
+    const userEmail = decodedToken.email;
+
+    const user = await userModel.findOneAndUpdate(
+      { email: userEmail },
+      { $addToSet: { countries_visited: countryCode } }
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: `${countryName} added`,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
