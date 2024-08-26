@@ -5,6 +5,7 @@ import jwt from "jsonwebtoken";
 import connectDB from "./config/db.mjs";
 import userModel from "./models/userModel.mjs";
 import cors from "cors";
+import countryModel from "./models/countryModel.mjs";
 
 const app = express();
 const port = 3000;
@@ -140,6 +141,31 @@ app.get("/api/auth/getUser", async (req, res) => {
   }
 });
 
+app.get("/api/getCountry", async (req, res) => {
+  try {
+    const countries = await countryModel.find();
+
+    return res.status(200).json({
+      success: true,
+      message: "Countries obtained from database",
+      payload: { countries },
+    });
+  } catch (err) {
+    return res.status(500).json({
+      success: false,
+      message: "An error occurred while retrieving countries",
+    });
+  }
+});
+
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+// Todo - 07 - Add the endpoint here to add the the incoming country code to the current users countries_visited array
+
+// Todo - 08 - Add the endpoint here to add return the current users countries_visited
+
+// Todo - 10 - Instead of having all the backend routes in this one file, you can split the routes out to different files to
+//             oranise them easier. So I would have a folder called routes and then a file called auth-routes.mjs, and maybe
+//             countries-routes.mjs. You can follow this answer https://stackoverflow.com/a/37309212/2518608
