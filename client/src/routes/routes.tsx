@@ -8,6 +8,7 @@ import ProfilePage from "../pages/ProfilePage";
 import SettingsPage from "../pages/SettingsPage";
 import ProtectedRoute from "../services/ProtectedRoute";
 import ScratchMap from "../pages/ScratchMap";
+import RestaurantFinder from "../pages/RestaurantPage";
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -64,6 +65,14 @@ const Router = () => {
       element: (
         <ProtectedRoute>
           <ScratchMap />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/explore/restaurant-finder",
+      element: (
+        <ProtectedRoute>
+          <RestaurantFinder />
         </ProtectedRoute>
       ),
     },
