@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import NavigationBar from "../components/NavigationBar";
 import { useEffect, useState } from "react";
+import { fetchData } from "../services/helpers";
 
 const PageLayout = styled.div`
   height: 100vh;
@@ -30,17 +31,30 @@ const CountryCard = styled.div`
 
 export default function ScratchMap() {
   const [countries, setCountries] = useState([]);
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
+
+  // Todo - 07 - Now that you have country codes saving to the user model, we want to load them and highlight them
+  //             as already ticked when the page loads. So when this component loads, do a GET request to the backend
+  //             which gets the current users countries_visited
+
+  // Todo - 09 - When the countries_visited comes from the backend you'll need to loop through the countries from the country
+  //             model and set a property like 'visited'
+
+  // Todo - 11 - You could also do this a different way, where you do the combination in #09 on the server, not on the front end.
+  //             So in the endpoint to #04 you get the countries, get the current users' countries_visited and return the
+  //             countries already with a visited property. You don't have to do this, but just showing how it could be done.
 
   useEffect(() => {
     try {
       const getData = async () => {
-        const res = await fetch("https://restcountries.com/v3.1/all");
+        const res = await fetchData(`${backendURL}/api/getCountry`, "GET");
+
         if (!res.ok) {
           throw new Error(`Response status: ${res.status}`);
         }
 
         const data = await res.json();
-        setCountries(data);
+        setCountries(data.payload.countries);
       };
 
       getData();
@@ -48,6 +62,9 @@ export default function ScratchMap() {
       console.log(err);
     }
   }, []);
+
+  // Todo - 06 - Now you have the country object from the model, you need to do a post request to the server
+  //             which will append this country code to the current users countries_visited
 
   const handleClick = (country) => {
     console.log(country);
@@ -58,7 +75,7 @@ export default function ScratchMap() {
       <NavigationBar />
       <CardLayout>
         {countries.map((country) => {
-          const countryName = country.name.common;
+          const countryName = country.name;
           return (
             <CountryCard
               onClick={() => {
