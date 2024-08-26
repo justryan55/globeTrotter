@@ -167,13 +167,37 @@ app.post("/api/addCountry", async (req, res) => {
 
     const user = await userModel.findOneAndUpdate(
       { email: userEmail },
-      { $addToSet: { countries_visited: countryCode } }
+      { $addToSet: { countries_visited: countryName } }
     );
 
     return res.status(200).json({
       success: true,
       message: `${countryName} added`,
     });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.get("/api/getCountriesVisited", async (req, res) => {
+  const authHeader = req.headers["authorisation"];
+
+  try {
+    if (authHeader) {
+      const token = authHeader.split(" ")[1];
+      const secretKey = process.env.SECRET_KEY;
+      const decodedToken = jwt.verify(token, secretKey);
+      const userEmail = decodedToken.email;
+
+      const user = await userModel.find({ email: userEmail });
+      const countriesVisitedByUser = user[0].countries_visited;
+
+      return res.status(200).json({
+        success: true,
+        message: "Countries visited by user obtained",
+        payload: { countriesVisitedByUser },
+      });
+    }
   } catch (err) {
     console.log(err);
   }
