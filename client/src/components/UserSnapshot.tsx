@@ -73,7 +73,7 @@ export default function UserSnapshot() {
         </FirstRow>
         <SecondRow>
           <Column>
-            <Counter>0</Counter>
+            <Counter>{user.countriesVisited.length}</Counter>
             <CounterTitle>Countries</CounterTitle>
           </Column>
           <Column>
