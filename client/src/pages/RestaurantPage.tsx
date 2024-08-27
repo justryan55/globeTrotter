@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import NavigationBar from "../components/NavigationBar";
+import GoogleMapComponent from "../components/GoogleMapComponent";
 
 const PageLayout = styled.div`
   height: 100vh;
@@ -12,6 +13,9 @@ export default function RestaurantFinder() {
   return (
     <PageLayout>
       <NavigationBar />
+      <div>
+        <GoogleMapComponent />
+      </div>
     </PageLayout>
   );
 }
