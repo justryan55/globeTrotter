@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Post from "./Post";
+import CreateNewPost from "./CreateNewPost";
 
 const Layout = styled.div`
   margin: 3rem;
@@ -38,6 +39,7 @@ export default function FeedCard() {
     <Layout>
       <Header>Feed</Header>
       <Line />
+      <CreateNewPost />
       <SubLayout>
         <Post />
       </SubLayout>
