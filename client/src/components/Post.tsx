@@ -42,12 +42,15 @@ const Timestamp = styled.p`
 const ActionButtons = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+`;
+
+const ActionButtonContainer = styled.div`
+  display: flex;
+  justify-content: center;
   align-items: center;
 `;
 
-const ActionButton = styled.p`
-  text-align: center;
-`;
+const ActionButton = styled.svg``;
 
 export default function Post() {
   const [user] = useContext(UserContext);
@@ -70,9 +73,58 @@ export default function Post() {
           🦌 Feeling so refreshed and energized! 💪
         </PostContent>
         <ActionButtons>
-          <ActionButton>Like</ActionButton>
-          <ActionButton>Comment</ActionButton>
-          <ActionButton>Share</ActionButton>
+          <ActionButtonContainer>
+            <ActionButton
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="black"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-heart"
+            >
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </ActionButton>
+          </ActionButtonContainer>
+          <ActionButtonContainer>
+            <ActionButton
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="black"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-message-square"
+            >
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </ActionButton>
+          </ActionButtonContainer>
+          <ActionButtonContainer>
+            <ActionButton
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="black"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-share-2"
+            >
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>Share
+            </ActionButton>
+          </ActionButtonContainer>
         </ActionButtons>
       </Layout>
       <Layout>
@@ -90,9 +142,128 @@ export default function Post() {
           I’ve been meaning to finish. 📚 Hope everyone is having a great day!
         </PostContent>
         <ActionButtons>
-          <ActionButton>Like</ActionButton>
-          <ActionButton>Comment</ActionButton>
-          <ActionButton>Share</ActionButton>
+          <ActionButtonContainer>
+            <ActionButton
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="black"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-heart"
+            >
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </ActionButton>
+          </ActionButtonContainer>
+          <ActionButtonContainer>
+            <ActionButton
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="black"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-message-square"
+            >
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </ActionButton>
+          </ActionButtonContainer>
+          <ActionButtonContainer>
+            <ActionButton
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="black"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-share-2"
+            >
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>Share
+            </ActionButton>
+          </ActionButtonContainer>
+        </ActionButtons>
+      </Layout>
+      <Layout>
+        <PostDetails>
+          <UserImg src="/images/avatar.png" />
+          <Poster>
+            <Name>
+              {user.firstName} {user.lastName}
+            </Name>
+            <Timestamp>Posted 45 minutes ago</Timestamp>
+          </Poster>
+        </PostDetails>
+        <PostContent>
+          Tried making homemade pizza tonight, and honestly… not too shabby! 🍽️
+          Who knew I could pull off a crispy crust like that? 😄 Might have gone
+          a little overboard with the cheese, but no regrets. 🧀
+        </PostContent>
+        <ActionButtons>
+          <ActionButtonContainer>
+            <ActionButton
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="black"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-heart"
+            >
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </ActionButton>
+          </ActionButtonContainer>
+          <ActionButtonContainer>
+            <ActionButton
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="black"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-message-square"
+            >
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </ActionButton>
+          </ActionButtonContainer>
+          <ActionButtonContainer>
+            <ActionButton
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="black"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-share-2"
+            >
+              <circle cx="18" cy="5" r="3"></circle>
+              <circle cx="6" cy="12" r="3"></circle>
+              <circle cx="18" cy="19" r="3"></circle>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>Share
+            </ActionButton>
+          </ActionButtonContainer>
         </ActionButtons>
       </Layout>
     </>
