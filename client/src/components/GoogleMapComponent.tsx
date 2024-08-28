@@ -19,6 +19,12 @@ export default function GoogleMapComponent() {
         mapContainerStyle={mapContainerStyle}
         center={center}
         zoom={10}
+        options={{
+          zoomControl: false,
+          streetViewControl: false,
+          mapTypeControl: false,
+          fullscreenControl: false,
+        }}
       ></GoogleMap>
     </LoadScript>
   );
