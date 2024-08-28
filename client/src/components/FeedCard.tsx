@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import Post from "./Post";
 
 const Layout = styled.div`
   margin: 3rem;
@@ -36,7 +37,9 @@ export default function FeedCard() {
     <Layout>
       <Header>Feed</Header>
       <Line />
-      <SubLayout></SubLayout>
+      <SubLayout>
+        <Post />
+      </SubLayout>
     </Layout>
   );
 }
