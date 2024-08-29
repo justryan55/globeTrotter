@@ -12,13 +12,17 @@ const ActionButton = styled.svg`
 
 export default function LikeButton({ postId }) {
   const [postLikes, setPostLikes] = useState();
-  console.log(postId);
 
   const backendURL = import.meta.env.VITE_BACKEND_URL;
 
   const handleClick = async () => {
-    const res = await fetchData(`${backendURL}/api/updatePostLikes`, "PUT");
+    const res = await fetchData(
+      `${backendURL}/api/${postId}/updatePostLikes`,
+      "PUT"
+    );
     const data = await res?.json();
+    const updatedPostLikes = data.updatedPostLikes;
+    setPostLikes(updatedPostLikes);
   };
 
   useEffect(() => {
