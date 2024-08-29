@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import styled from "styled-components";
 import { UserContext } from "../services/AuthContext";
+import LikeButton from "./LikeButton";
 
 const Layout = styled.div`
   display: grid;
@@ -52,7 +53,13 @@ const ActionButtonContainer = styled.div`
 
 const ActionButton = styled.svg``;
 
-export default function Post({ profileImage, name, timestamp, content }) {
+export default function Post({
+  postId,
+  profileImage,
+  name,
+  timestamp,
+  content,
+}) {
   const [user] = useContext(UserContext);
 
   return (
@@ -68,20 +75,7 @@ export default function Post({ profileImage, name, timestamp, content }) {
         <PostContent>{content}</PostContent>
         <ActionButtons>
           <ActionButtonContainer>
-            <ActionButton
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="black"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-heart"
-            >
-              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
-            </ActionButton>
+            <LikeButton postId={postId} />
           </ActionButtonContainer>
           <ActionButtonContainer>
             <ActionButton
