@@ -214,6 +214,7 @@ app.get(`/api/:userId/getPosts`, async (req, res) => {
 
     const postDetails = postedByUser.map((post) => {
       return {
+        postId: post.id,
         userId: post.userId,
         postedBy: post.postedBy,
         content: post.content,
@@ -255,7 +256,20 @@ app.get("/api/getCountriesVisited", async (req, res) => {
   }
 });
 
-app.get("/api/getPostLikes", async (req, res) => {});
+app.get(`/api/:postId/getPostLikes`, async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const post = await postModel.find({ _id: postId });
+    const totalLikes = post[0].totalLikes;
+
+    return res.status(200).json({
+      success: true,
+      postLikes: totalLikes,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 app.put("/api/updatePostLikes", async (req, res) => {});
 
