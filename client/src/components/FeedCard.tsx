@@ -51,7 +51,7 @@ export default function FeedCard() {
 
   useEffect(() => {
     fetchPosts();
-  }, [userid]);
+  }, [userid, posts]);
 
   return (
     <Layout>
