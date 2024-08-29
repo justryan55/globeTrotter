@@ -1,6 +1,9 @@
 import styled from "styled-components";
 import Post from "./Post";
 import CreateNewPost from "./CreateNewPost";
+import { fetchData } from "../services/helpers";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../services/AuthContext";
 
 const Layout = styled.div`
   margin: 3rem;
@@ -35,12 +38,43 @@ const Line = styled.div`
 `;
 
 export default function FeedCard() {
+  const [posts, setPosts] = useState();
+  const [user] = useContext(UserContext);
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
+  const userid = user.userId;
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const res = await fetchData(
+        `${backendURL}/api/${userid}/getPosts`,
+        "GET"
+      );
+      const data = await res.json();
+      setPosts(data.details);
+      console.log(posts);
+    };
+
+    fetchPosts();
+  }, []);
+
   return (
     <Layout>
       <Header>Feed</Header>
       <Line />
       <CreateNewPost />
       <SubLayout>
+        {posts &&
+          posts.map((post) => {
+            console.log(post);
+            return (
+              <Post
+                profileImage="/images/avatar.png"
+                name={post.postedBy}
+                timestamp={post.createdAt}
+                content={post.content}
+              />
+            );
+          })}
         <Post />
       </SubLayout>
     </Layout>
