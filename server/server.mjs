@@ -271,7 +271,23 @@ app.get(`/api/:postId/getPostLikes`, async (req, res) => {
   }
 });
 
-app.put("/api/updatePostLikes", async (req, res) => {});
+app.put("/api/:postId/updatePostLikes", async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const post = await postModel.findByIdAndUpdate({ _id: postId });
+
+    post.totalLikes += 1;
+
+    const updatedPost = await post.save();
+
+    return res.status(200).json({
+      success: true,
+      updatedPostLikes: updatedPost.totalLikes,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
