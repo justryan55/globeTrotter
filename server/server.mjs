@@ -103,6 +103,7 @@ app.post("/api/auth/login", async (req, res) => {
   const secretKey = process.env.SECRET_KEY;
 
   const payload = {
+    userId: user.id,
     firstName: user.firstName,
     lastName: user.lastName,
     email: user.email,
@@ -120,7 +121,6 @@ app.post("/api/auth/login", async (req, res) => {
 
 app.get("/api/auth/getUser", async (req, res) => {
   const authHeader = req.headers["authorisation"];
-
   if (authHeader) {
     const token = authHeader.split(" ")[1];
     const secretKey = process.env.SECRET_KEY;
@@ -254,6 +254,10 @@ app.get("/api/getCountriesVisited", async (req, res) => {
     console.log(err);
   }
 });
+
+app.get("/api/getPostLikes", async (req, res) => {});
+
+app.put("/api/updatePostLikes", async (req, res) => {});
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
