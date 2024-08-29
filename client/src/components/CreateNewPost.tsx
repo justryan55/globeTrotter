@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { UserContext } from "../services/AuthContext";
 import Post from "./Post";
@@ -44,12 +44,21 @@ export default function CreateNewPost() {
     postedBy: "",
     message: "",
   });
+
   const backendURL = import.meta.env.VITE_BACKEND_URL;
+
   const userid = user.userId;
   const name = user.firstName + " " + user.lastName;
 
+  const handleSubmit = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      createPost();
+      setContent({ ...content, message: "" });
+    }
+  };
+
   const createPost = async () => {
-    setContent({ ...content, userId: userid, postedBy: name });
     const res = await fetchData(
       `${backendURL}/api/${userid}/newPost`,
       "POST",
@@ -57,12 +66,9 @@ export default function CreateNewPost() {
     );
   };
 
-  const handleSubmit = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      createPost();
-    }
-  };
+  useEffect(() => {
+    setContent({ ...content, userId: userid, postedBy: name });
+  }, []);
 
   return (
     <>
