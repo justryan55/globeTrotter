@@ -1,12 +1,14 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import styled from "styled-components";
 import { UserContext } from "../services/AuthContext";
+import Post from "./Post";
+import { fetchData } from "../services/helpers";
 
 const Layout = styled.div`
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  border: 0.5px rgb(0, 0, 0, 0.2) solid;
+  /* border: 0.5px rgb(0, 0, 0, 0.2) solid; */
   width: 100%;
   padding: 1rem;
   margin-bottom: 1rem;
@@ -37,12 +39,41 @@ const TextBox = styled.textarea`
 
 export default function CreateNewPost() {
   const [user] = useContext(UserContext);
+  const [content, setContent] = useState({
+    userId: "",
+    postedBy: "",
+    message: "",
+  });
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
+  const userid = user.userId;
+  const name = user.firstName + " " + user.lastName;
+
+  const createPost = async () => {
+    setContent({ ...content, userId: userid, postedBy: name });
+    const res = await fetchData(
+      `${backendURL}/api/${userid}/newPost`,
+      "POST",
+      content
+    );
+  };
+
+  const handleSubmit = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      createPost();
+    }
+  };
 
   return (
     <>
       <Layout>
         <UserImg src="/images/avatar.png" />
-        <TextBox placeholder={`What's on your mind, ${user.firstName} ?`} />
+        <TextBox
+          placeholder={`What's on your mind, ${user.firstName} ?`}
+          onKeyDown={handleSubmit}
+          value={content.message}
+          onChange={(e) => setContent({ ...content, message: e.target.value })}
+        />
       </Layout>
     </>
   );
