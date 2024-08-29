@@ -43,17 +43,13 @@ export default function FeedCard() {
   const backendURL = import.meta.env.VITE_BACKEND_URL;
   const userid = user.userId;
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const res = await fetchData(
-        `${backendURL}/api/${userid}/getPosts`,
-        "GET"
-      );
-      const data = await res.json();
-      setPosts(data.details);
-      console.log(posts);
-    };
+  const fetchPosts = async () => {
+    const res = await fetchData(`${backendURL}/api/${userid}/getPosts`, "GET");
+    const data = await res.json();
+    setPosts(data.details);
+  };
 
+  useEffect(() => {
     fetchPosts();
   }, []);
 
@@ -65,7 +61,6 @@ export default function FeedCard() {
       <SubLayout>
         {posts &&
           posts.map((post) => {
-            console.log(post);
             return (
               <Post
                 profileImage="/images/avatar.png"
@@ -75,7 +70,6 @@ export default function FeedCard() {
               />
             );
           })}
-        <Post />
       </SubLayout>
     </Layout>
   );
