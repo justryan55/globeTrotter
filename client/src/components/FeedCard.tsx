@@ -51,20 +51,19 @@ export default function FeedCard() {
 
   useEffect(() => {
     fetchPosts();
-  }, [userid, posts]);
+  }, [userid]);
 
   return (
     <Layout>
       <Header>Feed</Header>
       <Line />
-      <CreateNewPost />
+      <CreateNewPost onPostCreated={fetchPosts} />
       <SubLayout>
         {posts.length === 0 ? (
           <p>Loading...</p>
         ) : (
           posts &&
           posts.map((post) => {
-            console.log(post);
             return (
               <Post
                 profileImage="/images/avatar.png"

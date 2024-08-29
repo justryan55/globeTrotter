@@ -37,7 +37,7 @@ const TextBox = styled.textarea`
   }
 `;
 
-export default function CreateNewPost() {
+export default function CreateNewPost({ onPostCreated }) {
   const [user] = useContext(UserContext);
   const [content, setContent] = useState({
     userId: "",
@@ -64,6 +64,7 @@ export default function CreateNewPost() {
       "POST",
       content
     );
+    onPostCreated();
   };
 
   useEffect(() => {
