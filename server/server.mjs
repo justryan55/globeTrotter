@@ -6,6 +6,7 @@ import connectDB from "./config/db.mjs";
 import userModel from "./models/userModel.mjs";
 import cors from "cors";
 import countryModel from "./models/countryModel.mjs";
+import postModel from "./models/postModel.mjs";
 
 const app = express();
 const port = 3000;
@@ -125,6 +126,7 @@ app.get("/api/auth/getUser", async (req, res) => {
     const secretKey = process.env.SECRET_KEY;
     const decodedToken = jwt.verify(token, secretKey);
 
+    const userId = decodedToken.userId;
     const firstName = decodedToken.firstName;
     const lastName = decodedToken.lastName;
     const email = decodedToken.email;
@@ -133,7 +135,7 @@ app.get("/api/auth/getUser", async (req, res) => {
     return res.status(200).json({
       success: true,
       message: "User details identified",
-      payload: { firstName, lastName, email, countriesVisited },
+      payload: { userId, firstName, lastName, email, countriesVisited },
     });
   } else {
     res.status(500).json({
@@ -181,6 +183,54 @@ app.post("/api/addCountry", async (req, res) => {
   }
 });
 
+app.post(`/api/:userId/newPost`, async (req, res) => {
+  const { userId } = req.params;
+  const { postedBy, message } = req.body;
+
+  try {
+    const newPost = new postModel({
+      userId: userId,
+      postedBy: postedBy,
+      content: message,
+      totalLikes: 0,
+    });
+
+    const postCreated = newPost.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "Post created",
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.get(`/api/:userId/getPosts`, async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const postedByUser = await postModel.find({ userId: userId });
+
+    const postDetails = postedByUser.map((post) => {
+      return {
+        userId: post.userId,
+        postedBy: post.postedBy,
+        content: post.content,
+        totalLikes: post.totalLikes,
+        createdAt: post.createdAt,
+      };
+    });
+
+    return res.status(200).json({
+      success: true,
+      details: postDetails,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 app.get("/api/getCountriesVisited", async (req, res) => {
   const authHeader = req.headers["authorisation"];
 
@@ -208,10 +258,6 @@ app.get("/api/getCountriesVisited", async (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
-
-// Todo - 07 - Add the endpoint here to add the the incoming country code to the current users countries_visited array
-
-// Todo - 08 - Add the endpoint here to add return the current users countries_visited
 
 // Todo - 10 - Instead of having all the backend routes in this one file, you can split the routes out to different files to
 //             oranise them easier. So I would have a folder called routes and then a file called auth-routes.mjs, and maybe
