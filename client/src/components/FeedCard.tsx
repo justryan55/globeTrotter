@@ -66,6 +66,7 @@ export default function FeedCard() {
           posts.map((post) => {
             return (
               <Post
+                postId={post.postId}
                 profileImage="/images/avatar.png"
                 name={post.postedBy}
                 timestamp={post.createdAt}
