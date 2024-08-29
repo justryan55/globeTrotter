@@ -38,7 +38,7 @@ const Line = styled.div`
 `;
 
 export default function FeedCard() {
-  const [posts, setPosts] = useState();
+  const [posts, setPosts] = useState([]);
   const [user] = useContext(UserContext);
   const backendURL = import.meta.env.VITE_BACKEND_URL;
   const userid = user.userId;
@@ -51,7 +51,7 @@ export default function FeedCard() {
 
   useEffect(() => {
     fetchPosts();
-  }, []);
+  }, [userid]);
 
   return (
     <Layout>
@@ -59,8 +59,12 @@ export default function FeedCard() {
       <Line />
       <CreateNewPost />
       <SubLayout>
-        {posts &&
+        {posts.length === 0 ? (
+          <p>Loading...</p>
+        ) : (
+          posts &&
           posts.map((post) => {
+            console.log(post);
             return (
               <Post
                 profileImage="/images/avatar.png"
@@ -69,7 +73,8 @@ export default function FeedCard() {
                 content={post.content}
               />
             );
-          })}
+          })
+        )}
       </SubLayout>
     </Layout>
   );
