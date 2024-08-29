@@ -195,7 +195,7 @@ app.post(`/api/:userId/newPost`, async (req, res) => {
       totalLikes: 0,
     });
 
-    const postCreated = newPost.save();
+    const postCreated = await newPost.save();
 
     return res.status(200).json({
       success: true,
