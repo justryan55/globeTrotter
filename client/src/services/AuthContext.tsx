@@ -5,6 +5,7 @@ export const UserContext = createContext(null);
 
 export default function AuthContext({ children }) {
   const [user, setUser] = useState({
+    userId: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -18,9 +19,11 @@ export default function AuthContext({ children }) {
 
         const res = await fetchData(`${backendURL}/api/auth/getUser`, "GET");
         const data = await res.json();
-        const { firstName, lastName, email, countriesVisited } = data.payload;
 
-        setUser({ firstName, lastName, email, countriesVisited });
+        const { userId, firstName, lastName, email, countriesVisited } =
+          data.payload;
+
+        setUser({ userId, firstName, lastName, email, countriesVisited });
       } catch (err) {
         console.log("Error fetching user data:", err);
       }
