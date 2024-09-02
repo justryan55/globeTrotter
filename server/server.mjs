@@ -192,6 +192,7 @@ app.post(`/api/:userId/newPost`, async (req, res) => {
       userId: userId,
       postedBy: postedBy,
       content: message,
+      likedBy: [],
       totalLikes: 0,
     });
 
@@ -260,7 +261,7 @@ app.get(`/api/:postId/getPostLikes`, async (req, res) => {
   try {
     const { postId } = req.params;
     const post = await postModel.find({ _id: postId });
-    const totalLikes = post[0].totalLikes;
+    const totalLikes = post[0].likedBy.length;
 
     return res.status(200).json({
       success: true,
@@ -274,15 +275,29 @@ app.get(`/api/:postId/getPostLikes`, async (req, res) => {
 app.put("/api/:postId/updatePostLikes", async (req, res) => {
   try {
     const { postId } = req.params;
+    const authHeader = req.headers["authorisation"];
+    let user = "";
+
+    if (authHeader) {
+      const token = authHeader.split(" ")[1];
+      const secretKey = process.env.SECRET_KEY;
+      const decodedToken = jwt.verify(token, secretKey);
+      user = decodedToken.userId;
+    }
+
     const post = await postModel.findByIdAndUpdate({ _id: postId });
 
-    post.totalLikes += 1;
+    if (!post.likedBy.includes(user)) {
+      post.likedBy.push(user);
+    } else {
+      post.likedBy.remove(user);
+    }
 
     const updatedPost = await post.save();
 
     return res.status(200).json({
       success: true,
-      updatedPostLikes: updatedPost.totalLikes,
+      updatedPostLikes: updatedPost.likedBy.length,
     });
   } catch (err) {
     console.log(err);
