@@ -14,6 +14,9 @@ const postSchema = new Schema(
       type: String,
       required: true,
     },
+    likedBy: {
+      type: [String],
+    },
     totalLikes: {
       type: Number,
     },
