@@ -196,7 +196,7 @@ app.post(`/api/:userId/newPost`, async (req, res) => {
       totalLikes: 0,
     });
 
-    const postCreated = await newPost.save();
+    await newPost.save();
 
     return res.status(200).json({
       success: true,
@@ -298,6 +298,42 @@ app.put("/api/:postId/updatePostLikes", async (req, res) => {
     return res.status(200).json({
       success: true,
       updatedPostLikes: updatedPost.likedBy.length,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.get("/api/:postId/getComments", async (req, res) => {
+  try {
+    const { postId } = req.params;
+
+    const post = await postModel.findById(postId);
+    const comments = post.comments;
+
+    return res.status(200).json({
+      success: true,
+      message: comments,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.post("/api/:postId/newComment", async (req, res) => {
+  try {
+    const { postId } = req.params;
+    const { userId, postedBy, comment } = req.body;
+
+    const post = await postModel.findById(postId);
+
+    post.comments.push({ postedBy, comment });
+
+    await post.save();
+
+    return res.status(200).json({
+      success: true,
+      message: "New comment created",
     });
   } catch (err) {
     console.log(err);
