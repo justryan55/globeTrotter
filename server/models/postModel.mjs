@@ -1,5 +1,18 @@
 import mongoose, { Schema } from "mongoose";
 
+const commentSchema = new Schema(
+  {
+    postedBy: {
+      type: String,
+      required: true,
+    },
+    comment: {
+      type: String,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 const postSchema = new Schema(
   {
     userId: {
@@ -19,6 +32,10 @@ const postSchema = new Schema(
     },
     totalLikes: {
       type: Number,
+    },
+    comments: {
+      type: [commentSchema],
+      default: [],
     },
   },
   { timestamps: true }
