@@ -2,6 +2,8 @@ import { useContext } from "react";
 import styled from "styled-components";
 import { UserContext } from "../services/AuthContext";
 import LikeButton from "./LikeButton";
+import CommentButton from "./CommentButton";
+import CommentComponent from "./CommentComponent";
 
 const Layout = styled.div`
   display: grid;
@@ -78,20 +80,7 @@ export default function Post({
             <LikeButton postId={postId} />
           </ActionButtonContainer>
           <ActionButtonContainer>
-            <ActionButton
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="black"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-message-square"
-            >
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-            </ActionButton>
+            <CommentButton postId={postId} />
           </ActionButtonContainer>
           <ActionButtonContainer>
             <ActionButton
@@ -101,10 +90,9 @@ export default function Post({
               viewBox="0 0 24 24"
               fill="none"
               stroke="black"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              class="feather feather-share-2"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
             >
               <circle cx="18" cy="5" r="3"></circle>
               <circle cx="6" cy="12" r="3"></circle>
@@ -115,6 +103,7 @@ export default function Post({
           </ActionButtonContainer>
         </ActionButtons>
       </Layout>
+      <CommentComponent postId={postId} />
     </>
   );
 }
