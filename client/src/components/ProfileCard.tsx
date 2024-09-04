@@ -1,6 +1,7 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { UserContext } from "../services/AuthContext";
+import { fetchData } from "../services/helpers";
 
 const Layout = styled.div`
   display: flex;
@@ -75,10 +76,68 @@ const LocationLayout = styled.div`
   gap: 10px;
 `;
 
+const EditBio = styled.textarea`
+  width: 100%;
+  padding: 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  outline: none;
+  resize: none;
+  background-color: #f9f9f9;
+  color: #333;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+  &:focus {
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+  }
+`;
+
+const Bio = styled.p``;
+
 const LocationIcon = styled.img``;
 
 export default function ProfileCard() {
   const [user] = useContext(UserContext);
+  const [isEditing, setIsEditing] = useState(false);
+  const [bio, setBio] = useState({ content: "Add a bio" });
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
+  const userId = user.userId;
+
+  const fetchBio = async () => {
+    const res = await fetchData(
+      `${backendURL}/api/${userId}/getUserBio`,
+      "GET"
+    );
+    const data = await res?.json();
+    const bio = data.content;
+    setBio({ content: bio });
+  };
+
+  useEffect(() => {
+    fetchBio();
+  }, []);
+
+  const editBio = () => {
+    setIsEditing((prev) => !prev);
+  };
+
+  const handleSubmit = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      setIsEditing((prev) => !prev);
+      updateBio();
+    }
+  };
+
+  const updateBio = async () => {
+    const res = await fetchData(
+      `${backendURL}/api/${userId}/updateBio`,
+      "PUT",
+      bio
+    );
+    const data = await res?.json();
+  };
 
   return (
     <Layout>
@@ -91,8 +150,17 @@ export default function ProfileCard() {
         <Text>Current Location</Text>
       </LocationLayout>
       <Text>
-        A travel enthusiast sharing my adventures, tips, and travel stories to
-        inspire your next journey.
+        {isEditing ? (
+          <EditBio
+            value={bio.content}
+            onChange={(e) => setBio({ content: e.target.value })}
+            onKeyDown={handleSubmit}
+          />
+        ) : (
+          <Bio onClick={editBio}>{bio.content}</Bio>
+        )}
+        {/* A travel enthusiast sharing my adventures, tips, and travel stories to
+        inspire your next journey. */}
       </Text>
       <FirstRow>
         <Column>
