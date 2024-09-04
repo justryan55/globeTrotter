@@ -5,11 +5,20 @@ import LikeButton from "./LikeButton";
 import CommentButton from "./CommentButton";
 import CommentComponent from "./CommentComponent";
 
+const Container = styled.div`
+  box-sizing: border-box;
+
+  width: 100%;
+  margin-bottom: 4rem;
+  padding: 1rem;
+  border: 0.5px rgb(0, 0, 0, 0.2) solid;
+`;
+
 const Layout = styled.div`
   display: grid;
   grid-template-rows: 1fr 1fr;
   box-sizing: border-box;
-  border: 0.5px rgb(0, 0, 0, 0.2) solid;
+  /* border: 0.5px rgb(0, 0, 0, 0.2) solid; */
   width: 100%;
   padding: 1rem;
   margin-bottom: 1rem;
@@ -65,7 +74,7 @@ export default function Post({
   const [user] = useContext(UserContext);
 
   return (
-    <>
+    <Container>
       <Layout>
         <PostDetails>
           <UserImg src={profileImage} />
@@ -104,6 +113,6 @@ export default function Post({
         </ActionButtons>
       </Layout>
       <CommentComponent postId={postId} />
-    </>
+    </Container>
   );
 }
