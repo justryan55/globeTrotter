@@ -233,6 +233,35 @@ app.get(`/api/:userId/getPosts`, async (req, res) => {
   }
 });
 
+app.put("/api/:userId/updateBio", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { content } = req.body;
+    const user = await userModel.findByIdAndUpdate(userId, { bio: content });
+
+    return res.status(200).json({
+      success: true,
+      message: "Bio updated",
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+app.get("/api/:userId/getUserBio", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const user = await userModel.findById(userId);
+    const bio = user.bio;
+
+    return res.status(200).json({
+      success: true,
+      message: "Bio successfully fetched",
+      content: bio,
+    });
+  } catch (err) {}
+});
+
 app.get("/api/getCountriesVisited", async (req, res) => {
   const authHeader = req.headers["authorisation"];
 
