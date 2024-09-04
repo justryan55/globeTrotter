@@ -3,10 +3,10 @@ import styled from "styled-components";
 
 const ActionButton = styled.svg`
   margin-right: 5px;
-  &:hover {
+  /* &:hover {
     fill: orange;
     stroke: black;
-  }
+  } */
 `;
 
 export default function CommentButton({ postId }) {
