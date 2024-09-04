@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import styled from "styled-components";
 import { UserContext } from "../services/AuthContext";
-import LikeButton from "./LikeButton";
+import LikeButton from "./LikeButtonPost";
 import CommentButton from "./CommentButton";
 import CommentComponent from "./CommentComponent";
 

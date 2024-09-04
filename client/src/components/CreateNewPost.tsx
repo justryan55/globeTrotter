@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { UserContext } from "../services/AuthContext";
 import Post from "./Post";
 import { fetchData } from "../services/helpers";
-import LikeButton from "./LikeButton";
+import LikeButton from "./LikeButtonPost";
 
 const Layout = styled.div`
   display: flex;
