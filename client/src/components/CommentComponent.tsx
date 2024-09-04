@@ -9,6 +9,8 @@ const ExistingComments = styled.div`
 
   padding: 10px;
   min-height: 50px;
+  max-height: 240px;
+  overflow-y: scroll;
   margin-bottom: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
