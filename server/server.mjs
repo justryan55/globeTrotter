@@ -266,6 +266,26 @@ app.get("/api/getCountriesVisited", async (req, res) => {
   const authHeader = req.headers["authorisation"];
 
   try {
+
+    // todo
+    // 2024-09-09
+    // So there are a few concepts here to learn from.
+    // 1. This looks like it is functional. Like in a few other comments I've made, 
+    // I've seen this same code before, decoding the key and getting the user etc
+    // should be moved into either a helper method or something, or part of the 
+    // router which runs on every route. 
+    // 2. Lets take a step back, and think generally about a front end doing a
+    // POST request to this route. If they think they are logged in on the front end
+    // they will send the authHeader. What you've done here works well for that. If they don't
+    // send the auth header, I don't think anything is returned, I'm not sure what express
+    // does by default, tahts fine. 
+    // What if a different front end (does this make sense) hits this server (once this server is live and running
+    // on some publically availble URL).
+    // What happens if someone hits a different route like "/api/:userId/getUserBio" without
+    // auth? Can I get any users' info by doing a basic fetch to your backend?
+    // EVery route that is not about authentication (ie accessed by people not logged in) needs
+    // to be protected by checking the token/auth, otherwise people can just access your backend endpoints
+
     if (authHeader) {
       const token = authHeader.split(" ")[1];
       const secretKey = process.env.SECRET_KEY;
@@ -372,6 +392,11 @@ app.post("/api/:postId/newComment", async (req, res) => {
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+
+// todo
+// 2024-09-09
+// Yep I think the below is important. Also helps group routes into ones which require checking the token/auth
+// vs ones that are public routes.
 
 // Todo - 10 - Instead of having all the backend routes in this one file, you can split the routes out to different files to
 //             oranise them easier. So I would have a folder called routes and then a file called auth-routes.mjs, and maybe
