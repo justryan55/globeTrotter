@@ -47,7 +47,7 @@ export default function CreateNewPost({ onPostCreated }) {
   const userid = user.userId;
   const name = user.firstName + " " + user.lastName;
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
       createPost();

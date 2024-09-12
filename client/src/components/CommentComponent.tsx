@@ -127,7 +127,7 @@ export default function CommentComponent({ postId }: postId) {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter") {
       e.preventDefault();
       setCommentDetails({
