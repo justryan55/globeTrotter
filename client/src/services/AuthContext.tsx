@@ -20,7 +20,7 @@ export default function AuthContext({ children }) {
       const backendURL = import.meta.env.VITE_BACKEND_URL;
 
       const res = await fetchData(`${backendURL}/api/auth/getUser`, "GET");
-      const data = await res.json();
+      const data = await res?.json();
 
       const { userId, firstName, lastName, email, countriesVisited } =
         data.payload;

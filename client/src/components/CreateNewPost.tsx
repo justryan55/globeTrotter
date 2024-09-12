@@ -1,9 +1,7 @@
-import { useContext, useEffect, useState } from "react";
+import { ChangeEvent, useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { UserContext } from "../services/AuthContext";
-import Post from "./Post";
 import { fetchData } from "../services/helpers";
-import LikeButton from "./LikeButtonPost";
 
 const Layout = styled.div`
   display: flex;
@@ -65,14 +63,14 @@ export default function CreateNewPost({ onPostCreated }) {
       "POST",
       content
     );
-    const data = await res.json();
+    const data = await res?.json();
 
     onPostCreated();
   };
 
   useEffect(() => {
     setContent({ ...content, userId: userid, postedBy: name });
-  }, [user]);
+  }, [userid]);
 
   return (
     <>

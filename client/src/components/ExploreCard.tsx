@@ -48,7 +48,14 @@ const Description = styled.p`
   padding-left: 10px;
 `;
 
-export default function ExploreCard({ title, image, description, link }) {
+type Card = {
+  title: string;
+  image: string;
+  description: string;
+  link: string;
+};
+
+export default function ExploreCard({ title, image, description, link }: Card) {
   const navigate = useNavigate();
 
   const handleClick = () => {

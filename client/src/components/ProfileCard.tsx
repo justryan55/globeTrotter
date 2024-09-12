@@ -18,13 +18,6 @@ const Layout = styled.div`
   }
 `;
 
-const SubLayout = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
 const AvatarImg = styled.img`
   height: 150px;
 `;
@@ -116,6 +109,7 @@ export default function ProfileCard() {
 
   useEffect(() => {
     fetchBio();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const editBio = () => {

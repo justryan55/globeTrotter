@@ -9,7 +9,7 @@ const ActionButton = styled.svg`
   } */
 `;
 
-export default function CommentButton({ postId }) {
+export default function CommentButton(postId: string) {
   const [totalComments, setTotalComments] = useState(0);
 
   return (
@@ -24,7 +24,6 @@ export default function CommentButton({ postId }) {
         stroke-width="2"
         stroke-linecap="round"
         stroke-linejoin="round"
-        class="feather feather-message-square"
       >
         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
       </ActionButton>

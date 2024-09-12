@@ -64,13 +64,21 @@ const ActionButtonContainer = styled.div`
 
 const ActionButton = styled.svg``;
 
+type Post = {
+  postId: string;
+  profileImage: string;
+  name: string;
+  timestamp: string;
+  content: string;
+};
+
 export default function Post({
   postId,
   profileImage,
   name,
   timestamp,
   content,
-}) {
+}: Post) {
   const [user] = useContext(UserContext);
 
   return (

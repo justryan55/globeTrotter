@@ -37,6 +37,13 @@ const Line = styled.div`
   margin-bottom: 20px;
 `;
 
+type Post = {
+  postId: string;
+  postedBy: string;
+  createdAt: Date;
+  content: string;
+};
+
 export default function FeedCard() {
   const [posts, setPosts] = useState([]);
   const [user] = useContext(UserContext);
@@ -45,11 +52,11 @@ export default function FeedCard() {
 
   const fetchPosts = async () => {
     const res = await fetchData(`${backendURL}/api/${userid}/getPosts`, "GET");
-    const data = await res.json();
+    const data = await res?.json();
     setPosts(data.details);
   };
 
-  const formatTimestamp = (timestamp) => {
+  const formatTimestamp = (timestamp: Date) => {
     const current = new Date();
     const provided = new Date(timestamp);
     const timeDifference = current - provided;
@@ -74,6 +81,7 @@ export default function FeedCard() {
 
   useEffect(() => {
     fetchPosts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userid]);
 
   return (
@@ -86,7 +94,7 @@ export default function FeedCard() {
           <p>There are no posts in your feed.</p>
         ) : (
           posts &&
-          posts.map((post) => {
+          posts.map((post: Post) => {
             return (
               <Post
                 postId={post.postId}

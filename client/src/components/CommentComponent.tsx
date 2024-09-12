@@ -80,22 +80,40 @@ const CommentActions = styled.div`
 
 const Action = styled.p``;
 
-export default function CommentComponent({ postId }) {
+type postId = {
+  postId: string;
+};
+
+type timestamp = {
+  timestamp: string;
+};
+
+type Comment = {
+  _id: string;
+  postedBy: string;
+  createdAt: string;
+  comment: string;
+};
+
+export default function CommentComponent({ postId }: postId) {
   const backendURL = import.meta.env.VITE_BACKEND_URL;
   const [user] = useContext(UserContext);
 
   const userid = user.userId;
   const name = user.firstName + " " + user.lastName;
-  const [comments, setComments] = useState([]);
+  const [comments, setComments] = useState<Comment[]>([]);
   const [commentDetails, setCommentDetails] = useState({
     userId: "",
     postedBy: "",
     comment: "",
   });
 
-  const formatTimestamp = (timestamp) => {
+  const formatTimestamp = ({ timestamp }: timestamp) => {
+    console.log(timestamp);
     const current = new Date();
     const provided = new Date(timestamp);
+    // provided is returning an invalid date after adding type
+    console.log(provided);
     const timeDifference = current - provided;
     const minutes = Math.floor(timeDifference / (1000 * 60));
     const hours = Math.floor(timeDifference / (1000 * 60 * 60));
@@ -166,7 +184,7 @@ export default function CommentComponent({ postId }) {
 
             return (
               <>
-                <ExistingComment key={comment.id}>
+                <ExistingComment key={comment._id}>
                   <div>
                     <Sender>{postedBy}</Sender>
                     <Comment>{message}</Comment>
@@ -174,7 +192,6 @@ export default function CommentComponent({ postId }) {
                 </ExistingComment>
                 <CommentActions>
                   <Timestamp>{formatTimestamp(timestamp)}</Timestamp>
-
                   <Action>Like</Action>
                   <Action>Reply</Action>
                 </CommentActions>

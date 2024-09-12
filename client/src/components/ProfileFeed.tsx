@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router";
 import styled from "styled-components";
 
 const Layout = styled.div`
@@ -33,18 +34,17 @@ const HeaderText = styled.p`
   }
 `;
 
-const HorizontalLine = styled.div`
-  width: 100%;
-  height: 1px;
-  background-color: rgb(0, 0, 0, 0.25);
-  margin-bottom: 20px;
-`;
-
 export default function ProfileFeed() {
+  const navigate = useNavigate();
+
+  const handleClick = (item: string) => {
+    navigate("/profile/" + item.toLowerCase());
+  };
+
   return (
     <Layout>
       <Header>
-        <HeaderText>Posts</HeaderText>
+        <HeaderText onClick={() => handleClick("Posts")}>Posts</HeaderText>
         <HeaderText>Comments</HeaderText>
         <HeaderText>Likes</HeaderText>
         <HeaderText>Itineraries</HeaderText>

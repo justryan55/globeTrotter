@@ -97,11 +97,11 @@ export const AuthForm = ({ auth }: { auth: string }) => {
         return;
       }
 
-      if (!res.ok) {
-        const data = await res.json();
+      if (!res?.ok) {
+        const data = await res?.json();
         setError(data);
       } else {
-        const data = await res.json();
+        const data = await res?.json();
         const token = window.localStorage.setItem("token", data.token);
         navigate("/home");
         console.log("Logged in!");
@@ -115,8 +115,8 @@ export const AuthForm = ({ auth }: { auth: string }) => {
         formData
       );
 
-      if (!res.ok) {
-        const data = await res.json();
+      if (!res?.ok) {
+        const data = await res?.json();
         setError(data.message);
       } else {
         navigate("/home");

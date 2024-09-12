@@ -10,7 +10,11 @@ const ActionButton = styled.svg`
   }
 `;
 
-export default function LikeButton({ postId }) {
+type postId = {
+  postId: string;
+};
+
+export default function LikeButton({ postId }: postId) {
   const [postLikes, setPostLikes] = useState();
 
   const backendURL = import.meta.env.VITE_BACKEND_URL;
@@ -31,12 +35,14 @@ export default function LikeButton({ postId }) {
         `${backendURL}/api/${postId}/getPostLikes`,
         "GET"
       );
-      const data = await res.json();
+      const data = await res?.json();
       const totalPostLikes = data.postLikes;
       setPostLikes(totalPostLikes);
     };
     getPostLikes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <>
       <ActionButton

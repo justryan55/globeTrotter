@@ -79,11 +79,11 @@ const MenuText = styled.p`
 `;
 
 export default function NavigationBar() {
-  const [activeItem, setActiveItem] = useState();
+  const [activeItem, setActiveItem] = useState<string>();
   const navigate = useNavigate();
   const token = window.localStorage.getItem("token");
 
-  const handleClick = (item) => {
+  const handleClick = (item: string) => {
     setActiveItem(item);
     navigate("/" + item.toLowerCase());
   };
