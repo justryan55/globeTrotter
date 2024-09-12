@@ -17,13 +17,8 @@ type postId = {
 export default function LikeButton({ postId }: postId) {
   const [postLikes, setPostLikes] = useState();
 
-  const backendURL = import.meta.env.VITE_BACKEND_URL;
-
   const handleClick = async () => {
-    const res = await fetchData(
-      `${backendURL}/api/${postId}/updatePostLikes`,
-      "PUT"
-    );
+    const res = await fetchData(`${postId}/updatePostLikes`, "PUT");
     const data = await res?.json();
     const updatedPostLikes = data.updatedPostLikes;
     setPostLikes(updatedPostLikes);
@@ -31,10 +26,7 @@ export default function LikeButton({ postId }: postId) {
 
   useEffect(() => {
     const getPostLikes = async () => {
-      const res = await fetchData(
-        `${backendURL}/api/${postId}/getPostLikes`,
-        "GET"
-      );
+      const res = await fetchData(`${postId}/getPostLikes`, "GET");
       const data = await res?.json();
       const totalPostLikes = data.postLikes;
       setPostLikes(totalPostLikes);
