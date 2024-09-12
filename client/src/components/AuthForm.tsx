@@ -71,8 +71,6 @@ export const AuthForm = ({ auth }: { auth: string }) => {
 
   const [error, setError] = useState("");
 
-  const backendURL = import.meta.env.VITE_BACKEND_URL;
-
   const navigate = useNavigate();
 
   const handleChange = async (e) => {
@@ -86,11 +84,7 @@ export const AuthForm = ({ auth }: { auth: string }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (auth === "login") {
-      const res = await fetchData(
-        `${backendURL}/api/auth/login`,
-        "POST",
-        formData
-      );
+      const res = await fetchData(`auth/login`, "POST", formData);
 
       if (formData.email === "") {
         setError("Please enter a valid email address");
@@ -109,11 +103,7 @@ export const AuthForm = ({ auth }: { auth: string }) => {
     }
 
     if (auth === "register") {
-      const res = await fetchData(
-        `${backendURL}/api/auth/register`,
-        "POST",
-        formData
-      );
+      const res = await fetchData(`auth/register`, "POST", formData);
 
       if (!res?.ok) {
         const data = await res?.json();

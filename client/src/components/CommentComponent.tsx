@@ -96,7 +96,6 @@ type Comment = {
 };
 
 export default function CommentComponent({ postId }: postId) {
-  const backendURL = import.meta.env.VITE_BACKEND_URL;
   const [user] = useContext(UserContext);
 
   const userid = user.userId;
@@ -109,11 +108,9 @@ export default function CommentComponent({ postId }: postId) {
   });
 
   const formatTimestamp = ({ timestamp }: timestamp) => {
-    console.log(timestamp);
     const current = new Date();
     const provided = new Date(timestamp);
     // provided is returning an invalid date after adding type
-    console.log(provided);
     const timeDifference = current - provided;
     const minutes = Math.floor(timeDifference / (1000 * 60));
     const hours = Math.floor(timeDifference / (1000 * 60 * 60));
@@ -147,19 +144,12 @@ export default function CommentComponent({ postId }: postId) {
   };
 
   const createComment = async () => {
-    const res = await fetchData(
-      `${backendURL}/api/${postId}/newComment`,
-      "POST",
-      commentDetails
-    );
+    const res = await fetchData(`${postId}/newComment`, "POST", commentDetails);
     const data = await res?.json();
   };
 
   const fetchComments = async () => {
-    const res = await fetchData(
-      `${backendURL}/api/${postId}/getComments`,
-      "GET"
-    );
+    const res = await fetchData(`${postId}/getComments`, "GET");
     const data = await res?.json();
     const existingComments = await data.message;
     setComments(existingComments);

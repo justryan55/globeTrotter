@@ -44,8 +44,6 @@ export default function CreateNewPost({ onPostCreated }) {
     message: "",
   });
 
-  const backendURL = import.meta.env.VITE_BACKEND_URL;
-
   const userid = user.userId;
   const name = user.firstName + " " + user.lastName;
 
@@ -58,11 +56,7 @@ export default function CreateNewPost({ onPostCreated }) {
   };
 
   const createPost = async () => {
-    const res = await fetchData(
-      `${backendURL}/api/${userid}/newPost`,
-      "POST",
-      content
-    );
+    const res = await fetchData(`${userid}/newPost`, "POST", content);
     const data = await res?.json();
 
     onPostCreated();

@@ -47,11 +47,10 @@ type Post = {
 export default function FeedCard() {
   const [posts, setPosts] = useState([]);
   const [user] = useContext(UserContext);
-  const backendURL = import.meta.env.VITE_BACKEND_URL;
   const userid = user.userId;
 
   const fetchPosts = async () => {
-    const res = await fetchData(`${backendURL}/api/${userid}/getPosts`, "GET");
+    const res = await fetchData(`${userid}/getPosts`, "GET");
     const data = await res?.json();
     setPosts(data.details);
   };

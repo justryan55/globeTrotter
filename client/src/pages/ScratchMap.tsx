@@ -3,12 +3,6 @@ import NavigationBar from "../components/NavigationBar";
 import { useEffect, useState } from "react";
 import { fetchData } from "../services/helpers";
 
-// todo
-// 2024-09-09
-// Just noticed that these are all tsx files, and as such I'm getting lots of errors about
-// unknown typecript types etc etc. Have you used TS before etc? I think the next thing you
-// should be doing is trying to write some TS.
-
 const PageLayout = styled.div`
   height: 100vh;
   display: grid;
@@ -43,12 +37,11 @@ type Country = {
 export default function ScratchMap() {
   const [countries, setCountries] = useState<string[]>([]);
   const [countriesVisited, setCountriesVisited] = useState([]);
-  const backendURL = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     try {
       const getData = async () => {
-        const res = await fetchData(`${backendURL}/api/getCountry`, "GET");
+        const res = await fetchData(`getCountry`, "GET");
 
         if (!res?.ok) {
           throw new Error(`Response status: ${res?.status}`);
@@ -58,16 +51,8 @@ export default function ScratchMap() {
         setCountries(data.payload.countries);
       };
 
-      // todo
-      // 2024-09-09
-      // So instead of using `${backendURL}/api/...` everywhere, can't that just be put in fetchData func?
-      // and you just use `getCountriesVisited` here.
-
       const getCountriesVisitedByUser = async () => {
-        const res = await fetchData(
-          `${backendURL}/api/getCountriesVisited`,
-          "GET"
-        );
+        const res = await fetchData(`getCountriesVisited`, "GET");
 
         if (!res?.ok) {
           throw new Error(`Response status: ${res?.status}`);
@@ -111,7 +96,7 @@ export default function ScratchMap() {
       // So what would you call the function if it was the same, and how would you do it? Lets chat about this,
       // it happens a lot and good to understand how this kind of "abstraction" works.
 
-      const res = await fetchData(`${backendURL}/api/addCountry`, "POST", {
+      const res = await fetchData(`addCountry`, "POST", {
         countryName,
         countryCode,
       });

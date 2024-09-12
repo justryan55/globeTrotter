@@ -98,10 +98,7 @@ export default function ProfileCard() {
   const userId = user.userId;
 
   const fetchBio = async () => {
-    const res = await fetchData(
-      `${backendURL}/api/${userId}/getUserBio`,
-      "GET"
-    );
+    const res = await fetchData(`${userId}/getUserBio`, "GET");
     const data = await res?.json();
     const bio = data.content;
     setBio({ content: bio });
@@ -125,11 +122,7 @@ export default function ProfileCard() {
   };
 
   const updateBio = async () => {
-    const res = await fetchData(
-      `${backendURL}/api/${userId}/updateBio`,
-      "PUT",
-      bio
-    );
+    const res = await fetchData(`${userId}/updateBio`, "PUT", bio);
     const data = await res?.json();
   };
 
