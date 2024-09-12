@@ -7,6 +7,7 @@ import userModel from "./models/userModel.mjs";
 import cors from "cors";
 import countryModel from "./models/countryModel.mjs";
 import postModel from "./models/postModel.mjs";
+import { checkToken } from "./config/helpers.mjs";
 
 const app = express();
 const port = 3000;
@@ -121,28 +122,14 @@ app.post("/api/auth/login", async (req, res) => {
 
 app.get("/api/auth/getUser", async (req, res) => {
   const authHeader = req.headers["authorisation"];
-  if (authHeader) {
-    const token = authHeader.split(" ")[1];
-    const secretKey = process.env.SECRET_KEY;
-    const decodedToken = jwt.verify(token, secretKey);
+  const { userId, firstName, lastName, email, countriesVisited } =
+    await checkToken(authHeader);
 
-    const userId = decodedToken.userId;
-    const firstName = decodedToken.firstName;
-    const lastName = decodedToken.lastName;
-    const email = decodedToken.email;
-    const countriesVisited = decodedToken.countries_visited;
-
-    return res.status(200).json({
-      success: true,
-      message: "User details identified",
-      payload: { userId, firstName, lastName, email, countriesVisited },
-    });
-  } else {
-    res.status(500).json({
-      success: false,
-      message: "Unauthorised",
-    });
-  }
+  return res.status(200).json({
+    success: true,
+    message: "User details identified",
+    payload: { userId, firstName, lastName, email, countriesVisited },
+  });
 });
 
 app.get("/api/getCountry", async (req, res) => {
@@ -282,40 +269,16 @@ app.get("/api/getCountriesVisited", async (req, res) => {
   const authHeader = req.headers["authorisation"];
 
   try {
-    // todo
-    // 2024-09-09
-    // So there are a few concepts here to learn from.
-    // 1. This looks like it is functional. Like in a few other comments I've made,
-    // I've seen this same code before, decoding the key and getting the user etc
-    // should be moved into either a helper method or something, or part of the
-    // router which runs on every route.
-    // 2. Lets take a step back, and think generally about a front end doing a
-    // POST request to this route. If they think they are logged in on the front end
-    // they will send the authHeader. What you've done here works well for that. If they don't
-    // send the auth header, I don't think anything is returned, I'm not sure what express
-    // does by default, tahts fine.
-    // What if a different front end (does this make sense) hits this server (once this server is live and running
-    // on some publically availble URL).
-    // What happens if someone hits a different route like "/api/:userId/getUserBio" without
-    // auth? Can I get any users' info by doing a basic fetch to your backend?
-    // EVery route that is not about authentication (ie accessed by people not logged in) needs
-    // to be protected by checking the token/auth, otherwise people can just access your backend endpoints
+    const { email } = await checkToken(authHeader);
 
-    if (authHeader) {
-      const token = authHeader.split(" ")[1];
-      const secretKey = process.env.SECRET_KEY;
-      const decodedToken = jwt.verify(token, secretKey);
-      const userEmail = decodedToken.email;
+    const user = await userModel.find({ email: email });
+    const countriesVisitedByUser = user[0].countries_visited;
 
-      const user = await userModel.find({ email: userEmail });
-      const countriesVisitedByUser = user[0].countries_visited;
-
-      return res.status(200).json({
-        success: true,
-        message: "Countries visited by user obtained",
-        payload: { countriesVisitedByUser },
-      });
-    }
+    return res.status(200).json({
+      success: true,
+      message: "Countries visited by user obtained",
+      payload: { countriesVisitedByUser },
+    });
   } catch (err) {
     console.log(err);
   }
@@ -340,14 +303,9 @@ app.put("/api/:postId/updatePostLikes", async (req, res) => {
   try {
     const { postId } = req.params;
     const authHeader = req.headers["authorisation"];
-    let user = "";
 
-    if (authHeader) {
-      const token = authHeader.split(" ")[1];
-      const secretKey = process.env.SECRET_KEY;
-      const decodedToken = jwt.verify(token, secretKey);
-      user = decodedToken.userId;
-    }
+    const { userId } = await checkToken(authHeader);
+    const user = userId;
 
     const post = await postModel.findByIdAndUpdate({ _id: postId });
 
