@@ -84,10 +84,6 @@ type postId = {
   postId: string;
 };
 
-type timestamp = {
-  timestamp: string;
-};
-
 type Comment = {
   _id: string;
   postedBy: string;
@@ -107,11 +103,11 @@ export default function CommentComponent({ postId }: postId) {
     comment: "",
   });
 
-  const formatTimestamp = ({ timestamp }: timestamp) => {
+  const formatTimestamp = (timestamp: string) => {
     const current = new Date();
     const provided = new Date(timestamp);
-    // provided is returning an invalid date after adding type
-    const timeDifference = current - provided;
+
+    const timeDifference = current.getTime() - provided.getTime();
     const minutes = Math.floor(timeDifference / (1000 * 60));
     const hours = Math.floor(timeDifference / (1000 * 60 * 60));
     const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));

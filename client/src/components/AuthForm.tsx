@@ -73,7 +73,7 @@ export const AuthForm = ({ auth }: { auth: string }) => {
 
   const navigate = useNavigate();
 
-  const handleChange = async (e) => {
+  const handleChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,

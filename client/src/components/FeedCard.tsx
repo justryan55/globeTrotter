@@ -58,7 +58,7 @@ export default function FeedCard() {
   const formatTimestamp = (timestamp: Date) => {
     const current = new Date();
     const provided = new Date(timestamp);
-    const timeDifference = current - provided;
+    const timeDifference = current.getTime() - provided.getTime();
     const minutes = Math.floor(timeDifference / (1000 * 60));
     const hours = Math.floor(timeDifference / (1000 * 60 * 60));
     const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));

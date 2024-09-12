@@ -94,7 +94,7 @@ export default function ProfileCard() {
   const [user] = useContext(UserContext);
   const [isEditing, setIsEditing] = useState(false);
   const [bio, setBio] = useState({ content: "Add a bio" });
-  const backendURL = import.meta.env.VITE_BACKEND_URL;
+
   const userId = user.userId;
 
   const fetchBio = async () => {

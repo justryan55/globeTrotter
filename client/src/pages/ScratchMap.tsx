@@ -36,7 +36,7 @@ type Country = {
 
 export default function ScratchMap() {
   const [countries, setCountries] = useState<string[]>([]);
-  const [countriesVisited, setCountriesVisited] = useState([]);
+  const [countriesVisited, setCountriesVisited] = useState<string[]>([]);
 
   useEffect(() => {
     try {
