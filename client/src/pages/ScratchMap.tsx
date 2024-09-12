@@ -76,39 +76,24 @@ export default function ScratchMap() {
 
   const handleClick = async ({ countryName, countryCode }: Country) => {
     try {
-      // todo
-      // 2024-09-09
-      // So the order of operations here is interesting, and I wonder if its on purpose. Typically the easilest
-      // way to do this would be to do the POST first, if that is successful then modify the internal state. What
-      // you have done (and not saying it is wrong, but want to point out how its a different and more complicated
-      // approach that can be prone to race conditions) is
-
-      if (!hasVisited(countryName)) {
-        setCountriesVisited((prevVisited) => [...prevVisited, countryName]);
-      }
-
-      // todo
-      // 2024-09-09
-      // Also what happens if you click the country accidently. It saves to the DB and there is no way to
-      // undo it? How could you fix this? So you could create a function here that does the oposite,
-      // and then a backend route to also do the opposite. You'll probably find you're dulicating a lot
-      // of code. These functions would be called something like 'addVistedCountry' and 'removeVisitedCountry'.
-      // So what would you call the function if it was the same, and how would you do it? Lets chat about this,
-      // it happens a lot and good to understand how this kind of "abstraction" works.
-
-      const res = await fetchData(`addCountry`, "POST", {
+      const res = await fetchData(`toggleCountry`, "POST", {
         countryName,
         countryCode,
       });
 
-      if (!res?.ok) {
-        setCountriesVisited((prevVisited) =>
-          prevVisited.filter((name) => name !== countryName)
-        );
-        throw new Error(`Response status: ${res?.status}`);
+      if (res?.ok) {
+        if (!hasVisited(countryName)) {
+          setCountriesVisited((prevVisited) => [...prevVisited, countryName]);
+        } else {
+          setCountriesVisited((prevVisited) =>
+            prevVisited.filter((name) => name !== countryName)
+          );
+        }
       }
 
-      const data = await res.json();
+      if (!res?.ok) {
+        console.log("Error reaching server");
+      }
     } catch (err) {
       console.log(err);
     }

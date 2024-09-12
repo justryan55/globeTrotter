@@ -162,22 +162,38 @@ app.get("/api/getCountry", async (req, res) => {
   }
 });
 
-app.post("/api/addCountry", async (req, res) => {
+app.post("/api/toggleCountry", async (req, res) => {
   try {
     const { countryName, countryCode, token } = req.body;
     const secretKey = process.env.SECRET_KEY;
     const decodedToken = jwt.verify(token, secretKey);
     const userEmail = decodedToken.email;
 
-    const user = await userModel.findOneAndUpdate(
-      { email: userEmail },
-      { $addToSet: { countries_visited: countryName } }
-    );
+    const user = await userModel.findOne({ email: userEmail });
 
-    return res.status(200).json({
-      success: true,
-      message: `${countryName} added`,
-    });
+    if (user.countries_visited.includes(countryName)) {
+      await userModel.findOneAndUpdate(
+        {
+          email: userEmail,
+        },
+        { $pull: { countries_visited: countryName } },
+        { new: true }
+      );
+      return res.status(200).json({
+        success: true,
+        message: `${countryName} removed`,
+      });
+    } else {
+      await userModel.findOneAndUpdate(
+        { email: userEmail },
+        { $addToSet: { countries_visited: countryName } },
+        { new: true }
+      );
+      return res.status(200).json({
+        success: true,
+        message: `${countryName} added`,
+      });
+    }
   } catch (err) {
     console.log(err);
   }
@@ -266,19 +282,18 @@ app.get("/api/getCountriesVisited", async (req, res) => {
   const authHeader = req.headers["authorisation"];
 
   try {
-
     // todo
     // 2024-09-09
     // So there are a few concepts here to learn from.
-    // 1. This looks like it is functional. Like in a few other comments I've made, 
+    // 1. This looks like it is functional. Like in a few other comments I've made,
     // I've seen this same code before, decoding the key and getting the user etc
-    // should be moved into either a helper method or something, or part of the 
-    // router which runs on every route. 
+    // should be moved into either a helper method or something, or part of the
+    // router which runs on every route.
     // 2. Lets take a step back, and think generally about a front end doing a
     // POST request to this route. If they think they are logged in on the front end
     // they will send the authHeader. What you've done here works well for that. If they don't
     // send the auth header, I don't think anything is returned, I'm not sure what express
-    // does by default, tahts fine. 
+    // does by default, tahts fine.
     // What if a different front end (does this make sense) hits this server (once this server is live and running
     // on some publically availble URL).
     // What happens if someone hits a different route like "/api/:userId/getUserBio" without
