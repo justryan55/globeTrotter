@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { fetchData } from "../services/helpers";
 
 const ActionButton = styled.svg`
   margin-right: 5px;
@@ -11,6 +12,16 @@ const ActionButton = styled.svg`
 
 export default function CommentButton(postId: string) {
   const [totalComments, setTotalComments] = useState(0);
+
+  useEffect(() => {
+    const getCommentCount = async () => {
+      const res = await fetchData(`${postId.postId}/getComments`, "GET");
+      const data = await res?.json();
+      setTotalComments(data.message.length);
+    };
+
+    getCommentCount();
+  }, []);
 
   return (
     <>
