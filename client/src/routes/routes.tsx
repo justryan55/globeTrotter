@@ -9,6 +9,7 @@ import SettingsPage from "../pages/SettingsPage";
 import ProtectedRoute from "../services/ProtectedRoute";
 import ScratchMap from "../pages/ScratchMap";
 import RestaurantFinder from "../pages/RestaurantPage";
+import TravelBuddyPage from "../pages/TravelBuddyPage";
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -53,6 +54,14 @@ const Router = () => {
       ),
     },
     {
+      path: "/profile/posts",
+      element: (
+        <ProtectedRoute>
+          <ProfilePage />
+        </ProtectedRoute>
+      ),
+    },
+    {
       path: "/settings",
       element: (
         <ProtectedRoute>
@@ -73,6 +82,14 @@ const Router = () => {
       element: (
         <ProtectedRoute>
           <RestaurantFinder />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/explore/travel-buddy-finder",
+      element: (
+        <ProtectedRoute>
+          <TravelBuddyPage />
         </ProtectedRoute>
       ),
     },

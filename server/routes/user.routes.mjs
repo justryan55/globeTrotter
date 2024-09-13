@@ -3,6 +3,28 @@ import userModel from "../models/userModel.mjs";
 
 const router = express.Router();
 
+router.get("/getUsers", async (req, res) => {
+  try {
+    const users = await userModel.find();
+
+    const userInformation = users.map((user) => {
+      return {
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        countriesVisited: user.countries_visited,
+      };
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: userInformation,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 router.put("/:userId/updateBio", async (req, res) => {
   try {
     const { userId } = req.params;
