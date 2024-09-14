@@ -1,4 +1,8 @@
 import styled from "styled-components";
+import { fetchData } from "../services/helpers";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../services/AuthContext";
+import { isCompositeComponent } from "react-dom/test-utils";
 
 const Button = styled.button`
   background-color: #2196f3;
@@ -25,6 +29,57 @@ const Button = styled.button`
   }
 `;
 
-export default function FollowFriend() {
-  return <Button>Follow</Button>;
+export default function FollowFriend(Id) {
+  const [user, setUser] = useContext(UserContext);
+  const [following, setFollowing] = useState([]);
+  const userId = user.userId;
+  const friendId = Id.Id;
+
+  useEffect(() => {
+    const fetchFriends = async () => {
+      const res = await fetchData(`/${userId}/fetchFriends`, "GET");
+      const data = await res?.json();
+      setFollowing(data.message);
+      console.log(following);
+    };
+
+    fetchFriends();
+  }, [user.friends]);
+
+  const handleClick = async () => {
+    try {
+      const res = await fetchData(`/${userId}/toggleFollow`, "PUT", {
+        friendId,
+      });
+      const data = await res?.json();
+
+      if (data.message === "Following user") {
+        setUser((prevUser) => ({
+          ...prevUser,
+          friends: [...prevUser.friends, friendId],
+        }));
+      }
+
+      if (data.message === "Unfollowing user") {
+        setUser((prevUser) => ({
+          ...prevUser,
+          friends: prevUser.friends.filter((id) => id !== friendId),
+        }));
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return (
+    <Button onClick={handleClick}>
+      {following.includes(friendId) ? <p>Following</p> : <p>Follow</p>}
+    </Button>
+  );
 }
+
+// <Button onClick={handleClick}>
+// {following.map((followingId) => (
+//   <p>{followingId === friendId ? "Following" : "Follow"}</p>
+// ))}
+// </Button>

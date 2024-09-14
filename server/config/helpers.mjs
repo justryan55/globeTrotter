@@ -14,6 +14,7 @@ export const checkToken = async (authHeader) => {
           lastName,
           email,
           countries_visited: countriesVisited,
+          friends: friends,
         } = decodedToken;
 
         return {
@@ -22,6 +23,7 @@ export const checkToken = async (authHeader) => {
           lastName,
           email,
           countriesVisited,
+          friends,
         };
       } else {
         return {

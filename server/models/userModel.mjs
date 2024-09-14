@@ -9,6 +9,7 @@ const userSchema = new Schema(
     password: { type: String, required: true },
     countries_visited: [{ type: String }],
     bio: { type: String, default: "Add a bio" },
+    friends: [{ type: String }],
   },
   { timestamps: true }
 );

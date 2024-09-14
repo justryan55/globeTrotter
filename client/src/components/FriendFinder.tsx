@@ -80,7 +80,7 @@ export default function FriendFinder() {
               <p>{user.firstName}</p>
               <p>{user.lastName}</p>
             </Name>
-            <FollowFriend />
+            <FollowFriend Id={user.id} />
           </User>
         ))}
       </Container>

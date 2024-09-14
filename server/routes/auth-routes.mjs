@@ -95,6 +95,7 @@ router.post("/login", async (req, res) => {
     email: user.email,
     password: user.password,
     countries_visited: user.countries_visited,
+    friends: user.friends,
   };
 
   const token = jwt.sign(payload, secretKey, { expiresIn: "1d" });
@@ -107,13 +108,13 @@ router.post("/login", async (req, res) => {
 
 router.get("/getUser", async (req, res) => {
   const authHeader = req.headers["authorisation"];
-  const { userId, firstName, lastName, email, countriesVisited } =
+  const { userId, firstName, lastName, email, countriesVisited, friends } =
     await checkToken(authHeader);
 
   return res.status(200).json({
     success: true,
     message: "User details identified",
-    payload: { userId, firstName, lastName, email, countriesVisited },
+    payload: { userId, firstName, lastName, email, countriesVisited, friends },
   });
 });
 

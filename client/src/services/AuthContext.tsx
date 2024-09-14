@@ -13,6 +13,7 @@ export default function AuthContext({ children }) {
     lastName: "",
     email: "",
     countriesVisited: "",
+    friends: "",
   });
 
   const getUserData = async () => {
@@ -20,10 +21,17 @@ export default function AuthContext({ children }) {
       const res = await fetchData(`auth/getUser`, "GET");
       const data = await res?.json();
 
-      const { userId, firstName, lastName, email, countriesVisited } =
+      const { userId, firstName, lastName, email, countriesVisited, friends } =
         data.payload;
 
-      setUser({ userId, firstName, lastName, email, countriesVisited });
+      setUser({
+        userId,
+        firstName,
+        lastName,
+        email,
+        countriesVisited,
+        friends,
+      });
       setIsLoading(false);
       setIsAuthenticated(true);
     } catch (err) {

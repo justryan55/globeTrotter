@@ -56,4 +56,55 @@ router.get("/:userId/getUserBio", async (req, res) => {
   }
 });
 
+router.put("/:userId/toggleFollow", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { friendId } = req.body;
+
+    const user = await userModel.findById(userId);
+
+    if (!user.friends.includes(friendId)) {
+      await userModel.findByIdAndUpdate(userId, {
+        $addToSet: { friends: friendId },
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: "Following user",
+        content: friendId,
+      });
+    }
+
+    if (user.friends.includes(friendId)) {
+      await userModel.findByIdAndUpdate(userId, {
+        $pull: { friends: friendId },
+      });
+
+      return res.status(200).json({
+        success: true,
+        message: "Unfollowing user",
+        content: friendId,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.get("/:userId/fetchFriends", async (req, res) => {
+  try {
+    const { userId } = req.params;
+
+    const user = await userModel.findById(userId);
+    const userFriends = user.friends;
+
+    res.status(200).json({
+      success: true,
+      message: userFriends,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 export default router;
