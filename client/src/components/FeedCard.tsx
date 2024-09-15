@@ -45,14 +45,21 @@ type Post = {
 };
 
 export default function FeedCard() {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState({
+    usersPosts: [],
+    friendsPosts: [],
+  });
   const [user] = useContext(UserContext);
   const userid = user.userId;
 
   const fetchPosts = async () => {
     const res = await fetchData(`${userid}/getPosts`, "GET");
     const data = await res?.json();
-    setPosts(data.details);
+
+    setPosts({
+      usersPosts: data.usersPosts,
+      friendsPosts: data.friendsPosts[0],
+    });
   };
 
   const formatTimestamp = (timestamp: Date) => {
@@ -83,17 +90,19 @@ export default function FeedCard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userid]);
 
+  const allPosts = [...posts.usersPosts, ...posts.friendsPosts];
+
   return (
     <Layout>
       <Header>Feed</Header>
       <Line />
       <CreateNewPost onPostCreated={fetchPosts} />
       <SubLayout>
-        {posts.length === 0 ? (
+        {allPosts.length === 0 ? (
           <p>There are no posts in your feed.</p>
         ) : (
-          posts &&
-          posts.map((post: Post) => {
+          allPosts &&
+          allPosts.map((post: Post) => {
             return (
               <Post
                 postId={post.postId}

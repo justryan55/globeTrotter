@@ -1,6 +1,7 @@
 import express from "express";
 import { checkToken } from "../config/helpers.mjs";
 import postModel from "../models/postModel.mjs";
+import userModel from "../models/userModel.mjs";
 
 const router = express.Router();
 
@@ -31,10 +32,27 @@ router.post(`/:userId/newPost`, async (req, res) => {
 router.get(`/:userId/getPosts`, async (req, res) => {
   try {
     const { userId } = req.params;
-
     const postedByUser = await postModel.find({ userId: userId });
 
-    const postDetails = postedByUser.map((post) => {
+    const user = await userModel.findById(userId);
+
+    const userFollowing = user.friends;
+
+    const friendsPosts = await Promise.all(
+      userFollowing.map(async (friendId) => {
+        const postedByFriend = await postModel.find({ userId: friendId });
+        return postedByFriend.map((post) => ({
+          postId: post.id,
+          userId: post.userId,
+          postedBy: post.postedBy,
+          content: post.content,
+          totalLikes: post.totalLikes,
+          createdAt: post.createdAt,
+        }));
+      })
+    );
+
+    const usersPosts = postedByUser.map((post) => {
       return {
         postId: post.id,
         userId: post.userId,
@@ -44,10 +62,12 @@ router.get(`/:userId/getPosts`, async (req, res) => {
         createdAt: post.createdAt,
       };
     });
+    console.log(usersPosts);
 
     return res.status(200).json({
       success: true,
-      details: postDetails,
+      usersPosts: usersPosts,
+      friendsPosts: friendsPosts,
     });
   } catch (err) {
     console.log(err);
