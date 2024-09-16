@@ -62,7 +62,6 @@ router.get(`/:userId/getPosts`, async (req, res) => {
         createdAt: post.createdAt,
       };
     });
-    console.log(usersPosts);
 
     return res.status(200).json({
       success: true,
