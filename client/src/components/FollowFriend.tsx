@@ -76,9 +76,3 @@ export default function FollowFriend(Id) {
     </Button>
   );
 }
-
-// <Button onClick={handleClick}>
-// {following.map((followingId) => (
-//   <p>{followingId === friendId ? "Following" : "Follow"}</p>
-// ))}
-// </Button>
