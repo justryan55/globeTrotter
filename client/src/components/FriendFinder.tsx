@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { fetchData } from "../services/helpers";
 import styled from "styled-components";
 import FollowFriend from "./FollowFriend";
+import { UserContext } from "../services/AuthContext";
 
 const Container = styled.div`
   display: flex;
@@ -57,10 +58,12 @@ const Line = styled.div`
 
 export default function FriendFinder() {
   const [users, setUsers] = useState([]);
+  const user = useContext(UserContext);
+  const userId = user[0].userId;
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const res = await fetchData("/getUsers", "GET");
+      const res = await fetchData(`/${userId}/getUsers`, "GET");
       const data = await res?.json();
       setUsers(data.message);
     };
