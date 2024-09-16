@@ -47,12 +47,21 @@ const MenuLayout = styled.div`
   padding: 0px 25px;
 
   p {
+    color: black;
+  }
+
+  svg {
+    stroke: black;
+  }
+
+  /* 
+  p {
     color: ${(props) => (props.activeItem ? "#3283ae" : "black")};
   }
 
   svg {
     stroke: ${(props) => (props.activeItem ? "#3283ae" : "black")};
-  }
+  } */
 
   &:hover {
     cursor: pointer;
@@ -106,7 +115,7 @@ export default function NavigationBar() {
         <Line />
       </LineLayout>
       <MenuLayout
-        activeItem={activeItem === "Home"}
+        // activeItem={activeItem === "Home"}
         onClick={() => handleClick("Home")}
       >
         <MenuImg
@@ -127,7 +136,7 @@ export default function NavigationBar() {
         <MenuText>Home</MenuText>
       </MenuLayout>
       <MenuLayout
-        activeItem={activeItem === "Explore"}
+        // activeItem={activeItem === "Explore"}
         onClick={() => handleClick("Explore")}
       >
         <MenuImg
@@ -148,7 +157,7 @@ export default function NavigationBar() {
         <MenuText>Explore</MenuText>
       </MenuLayout>
       <MenuLayout
-        activeItem={activeItem === "Messages"}
+        // activeItem={activeItem === "Messages"}
         onClick={() => handleClick("Messages")}
       >
         <MenuImg
@@ -168,7 +177,7 @@ export default function NavigationBar() {
         <MenuText>Messages</MenuText>
       </MenuLayout>
       <MenuLayout
-        activeItem={activeItem === "Profile"}
+        // activeItem={activeItem === "Profile"}
         onClick={() => handleClick("Profile")}
       >
         <MenuImg
@@ -190,7 +199,7 @@ export default function NavigationBar() {
         <MenuText>Profile</MenuText>
       </MenuLayout>
       <MenuLayout
-        activeItem={activeItem === "Settings"}
+        // activeItem={activeItem === "Settings"}
         onClick={() => handleClick("Settings")}
       >
         <MenuImg
