@@ -49,6 +49,7 @@ export default function FeedCard() {
     usersPosts: [],
     friendsPosts: [],
   });
+
   const [user] = useContext(UserContext);
   const userid = user.userId;
 
@@ -58,7 +59,7 @@ export default function FeedCard() {
 
     setPosts({
       usersPosts: data.usersPosts,
-      friendsPosts: data.friendsPosts[0],
+      friendsPosts: data.friendsPosts,
     });
   };
 
