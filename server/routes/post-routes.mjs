@@ -52,6 +52,8 @@ router.get(`/:userId/getPosts`, async (req, res) => {
       })
     );
 
+    const flattenedFriendsPosts = friendsPosts.flat();
+
     const usersPosts = postedByUser.map((post) => {
       return {
         postId: post.id,
@@ -66,7 +68,7 @@ router.get(`/:userId/getPosts`, async (req, res) => {
     return res.status(200).json({
       success: true,
       usersPosts: usersPosts,
-      friendsPosts: friendsPosts,
+      friendsPosts: flattenedFriendsPosts,
     });
   } catch (err) {
     console.log(err);
