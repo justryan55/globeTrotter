@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { fetchData } from "../services/helpers";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "../services/AuthContext";
 
 const ActionButton = styled.svg`
   margin-right: 5px;
@@ -15,13 +16,25 @@ type postId = {
 };
 
 export default function LikeButton({ postId }: postId) {
+  const [user] = useContext(UserContext);
   const [postLikes, setPostLikes] = useState();
+  const [colour, setColour] = useState("none");
+
+  const userId = user.userId;
 
   const handleClick = async () => {
     const res = await fetchData(`${postId}/updatePostLikes`, "PUT");
     const data = await res?.json();
     const updatedPostLikes = data.updatedPostLikes;
     setPostLikes(updatedPostLikes);
+
+    if (data.message === "Liked") {
+      setColour("orange");
+    }
+
+    if (data.message === "Unliked") {
+      setColour("none");
+    }
   };
 
   useEffect(() => {
@@ -30,6 +43,14 @@ export default function LikeButton({ postId }: postId) {
       const data = await res?.json();
       const totalPostLikes = data.postLikes;
       setPostLikes(totalPostLikes);
+
+      if (data.likedBy.includes(userId)) {
+        setColour("orange");
+      }
+
+      if (!data.likedBy.includes(userId)) {
+        setColour("none");
+      }
     };
     getPostLikes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -42,7 +63,7 @@ export default function LikeButton({ postId }: postId) {
         width="24"
         height="24"
         viewBox="0 0 24 24"
-        fill="none"
+        fill={colour}
         stroke="black"
         strokeWidth="2"
         strokeLinecap="round"

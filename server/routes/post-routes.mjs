@@ -84,6 +84,7 @@ router.get(`/:postId/getPostLikes`, async (req, res) => {
     return res.status(200).json({
       success: true,
       postLikes: totalLikes,
+      likedBy: post[0].likedBy,
     });
   } catch (err) {
     console.log(err);
@@ -102,16 +103,25 @@ router.put("/:postId/updatePostLikes", async (req, res) => {
 
     if (!post.likedBy.includes(user)) {
       post.likedBy.push(user);
+
+      const updatedPost = await post.save();
+
+      return res.status(200).json({
+        success: true,
+        updatedPostLikes: updatedPost.likedBy.length,
+        message: "Liked",
+      });
     } else {
       post.likedBy.remove(user);
+
+      const updatedPost = await post.save();
+
+      return res.status(200).json({
+        success: true,
+        updatedPostLikes: updatedPost.likedBy.length,
+        message: "Unliked",
+      });
     }
-
-    const updatedPost = await post.save();
-
-    return res.status(200).json({
-      success: true,
-      updatedPostLikes: updatedPost.likedBy.length,
-    });
   } catch (err) {
     console.log(err);
   }
