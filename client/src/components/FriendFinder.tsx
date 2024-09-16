@@ -77,7 +77,7 @@ export default function FriendFinder() {
       <Line />
       <Container>
         {users.map((user) => (
-          <User>
+          <User key={user.id}>
             <ProfileImage src="../images/avatar.png" />
             <Name>
               <p>{user.firstName}</p>
