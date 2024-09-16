@@ -3,11 +3,14 @@ import userModel from "../models/userModel.mjs";
 
 const router = express.Router();
 
-router.get("/getUsers", async (req, res) => {
+router.get("/:userId/getUsers", async (req, res) => {
   try {
+    const { userId } = req.params;
     const users = await userModel.find();
 
-    const userInformation = users.map((user) => {
+    const filteredUsers = users.filter((user) => user.id !== userId);
+
+    const userInformation = filteredUsers.map((user) => {
       return {
         id: user.id,
         firstName: user.firstName,
