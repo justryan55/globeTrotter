@@ -99,13 +99,25 @@ export default function FeedCard() {
       <Line />
       <CreateNewPost onPostCreated={fetchPosts} />
       <SubLayout>
+        {/* Currently not working due to posts.friendPosts arrays being empty but still showing  */}
         {allPosts.length === 0 ? (
           <p>There are no posts in your feed.</p>
         ) : (
           allPosts &&
           allPosts.map((post: Post) => {
+            if (
+              !post ||
+              !post.postId ||
+              !post.postedBy ||
+              !post.createdAt ||
+              !post.content
+            ) {
+              return null;
+            }
+
             return (
               <Post
+                key={post.postId}
                 postId={post.postId}
                 profileImage="/images/avatar.png"
                 name={post.postedBy}
