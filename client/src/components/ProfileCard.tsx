@@ -184,11 +184,9 @@ export default function ProfileCard() {
     const fetchFollowers = async () => {
       const res = await fetchData(`${userId}/fetchFollowers`, "GET");
       const data = await res?.json();
-      console.log(data);
     };
 
     fetchFollowers();
-    console.log(user);
   }, []);
 
   return (
