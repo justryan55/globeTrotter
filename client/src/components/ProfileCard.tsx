@@ -91,7 +91,11 @@ const Bio = styled.p`
 
 const LocationIcon = styled.img``;
 
-const LocationText = styled.p``;
+const LocationText = styled.p`
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 export default function ProfileCard() {
   const [user] = useContext(UserContext);
