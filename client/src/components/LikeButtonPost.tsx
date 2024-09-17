@@ -8,6 +8,7 @@ const ActionButton = styled.svg`
   &:hover {
     fill: orange;
     stroke: black;
+    cursor: pointer;
   }
 `;
 

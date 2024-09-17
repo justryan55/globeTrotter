@@ -6,6 +6,7 @@ import { UserContext } from "../services/AuthContext";
 const Text = styled.p`
   &:hover {
     text-decoration: underline;
+    cursor: pointer;
   }
 `;
 

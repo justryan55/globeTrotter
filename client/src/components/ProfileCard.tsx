@@ -13,9 +13,6 @@ const Layout = styled.div`
   background-color: white;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   flex-basis: 25%;
-  &:hover {
-    cursor: pointer;
-  }
 `;
 
 const AvatarImg = styled.img`
@@ -86,14 +83,28 @@ const EditBio = styled.textarea`
   }
 `;
 
-const Bio = styled.p``;
+const Bio = styled.p`
+  &:hover {
+    cursor: pointer;
+  }
+`;
 
 const LocationIcon = styled.img``;
+
+const LocationText = styled.p``;
 
 export default function ProfileCard() {
   const [user] = useContext(UserContext);
   const [isEditing, setIsEditing] = useState(false);
-  const [bio, setBio] = useState({ content: "Add a bio" });
+  const [isEditingLocation, setIsEditingLocation] = useState(false);
+  const [countries, setCountries] = useState([]);
+  const [selectedCountry, setSelectedCountry] = useState({
+    country: "",
+  });
+  const [bio, setBio] = useState({
+    content:
+      "A travel enthusiast sharing my adventures, tips, and travel stories to inspire your next journey.",
+  });
 
   const userId = user.userId;
 
@@ -126,16 +137,78 @@ export default function ProfileCard() {
     const data = await res?.json();
   };
 
+  const updateCurrentLocation = async (e) => {
+    const res = await fetchData(`${userId}/updateCurrentLocation`, "PUT", {
+      country: e.target.value,
+    });
+
+    const data = await res?.json();
+
+    if (res.ok) {
+      setSelectedCountry({ country: data.updatedLocation });
+    }
+    setIsEditingLocation(false);
+  };
+
+  const editLocation = () => {
+    setIsEditingLocation((prev) => !prev);
+  };
+
+  useEffect(() => {
+    const getCountries = async () => {
+      const res = await fetchData(`getCountry`, "GET");
+
+      if (!res?.ok) {
+        throw new Error(`Response status: ${res?.status}`);
+      }
+
+      const data = await res?.json();
+
+      setCountries(data.payload.countries);
+    };
+
+    getCountries();
+  }, []);
+
+  useEffect(() => {
+    const fetchCurrentLocation = async () => {
+      const res = await fetchData(`${userId}/fetchCurrentLocation`, "GET");
+      const data = await res?.json();
+      setSelectedCountry({ country: data.currentLocation });
+    };
+
+    fetchCurrentLocation();
+  }, []);
+
   return (
     <Layout>
       <AvatarImg src="/images/avatar.png" />
       <Header>
         {user.firstName} {user.lastName}
       </Header>
+
       <LocationLayout>
         <LocationIcon src="images/map-pin.svg" />
-        <Text>Current Location</Text>
+
+        {isEditingLocation ? (
+          <LocationText>
+            <select
+              id="country"
+              value={selectedCountry.country}
+              onChange={updateCurrentLocation}
+            >
+              {countries.map((country) => (
+                <option value={country.name}>{country.name}</option>
+              ))}
+            </select>
+          </LocationText>
+        ) : (
+          <LocationText onClick={editLocation}>
+            {selectedCountry.country}
+          </LocationText>
+        )}
       </LocationLayout>
+
       <Text>
         {isEditing ? (
           <EditBio
@@ -146,8 +219,6 @@ export default function ProfileCard() {
         ) : (
           <Bio onClick={editBio}>{bio.content}</Bio>
         )}
-        {/* A travel enthusiast sharing my adventures, tips, and travel stories to
-        inspire your next journey. */}
       </Text>
       <FirstRow>
         <Column>
@@ -176,5 +247,3 @@ export default function ProfileCard() {
     </Layout>
   );
 }
-
-// Itinerary creator, google map restaurant tool, map selector

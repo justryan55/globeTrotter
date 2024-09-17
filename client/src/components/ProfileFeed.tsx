@@ -11,10 +11,6 @@ const Layout = styled.div`
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   flex-basis: 25%;
   max-height: 90vh;
-
-  &:hover {
-    cursor: pointer;
-  }
 `;
 
 const SubLayout = styled.div`
@@ -40,6 +36,19 @@ const HeaderText = styled.p`
 
   &:hover {
     border-bottom: 1px rgb(0, 0, 0, 1) solid;
+    cursor: pointer;
+  }
+`;
+
+const HeaderTextCross = styled.p`
+  padding: 30px;
+  font-size: 1.25rem;
+  border-right: 1px rgb(0, 0, 0, 0.25) solid;
+  border-bottom: 1px rgb(0, 0, 0, 0.25) solid;
+
+  &:hover {
+    border-bottom: 1px rgb(0, 0, 0, 1) solid;
+    cursor: url("../images/slash.svg"), auto;
   }
 `;
 
@@ -58,8 +67,6 @@ export default function ProfileFeed() {
     const data = await res?.json();
 
     setContent(data.usersPosts);
-    console.log(data);
-    console.log(content);
   };
 
   const formatTimestamp = (timestamp: Date) => {
@@ -93,9 +100,9 @@ export default function ProfileFeed() {
       <Header>
         {/* <HeaderText onClick={() => handleClick("Posts")}>Posts</HeaderText> */}
         <HeaderText onClick={handlePostClick}>Posts</HeaderText>
-        <HeaderText>Comments</HeaderText>
-        <HeaderText>Likes</HeaderText>
-        <HeaderText>Itineraries</HeaderText>
+        <HeaderTextCross>Comments</HeaderTextCross>
+        <HeaderTextCross>Likes</HeaderTextCross>
+        <HeaderTextCross>Itineraries</HeaderTextCross>
       </Header>
       <SubLayout>
         {content.map((post) => (
