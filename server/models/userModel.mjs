@@ -14,6 +14,7 @@ const userSchema = new Schema(
         "A travel enthusiast sharing my adventures, tips, and travel stories to inspire your next journey.",
     },
     friends: [{ type: String }],
+    followers: [{ type: String }],
     currentLocation: { type: String, default: "Australia" },
   },
   { timestamps: true }

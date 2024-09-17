@@ -77,7 +77,7 @@ export default function UserSnapshot() {
             <CounterTitle>Countries</CounterTitle>
           </Column>
           <Column>
-            <Counter>0</Counter>
+            <Counter>{user.followers.length}</Counter>
             <CounterTitle>Followers</CounterTitle>
           </Column>
           <Column>

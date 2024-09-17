@@ -180,6 +180,17 @@ export default function ProfileCard() {
     fetchCurrentLocation();
   }, []);
 
+  useEffect(() => {
+    const fetchFollowers = async () => {
+      const res = await fetchData(`${userId}/fetchFollowers`, "GET");
+      const data = await res?.json();
+      console.log(data);
+    };
+
+    fetchFollowers();
+    console.log(user);
+  }, []);
+
   return (
     <Layout>
       <AvatarImg src="/images/avatar.png" />
@@ -226,7 +237,7 @@ export default function ProfileCard() {
           <CounterTitle>Countries</CounterTitle>
         </Column>
         <Column>
-          <Counter>0</Counter>
+          <Counter>{user.followers.length}</Counter>
           <CounterTitle>Followers</CounterTitle>
         </Column>
         <Column>

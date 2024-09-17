@@ -14,6 +14,7 @@ export default function AuthContext({ children }) {
     email: "",
     countriesVisited: "",
     friends: "",
+    followers: "",
   });
 
   const getUserData = async () => {
@@ -21,8 +22,15 @@ export default function AuthContext({ children }) {
       const res = await fetchData(`auth/getUser`, "GET");
       const data = await res?.json();
 
-      const { userId, firstName, lastName, email, countriesVisited, friends } =
-        data.payload;
+      const {
+        userId,
+        firstName,
+        lastName,
+        email,
+        countriesVisited,
+        friends,
+        followers,
+      } = data.payload;
 
       setUser({
         userId,
@@ -31,6 +39,7 @@ export default function AuthContext({ children }) {
         email,
         countriesVisited,
         friends,
+        followers,
       });
       setIsLoading(false);
       setIsAuthenticated(true);

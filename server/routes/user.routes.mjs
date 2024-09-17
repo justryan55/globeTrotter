@@ -71,6 +71,10 @@ router.put("/:userId/toggleFollow", async (req, res) => {
         $addToSet: { friends: friendId },
       });
 
+      await userModel.findByIdAndUpdate(friendId, {
+        $addToSet: { followers: userId },
+      });
+
       return res.status(200).json({
         success: true,
         message: "Following user",
@@ -81,6 +85,10 @@ router.put("/:userId/toggleFollow", async (req, res) => {
     if (user.friends.includes(friendId)) {
       await userModel.findByIdAndUpdate(userId, {
         $pull: { friends: friendId },
+      });
+
+      await userModel.findByIdAndUpdate(friendId, {
+        $pull: { followers: userId },
       });
 
       return res.status(200).json({
@@ -138,6 +146,21 @@ router.get("/:userId/fetchCurrentLocation", async (req, res) => {
       success: true,
       message: "Location fetched",
       currentLocation: user.currentLocation,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.get("/:userId/fetchFollowers", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const user = await userModel.findById(userId);
+
+    return res.status(200).json({
+      success: true,
+      message: "Followers fetched",
+      currentLocation: user.followers,
     });
   } catch (err) {
     console.log(err);
