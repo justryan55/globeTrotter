@@ -20,12 +20,12 @@ const LogoLayout = styled.div`
 `;
 
 const LogoImg = styled.img`
-  height: 5rem;
+  height: 3rem;
 `;
 
 const LogoText = styled.p`
-  padding: 1rem;
-  font-size: 1.25rem;
+  padding: 0.751rem;
+  font-size: 2rem;
 `;
 
 const Line = styled.div`
@@ -108,7 +108,7 @@ export default function NavigationBar() {
     <Layout>
       <LogoLayout>
         <LogoImg src="/images/globe.svg" />
-        <LogoText>Adventure Atlas</LogoText>
+        <LogoText>Globe Trotter</LogoText>
       </LogoLayout>
       <UserSnapshot />
       <LineLayout>

@@ -116,7 +116,7 @@ export const AuthForm = ({ auth }: { auth: string }) => {
 
   return (
     <CredentialsLayout>
-      <Header>Welcome to Adventure Atlas</Header>
+      <Header>Welcome to Globe Trotter</Header>
       <Form>
         {auth === "register" && (
           <Input
