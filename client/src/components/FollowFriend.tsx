@@ -39,7 +39,6 @@ export default function FollowFriend(Id) {
     const fetchFriends = async () => {
       const res = await fetchData(`/${userId}/fetchFriends`, "GET");
       const data = await res?.json();
-      console.log(data);
       setFollowing(data.message);
     };
 
