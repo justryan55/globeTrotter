@@ -78,11 +78,11 @@ export default function UserSnapshot() {
           </Column>
           <Column>
             <Counter>0</Counter>
-            <CounterTitle>Cities</CounterTitle>
+            <CounterTitle>Followers</CounterTitle>
           </Column>
           <Column>
-            <Counter>0</Counter>
-            <CounterTitle>Contributions</CounterTitle>
+            <Counter>{user.friends.length}</Counter>
+            <CounterTitle>Following</CounterTitle>
           </Column>
         </SecondRow>
       </Box>

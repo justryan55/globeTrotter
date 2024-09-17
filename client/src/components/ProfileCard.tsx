@@ -156,23 +156,23 @@ export default function ProfileCard() {
         </Column>
         <Column>
           <Counter>0</Counter>
+          <CounterTitle>Followers</CounterTitle>
+        </Column>
+        <Column>
+          <Counter>{user.friends.length}</Counter>
+          <CounterTitle>Following</CounterTitle>
+        </Column>
+      </FirstRow>
+      {/* <SecondRow>
+        <Column>
+          <Counter>0</Counter>
           <CounterTitle>Cities</CounterTitle>
         </Column>
         <Column>
           <Counter>0</Counter>
           <CounterTitle>Contributions</CounterTitle>
         </Column>
-      </FirstRow>
-      <SecondRow>
-        <Column>
-          <Counter>0</Counter>
-          <CounterTitle>Followers</CounterTitle>
-        </Column>
-        <Column>
-          <Counter>0</Counter>
-          <CounterTitle>Following</CounterTitle>
-        </Column>
-      </SecondRow>
+      </SecondRow> */}
     </Layout>
   );
 }
