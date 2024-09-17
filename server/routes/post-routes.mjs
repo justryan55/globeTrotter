@@ -196,8 +196,6 @@ router.put("/:postId/:commentId/updateCommentLikes", async (req, res) => {
         });
       }
     });
-
-    console.log(postComments);
   } catch (err) {
     console.log(err);
   }
@@ -211,7 +209,6 @@ router.get(
       const post = await postModel.findById(postId);
 
       const postComments = post.comments;
-
       postComments.map((comment) => {
         return res.status(200).json({
           success: true,
