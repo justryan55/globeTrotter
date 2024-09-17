@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { fetchData } from "../services/helpers";
@@ -85,6 +85,9 @@ export default function ProfileFeed() {
     }
   };
 
+  useEffect(() => {
+    handlePostClick();
+  }, []);
   return (
     <Layout>
       <Header>
