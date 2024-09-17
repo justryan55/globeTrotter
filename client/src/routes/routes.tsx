@@ -3,7 +3,7 @@ import { WelcomePage } from "../pages/WelcomePage";
 import RegisterPage from "../pages/RegisterPage";
 import HomePage from "../pages/HomePage";
 import ExplorePage from "../pages/ExplorePage";
-import MessagesPage from "../pages/MessagesPage";
+import ConstructionPage from "../pages/ConstructionPage";
 import ProfilePage from "../pages/ProfilePage";
 import SettingsPage from "../pages/SettingsPage";
 import ProtectedRoute from "../services/ProtectedRoute";
@@ -41,20 +41,12 @@ const Router = () => {
       path: "/messages",
       element: (
         <ProtectedRoute>
-          <MessagesPage />
+          <ConstructionPage />
         </ProtectedRoute>
       ),
     },
     {
       path: "/profile",
-      element: (
-        <ProtectedRoute>
-          <ProfilePage />
-        </ProtectedRoute>
-      ),
-    },
-    {
-      path: "/profile/posts",
       element: (
         <ProtectedRoute>
           <ProfilePage />
@@ -90,6 +82,22 @@ const Router = () => {
       element: (
         <ProtectedRoute>
           <TravelBuddyPage />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/explore/itinerary-creator",
+      element: (
+        <ProtectedRoute>
+          <ConstructionPage />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/explore/travel-journal",
+      element: (
+        <ProtectedRoute>
+          <ConstructionPage />
         </ProtectedRoute>
       ),
     },
