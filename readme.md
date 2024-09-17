@@ -14,4 +14,4 @@ from /server run npm run dev
 from /client run npm run dev
 
 Seed database
-Run node seed.mjs to populate the database
+Run node seed.mjs in /server to populate the database
