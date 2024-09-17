@@ -49,11 +49,11 @@ export default function LikeButtonComment({ postId, commentId }) {
       );
 
       const data = await res?.json();
+
       if (data.message.includes(userId)) {
         setText("Liked");
       }
       setCounter(data.message.length);
-      console.log(data);
     };
 
     fetchCommentLikes();
