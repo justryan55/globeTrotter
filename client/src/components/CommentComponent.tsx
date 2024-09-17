@@ -145,6 +145,7 @@ export default function CommentComponent({ postId }: postId) {
   const createComment = async () => {
     const res = await fetchData(`${postId}/newComment`, "POST", commentDetails);
     const data = await res?.json();
+    fetchComments();
   };
 
   const fetchComments = async () => {
