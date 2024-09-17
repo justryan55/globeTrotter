@@ -110,4 +110,38 @@ router.get("/:userId/fetchFriends", async (req, res) => {
   }
 });
 
+router.put("/:userId/updateCurrentLocation", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { country } = req.body;
+    const user = await userModel.findByIdAndUpdate(userId, {
+      currentLocation: country,
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Location updated",
+      updatedLocation: country,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.get("/:userId/fetchCurrentLocation", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const { country } = req.body;
+    const user = await userModel.findById(userId);
+
+    return res.status(200).json({
+      success: true,
+      message: "Location fetched",
+      currentLocation: user.currentLocation,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 export default router;

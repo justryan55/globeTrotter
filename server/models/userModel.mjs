@@ -8,8 +8,13 @@ const userSchema = new Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     countries_visited: [{ type: String }],
-    bio: { type: String, default: "Add a bio" },
+    bio: {
+      type: String,
+      default:
+        "A travel enthusiast sharing my adventures, tips, and travel stories to inspire your next journey.",
+    },
     friends: [{ type: String }],
+    currentLocation: { type: String, default: "Australia" },
   },
   { timestamps: true }
 );
