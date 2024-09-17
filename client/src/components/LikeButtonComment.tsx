@@ -61,7 +61,7 @@ export default function LikeButtonComment({ postId, commentId }) {
   return (
     <>
       <Text onClick={handleClick}>{text}</Text>
-      <Counter>{counter > 0 && `${counter}`}</Counter>
+      {counter > 0 && <Counter>{`${counter}`}</Counter>}
     </>
   );
 }
