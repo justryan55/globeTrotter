@@ -163,4 +163,65 @@ router.post("/:postId/newComment", async (req, res) => {
   }
 });
 
+router.put("/:postId/:commentId/updateCommentLikes", async (req, res) => {
+  try {
+    const { postId, commentId } = req.params;
+    const { userId } = req.body;
+
+    const post = await postModel.findById(postId);
+
+    const postComments = post.comments;
+
+    postComments.map(async (comment) => {
+      if (comment.id === commentId && comment.likedBy.includes(userId)) {
+        console.log("1");
+        comment.likedBy.remove(userId);
+        await post.save();
+
+        return res.status(200).json({
+          success: true,
+          message: "Unliked comment",
+        });
+      }
+
+      if (comment.id === commentId && !comment.likedBy.includes(userId)) {
+        console.log("2");
+
+        comment.likedBy.push(userId);
+        await post.save();
+
+        return res.status(200).json({
+          success: true,
+          message: "Liked comment",
+        });
+      }
+    });
+
+    console.log(postComments);
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.get(
+  "/:userId/:postId/:commentId/fetchCommentLikes",
+  async (req, res) => {
+    try {
+      const { postId, commentId, userId } = req.params;
+      const post = await postModel.findById(postId);
+
+      const postComments = post.comments;
+
+      postComments.map((comment) => {
+        return res.status(200).json({
+          success: true,
+          message: comment.likedBy,
+        });
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+);
+
 export default router;

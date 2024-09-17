@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { UserContext } from "../services/AuthContext";
 import { fetchData } from "../services/helpers";
+import LikeButtonComment from "./LikeButtonComment";
 
 const ExistingComments = styled.div`
   box-sizing: border-box;
@@ -50,6 +51,7 @@ const Comment = styled.div`
 const Timestamp = styled.div`
   color: #333;
   font-size: 12px;
+  padding-right: 1rem;
 `;
 
 const NewCommentBox = styled.textarea`
@@ -74,11 +76,12 @@ const CommentActions = styled.div`
   background-color: white;
   font-size: 14px;
   padding-left: 10px;
-  gap: 1rem;
   /* margin-bottom: 10px; */
 `;
 
-const Action = styled.p``;
+const Action = styled.p`
+  padding-left: 1rem;
+`;
 
 type postId = {
   postId: string;
@@ -178,7 +181,7 @@ export default function CommentComponent({ postId }: postId) {
                 </ExistingComment>
                 <CommentActions>
                   <Timestamp>{formatTimestamp(timestamp)}</Timestamp>
-                  <Action>Like</Action>
+                  <LikeButtonComment postId={postId} commentId={comment._id} />
                   <Action>Reply</Action>
                 </CommentActions>
               </>
