@@ -81,6 +81,10 @@ const CommentActions = styled.div`
 
 const Action = styled.p`
   padding-left: 1rem;
+
+  &:hover {
+    cursor: url("../images/slash.svg"), auto;
+  }
 `;
 
 type postId = {

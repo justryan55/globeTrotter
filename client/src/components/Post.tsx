@@ -62,7 +62,11 @@ const ActionButtonContainer = styled.div`
   align-items: center;
 `;
 
-const ActionButton = styled.svg``;
+const ActionButton = styled.svg`
+  &:hover {
+    cursor: url("../images/slash.svg"), auto;
+  }
+`;
 
 type Post = {
   postId: string;
