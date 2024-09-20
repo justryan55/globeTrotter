@@ -89,6 +89,7 @@ export default function Post({
   name,
   timestamp,
   content,
+  postUserId,
   fetchPosts,
 }: Post) {
   const [user] = useContext(UserContext);
@@ -105,11 +106,13 @@ export default function Post({
                 <Timestamp>{timestamp}</Timestamp>
               </Poster>
             </UserDetails>
-            <PostDeleteBtn
-              postId={postId}
-              user={user}
-              fetchPosts={fetchPosts}
-            />
+            {user.userId === postUserId && (
+              <PostDeleteBtn
+                postId={postId}
+                user={user}
+                fetchPosts={fetchPosts}
+              />
+            )}
           </PostDetails>
 
           <PostContent>{content}</PostContent>

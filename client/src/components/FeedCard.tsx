@@ -120,6 +120,7 @@ export default function FeedCard() {
                 name={post.postedBy}
                 timestamp={formatTimestamp(post.createdAt)}
                 content={post.content}
+                postUserId={post.userId}
                 fetchPosts={fetchPosts}
               />
             );
