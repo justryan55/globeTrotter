@@ -6,7 +6,7 @@ import { UserContext } from "../services/AuthContext";
 const ActionButton = styled.svg`
   margin-right: 5px;
   &:hover {
-    fill: orange;
+    fill: lightBlue;
     stroke: black;
     cursor: pointer;
   }
@@ -46,7 +46,7 @@ export default function LikeButton({ postId }: postId) {
       setPostLikes(totalPostLikes);
 
       if (data.likedBy.includes(userId)) {
-        setColour("orange");
+        setColour("lightBlue");
       }
 
       if (!data.likedBy.includes(userId)) {
