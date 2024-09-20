@@ -81,7 +81,7 @@ export const AuthForm = ({ auth }: { auth: string }) => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (auth === "login") {
       const res = await fetchData(`auth/login`, "POST", formData);
@@ -117,7 +117,7 @@ export const AuthForm = ({ auth }: { auth: string }) => {
   return (
     <CredentialsLayout>
       <Header>Welcome to Globe Trotter</Header>
-      <Form>
+      <Form onSubmit={handleSubmit}>
         {auth === "register" && (
           <Input
             id="first-name"
@@ -165,9 +165,7 @@ export const AuthForm = ({ auth }: { auth: string }) => {
             placeholder="Confirm Password"
           />
         )}
-        <Button onClick={handleSubmit}>
-          {auth === "login" ? "Login" : "Register"}
-        </Button>
+        <Button type="submit">{auth === "login" ? "Login" : "Register"}</Button>
       </Form>
       {auth === "login" && (
         <Text style={{ color: "blue" }}>Forgotten password?</Text>
