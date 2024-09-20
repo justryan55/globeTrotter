@@ -25,20 +25,35 @@ const DeleteButton = styled.div`
   }
 `;
 
+type user = {
+  userId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  countriesVisited: string[];
+  friends: string[];
+  followers: string[];
+};
+
+type CommentDeleteBtnProps = {
+  postId: string;
+  user: user;
+  commentId: string;
+  fetchComments: () => void;
+  postedBy: string;
+};
+
 export default function CommentDeleteBtn({
   postId,
   user,
   commentId,
   fetchComments,
   postedBy,
-}) {
+}: CommentDeleteBtnProps) {
   const userId = user.userId;
 
   const handleClick = async () => {
-    const res = await fetchData(
-      `${userId}/${postId}/${commentId}/deleteComment`,
-      "DELETE"
-    );
+    await fetchData(`${userId}/${postId}/${commentId}/deleteComment`, "DELETE");
     fetchComments();
   };
   return (

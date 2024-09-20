@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { UserContext } from "../services/AuthContext";
@@ -97,10 +98,11 @@ type Comment = {
   postedBy: string;
   createdAt: string;
   comment: string;
+  postedByUserId: string;
 };
 
 export default function CommentComponent({ postId }: postId) {
-  const [user] = useContext(UserContext);
+  const [user] = useContext(UserContext) || null;
 
   const userid = user.userId;
   const name = user.firstName + " " + user.lastName;
@@ -148,8 +150,7 @@ export default function CommentComponent({ postId }: postId) {
   };
 
   const createComment = async () => {
-    const res = await fetchData(`${postId}/newComment`, "POST", commentDetails);
-    const data = await res?.json();
+    await fetchData(`${postId}/newComment`, "POST", commentDetails);
     fetchComments();
   };
 
