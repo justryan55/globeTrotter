@@ -1,7 +1,8 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { UserContext } from "../services/AuthContext";
 import Avvvatars from "avvvatars-react";
+import { fetchCountriesVisited } from "../services/helpers";
 
 const Layout = styled.div`
   display: flex;
@@ -63,8 +64,22 @@ const AvatarImg = styled.img`
 
 export default function UserSnapshot() {
   const [user] = useContext(UserContext);
+  const [countriesVisited, setCountriesVisited] = useState([]);
   const displayName = user.firstName[0] + user.lastName[0];
   const name = user.firstName + " " + user.lastName;
+
+  useEffect(() => {
+    const fetchCountries = async () => {
+      const res = await fetchCountriesVisited(user.userId);
+      const data = await res?.json();
+      setCountriesVisited(data.message);
+      user.countriesVisited = data.message;
+    };
+
+    fetchCountries();
+  }, []);
+
+  console.log(user);
 
   return (
     <Layout>

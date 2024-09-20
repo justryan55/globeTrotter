@@ -28,6 +28,20 @@ router.get("/:userId/getUsers", async (req, res) => {
   }
 });
 
+router.get("/:userId/getCountriesVisisted", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const user = await userModel.findById(userId);
+
+    return res.status(200).json({
+      success: true,
+      message: user.countries_visited,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 router.put("/:userId/updateBio", async (req, res) => {
   try {
     const { userId } = req.params;

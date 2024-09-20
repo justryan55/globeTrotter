@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import NavigationBar from "../components/NavigationBar";
-import { useEffect, useState } from "react";
-import { fetchData } from "../services/helpers";
+import { useContext, useEffect, useState } from "react";
+import { fetchCountriesVisited, fetchData } from "../services/helpers";
+import { UserContext } from "../services/AuthContext";
 
 const PageLayout = styled.div`
   height: 100vh;
@@ -35,6 +36,7 @@ type Country = {
 };
 
 export default function ScratchMap() {
+  const [user] = useContext(UserContext);
   const [countries, setCountries] = useState<string[]>([]);
   const [countriesVisited, setCountriesVisited] = useState<string[]>([]);
 
@@ -52,15 +54,9 @@ export default function ScratchMap() {
       };
 
       const getCountriesVisitedByUser = async () => {
-        const res = await fetchData(`getCountriesVisited`, "GET");
-
-        if (!res?.ok) {
-          throw new Error(`Response status: ${res?.status}`);
-        }
-
-        const data = await res.json();
-        const countriesVisitedByUser = data.payload.countriesVisitedByUser;
-        setCountriesVisited(countriesVisitedByUser);
+        const res = await fetchCountriesVisited(user.userId);
+        const data = await res?.json();
+        setCountriesVisited(data.message);
       };
 
       getData();
@@ -84,9 +80,13 @@ export default function ScratchMap() {
       if (res?.ok) {
         if (!hasVisited(countryName)) {
           setCountriesVisited((prevVisited) => [...prevVisited, countryName]);
+          user.countriesVisited = [...user.countriesVisited, countryName];
         } else {
           setCountriesVisited((prevVisited) =>
             prevVisited.filter((name) => name !== countryName)
+          );
+          user.countriesVisited = user.countriesVisited.filter(
+            (name) => name !== countryName
           );
         }
       }

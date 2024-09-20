@@ -28,3 +28,27 @@ export const fetchData = async (url, method, payload = {}) => {
     console.log("Error fetching data:", err);
   }
 };
+
+export const fetchCountriesVisited = async (userId) => {
+  try {
+    const token = window.localStorage.getItem("token");
+
+    const params = {
+      method: "GET",
+      headers: new Headers({
+        Authorisation: `Bearer ${token}`,
+      }),
+      token: token,
+    };
+
+    const backendURL = import.meta.env.VITE_BACKEND_URL;
+
+    const res = await fetch(
+      `${backendURL}/api/${userId}/getCountriesVisisted`,
+      params
+    );
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+};
