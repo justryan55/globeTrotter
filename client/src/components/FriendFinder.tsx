@@ -56,10 +56,16 @@ const Line = styled.div`
   margin-bottom: 20px;
 `;
 
+type User = {
+  id: string;
+  firstName: string;
+  lastName: string;
+};
+
 export default function FriendFinder() {
   const [users, setUsers] = useState([]);
   const user = useContext(UserContext);
-  const userId = user[0].userId;
+  const userId = user && user[0] ? user[0].userId : null;
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -69,6 +75,7 @@ export default function FriendFinder() {
     };
 
     fetchUsers();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -76,7 +83,7 @@ export default function FriendFinder() {
       <Header>Find a Travel Buddy</Header>
       <Line />
       <Container>
-        {users.map((user) => (
+        {users.map((user: User) => (
           <User key={user.id}>
             <ProfileImage src="../images/avatar.png" />
             <Name>

@@ -8,15 +8,9 @@ const Layout = styled.div`
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  /* border: 0.5px rgb(0, 0, 0, 0.2) solid; */
   width: 100%;
   padding: 1rem;
   margin-bottom: 1rem;
-`;
-
-const UserImg = styled.img`
-  height: 80px;
-  margin-right: 1rem;
 `;
 
 const TextBox = styled.textarea`
@@ -38,7 +32,11 @@ const TextBox = styled.textarea`
   }
 `;
 
-export default function CreateNewPost({ onPostCreated }) {
+type CreateNewPostProps = {
+  onPostCreated: () => void;
+};
+
+export default function CreateNewPost({ onPostCreated }: CreateNewPostProps) {
   const [user] = useContext(UserContext);
   const [content, setContent] = useState({
     userId: "",
@@ -58,14 +56,14 @@ export default function CreateNewPost({ onPostCreated }) {
   };
 
   const createPost = async () => {
-    const res = await fetchData(`${userid}/newPost`, "POST", content);
-    const data = await res?.json();
+    await fetchData(`${userid}/newPost`, "POST", content);
 
     onPostCreated();
   };
 
   useEffect(() => {
     setContent({ ...content, userId: userid, postedBy: name });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userid]);
 
   const displayName = user.firstName[0] + user.lastName[0];

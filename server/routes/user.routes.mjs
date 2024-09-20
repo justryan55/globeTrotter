@@ -46,7 +46,7 @@ router.put("/:userId/updateBio", async (req, res) => {
   try {
     const { userId } = req.params;
     const { content } = req.body;
-    const user = await userModel.findByIdAndUpdate(userId, { bio: content });
+    await userModel.findByIdAndUpdate(userId, { bio: content });
 
     return res.status(200).json({
       success: true,
@@ -136,7 +136,7 @@ router.put("/:userId/updateCurrentLocation", async (req, res) => {
   try {
     const { userId } = req.params;
     const { country } = req.body;
-    const user = await userModel.findByIdAndUpdate(userId, {
+    await userModel.findByIdAndUpdate(userId, {
       currentLocation: country,
     });
 
@@ -153,7 +153,6 @@ router.put("/:userId/updateCurrentLocation", async (req, res) => {
 router.get("/:userId/fetchCurrentLocation", async (req, res) => {
   try {
     const { userId } = req.params;
-    const { country } = req.body;
     const user = await userModel.findById(userId);
 
     return res.status(200).json({

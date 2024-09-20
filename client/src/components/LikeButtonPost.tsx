@@ -30,7 +30,7 @@ export default function LikeButton({ postId }: postId) {
     setPostLikes(updatedPostLikes);
 
     if (data.message === "Liked") {
-      setColour("orange");
+      setColour("lightBlue");
     }
 
     if (data.message === "Unliked") {

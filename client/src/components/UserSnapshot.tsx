@@ -57,13 +57,9 @@ const CounterTitle = styled.p`
   font-weight: 500;
 `;
 
-const AvatarImg = styled.img`
-  height: 70px;
-  padding-right: 20px;
-`;
-
 export default function UserSnapshot() {
   const [user] = useContext(UserContext);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [countriesVisited, setCountriesVisited] = useState([]);
   const displayName = user.firstName[0] + user.lastName[0];
   const name = user.firstName + " " + user.lastName;
@@ -77,6 +73,7 @@ export default function UserSnapshot() {
     };
 
     fetchCountries();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

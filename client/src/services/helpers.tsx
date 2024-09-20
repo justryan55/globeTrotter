@@ -1,4 +1,8 @@
-export const fetchData = async (url, method, payload = {}) => {
+export const fetchData = async (
+  url: string,
+  method: string,
+  payload: object = {}
+) => {
   try {
     const token = window.localStorage.getItem("token");
 
@@ -29,7 +33,7 @@ export const fetchData = async (url, method, payload = {}) => {
   }
 };
 
-export const fetchCountriesVisited = async (userId) => {
+export const fetchCountriesVisited = async (userId: string) => {
   try {
     const token = window.localStorage.getItem("token");
 

@@ -24,14 +24,32 @@ const DeleteButton = styled.div`
   }
 `;
 
-export default function PostDeleteBtn({ postId, user, fetchPosts }) {
+type user = {
+  userId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  countriesVisited: string[];
+  friends: string[];
+  followers: string[];
+};
+
+type PostDeleteBtnProps = {
+  postId: string;
+  user: user;
+  fetchPosts: () => void;
+};
+
+export default function PostDeleteBtn({
+  postId,
+  user,
+  fetchPosts,
+}: PostDeleteBtnProps) {
   const userId = user.userId;
   const handleClick = async () => {
     const res = await fetchData(`${userId}/${postId}/deletePost`, "DELETE");
 
-    const data = await res?.json();
-
-    if (res.ok) {
+    if (res && res.ok) {
       fetchPosts();
     }
   };

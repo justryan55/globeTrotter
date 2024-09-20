@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { fetchData } from "../services/helpers";
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../services/AuthContext";
-import { isCompositeComponent } from "react-dom/test-utils";
 
 const Button = styled.button`
   background-color: #2196f3;
@@ -43,6 +42,7 @@ export default function FollowFriend(Id) {
     };
 
     fetchFriends();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user.friends]);
 
   const handleClick = async () => {

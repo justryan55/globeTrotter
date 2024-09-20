@@ -45,7 +45,8 @@ router.get("/getCountriesVisited", async (req, res) => {
 
 router.post("/toggleCountry", async (req, res) => {
   try {
-    const { countryName, countryCode, token } = req.body;
+    const { countryName, token } = req.body;
+    // eslint-disable-next-line no-undef
     const secretKey = process.env.SECRET_KEY;
     const decodedToken = jwt.verify(token, secretKey);
     const userEmail = decodedToken.email;

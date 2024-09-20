@@ -39,6 +39,9 @@ type Post = {
   postedBy: string;
   createdAt: Date;
   content: string;
+  postUserId: string;
+  userId: string;
+  fetchPosts: () => void;
 };
 
 export default function FeedCard() {

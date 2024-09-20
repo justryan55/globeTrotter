@@ -60,7 +60,7 @@ router.post("/register", async (req, res) => {
         message: "Passwords do not match",
       });
     } else {
-      const userCreated = await newUser.save();
+      await newUser.save();
       return res.status(200).json({
         success: true,
         message: "User created",
@@ -86,6 +86,7 @@ router.post("/login", async (req, res) => {
     return res.status(401).json("Invalid password");
   }
 
+  // eslint-disable-next-line no-undef
   const secretKey = process.env.SECRET_KEY;
 
   const payload = {

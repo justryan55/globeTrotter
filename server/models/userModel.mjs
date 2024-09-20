@@ -1,4 +1,3 @@
-import express from "express";
 import { Schema, mongoose } from "mongoose";
 
 const userSchema = new Schema(

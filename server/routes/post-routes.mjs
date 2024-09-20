@@ -202,7 +202,7 @@ router.get(
   "/:userId/:postId/:commentId/fetchCommentLikes",
   async (req, res) => {
     try {
-      const { postId, commentId, userId } = req.params;
+      const { postId } = req.params;
       const post = await postModel.findById(postId);
 
       const postComments = post.comments;
@@ -220,9 +220,9 @@ router.get(
 
 router.delete("/:userId/:postId/deletePost", async (req, res) => {
   try {
-    const { userId, postId } = req.params;
+    const { postId } = req.params;
 
-    const post = await postModel.findByIdAndUpdate(postId, {
+    await postModel.findByIdAndUpdate(postId, {
       isDeleted: true,
       deletedAt: new Date(),
     });
@@ -238,7 +238,7 @@ router.delete("/:userId/:postId/deletePost", async (req, res) => {
 
 router.delete("/:userId/:postId/:commentId/deleteComment", async (req, res) => {
   try {
-    const { userId, postId, commentId } = req.params;
+    const { postId, commentId } = req.params;
 
     const post = await postModel.findById(postId);
 

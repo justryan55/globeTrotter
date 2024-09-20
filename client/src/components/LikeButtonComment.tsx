@@ -20,7 +20,15 @@ const Counter = styled.div`
   border-radius: 0.5rem;
 `;
 
-export default function LikeButtonComment({ postId, commentId }) {
+type LikeButtonCommentProps = {
+  postId: string;
+  commentId: string;
+};
+
+export default function LikeButtonComment({
+  postId,
+  commentId,
+}: LikeButtonCommentProps) {
   const [user] = useContext(UserContext);
   const [text, setText] = useState("Like");
   const [counter, setCounter] = useState();
@@ -58,11 +66,14 @@ export default function LikeButtonComment({ postId, commentId }) {
     };
 
     fetchCommentLikes();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, text, counter]);
   return (
     <>
       <Text onClick={handleClick}>{text}</Text>
-      {counter > 0 && <Counter>{`${counter}`}</Counter>}
+      {counter !== undefined && counter > 0 && (
+        <Counter>{`${counter}`}</Counter>
+      )}
     </>
   );
 }

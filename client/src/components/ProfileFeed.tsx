@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router";
 import styled from "styled-components";
 import { fetchData } from "../services/helpers";
 import { UserContext } from "../services/AuthContext";
@@ -14,7 +13,7 @@ const Layout = styled.div`
 `;
 
 const SubLayout = styled.div`
-position: relative
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -52,15 +51,26 @@ const HeaderTextCross = styled.p`
   }
 `;
 
+const NoPostText = styled.p`
+  text-align: center;
+`;
+
+type PostType = {
+  postId: string;
+  name: string;
+  timestamp: string;
+  content: string;
+  createdAt: Date;
+  postedBy: string;
+  postUserId: string;
+  fetchPosts: () => void;
+};
+
 export default function ProfileFeed() {
   const [content, setContent] = useState([]);
-  const [user, setUser] = useContext(UserContext);
-  const navigate = useNavigate();
+  const [user] = useContext(UserContext);
 
   const userid = user.userId;
-  // const handleClick = (item: string) => {
-  //   navigate("/profile/" + item.toLowerCase());
-  // };
 
   const handlePostClick = async () => {
     const res = await fetchData(`${userid}/getPosts`, "GET");
@@ -94,6 +104,7 @@ export default function ProfileFeed() {
 
   useEffect(() => {
     handlePostClick();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <Layout>
@@ -105,16 +116,21 @@ export default function ProfileFeed() {
         <HeaderTextCross>Itineraries</HeaderTextCross>
       </Header>
       <SubLayout>
-        {content.map((post) => (
-          <Post
-            key={post.postId}
-            postId={post.postId}
-            profileImage="/images/avatar.png"
-            name={post.postedBy}
-            timestamp={formatTimestamp(post.createdAt)}
-            content={post.content}
-          />
-        ))}
+        {content.length > 0 ? (
+          content.map((post: PostType) => (
+            <Post
+              key={post.postId}
+              postId={post.postId}
+              name={post.postedBy}
+              timestamp={formatTimestamp(post.createdAt)}
+              content={post.content}
+              postUserId={post.postUserId}
+              fetchPosts={handlePostClick}
+            />
+          ))
+        ) : (
+          <NoPostText>You have made no posts.</NoPostText>
+        )}
       </SubLayout>
     </Layout>
   );

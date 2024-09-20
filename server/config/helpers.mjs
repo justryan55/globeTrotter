@@ -4,6 +4,7 @@ export const checkToken = async (authHeader) => {
   if (authHeader) {
     try {
       const token = authHeader.split(" ")[1];
+      // eslint-disable-next-line no-undef
       const secretKey = process.env.SECRET_KEY;
       const decodedToken = jwt.verify(token, secretKey);
 
@@ -34,6 +35,7 @@ export const checkToken = async (authHeader) => {
         };
       }
     } catch (err) {
+      console.log(err);
       return {
         success: false,
         message: "Invalid or expired token",

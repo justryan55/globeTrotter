@@ -33,11 +33,6 @@ const PostContent = styled.div`
   /* grid-column: span 2; */
 `;
 
-const UserImg = styled.img`
-  height: 80px;
-  margin-right: 1rem;
-`;
-
 const PostDetails = styled.div`
   display: flex;
   justify-content: space-between;
@@ -79,16 +74,15 @@ const ActionButton = styled.svg`
 
 type Post = {
   postId: string;
-  profileImage: string;
   name: string;
   timestamp: string;
   content: string;
+  postUserId: string;
   fetchPosts: () => void;
 };
 
 export default function Post({
   postId,
-  profileImage,
   name,
   timestamp,
   content,

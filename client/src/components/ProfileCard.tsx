@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { UserContext } from "../services/AuthContext";
@@ -16,10 +17,6 @@ const Layout = styled.div`
   flex-basis: 25%;
 `;
 
-const AvatarImg = styled.img`
-  height: 150px;
-`;
-
 const Header = styled.p`
   font-size: 1.25rem;
   font-weight: 500;
@@ -32,14 +29,6 @@ const Text = styled.p`
 const FirstRow = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  justify-content: center;
-  align-items: center;
-  padding: 0.2rem;
-`;
-
-const SecondRow = styled.div`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
   justify-content: center;
   align-items: center;
   padding: 0.2rem;
@@ -138,8 +127,7 @@ export default function ProfileCard() {
   };
 
   const updateBio = async () => {
-    const res = await fetchData(`${userId}/updateBio`, "PUT", bio);
-    const data = await res?.json();
+    await fetchData(`${userId}/updateBio`, "PUT", bio);
   };
 
   const updateCurrentLocation = async (e) => {
@@ -149,7 +137,7 @@ export default function ProfileCard() {
 
     const data = await res?.json();
 
-    if (res.ok) {
+    if (res && res.ok) {
       setSelectedCountry({ country: data.updatedLocation });
     }
     setIsEditingLocation(false);
@@ -187,8 +175,7 @@ export default function ProfileCard() {
 
   useEffect(() => {
     const fetchFollowers = async () => {
-      const res = await fetchData(`${userId}/fetchFollowers`, "GET");
-      const data = await res?.json();
+      await fetchData(`${userId}/fetchFollowers`, "GET");
     };
 
     fetchFollowers();
