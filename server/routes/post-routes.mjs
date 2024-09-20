@@ -150,7 +150,7 @@ router.post("/:postId/newComment", async (req, res) => {
 
     const post = await postModel.findById(postId);
 
-    post.comments.push({ postedBy, comment });
+    post.comments.push({ postedBy, postedByUserId: userId, comment });
 
     await post.save();
 
@@ -174,7 +174,6 @@ router.put("/:postId/:commentId/updateCommentLikes", async (req, res) => {
 
     postComments.map(async (comment) => {
       if (comment.id === commentId && comment.likedBy.includes(userId)) {
-        console.log("1");
         comment.likedBy.remove(userId);
         await post.save();
 
@@ -185,8 +184,6 @@ router.put("/:postId/:commentId/updateCommentLikes", async (req, res) => {
       }
 
       if (comment.id === commentId && !comment.likedBy.includes(userId)) {
-        console.log("2");
-
         comment.likedBy.push(userId);
         await post.save();
 
@@ -234,6 +231,32 @@ router.delete("/:userId/:postId/deletePost", async (req, res) => {
       success: true,
       message: "Post deleted",
     });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.delete("/:userId/:postId/:commentId/deleteComment", async (req, res) => {
+  try {
+    const { userId, postId, commentId } = req.params;
+
+    const post = await postModel.findById(postId);
+
+    const postComments = post.comments;
+
+    const comment = post.comments.find((comment) => comment.id === commentId);
+
+    if (comment) {
+      comment.isDeleted = true;
+      comment.deletedAt = new Date();
+
+      await post.save();
+
+      return res.status(200).json({
+        success: true,
+        message: "Comment deleted",
+      });
+    }
   } catch (err) {
     console.log(err);
   }

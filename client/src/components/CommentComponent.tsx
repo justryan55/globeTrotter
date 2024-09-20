@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { UserContext } from "../services/AuthContext";
 import { fetchData } from "../services/helpers";
 import LikeButtonComment from "./LikeButtonComment";
+import CommentDeleteBtn from "./CommentDeleteBtn";
 
 const ExistingComments = styled.div`
   box-sizing: border-box;
@@ -172,6 +173,7 @@ export default function CommentComponent({ postId }: postId) {
       {comments && comments.length > 0 && (
         <ExistingComments>
           {comments.map((comment) => {
+            console.log(comment);
             const postedBy = comment.postedBy;
             const timestamp = comment.createdAt;
             const message = comment.comment;
@@ -183,6 +185,13 @@ export default function CommentComponent({ postId }: postId) {
                     <Sender>{postedBy}</Sender>
                     <Comment>{message}</Comment>
                   </div>
+                  <CommentDeleteBtn
+                    postId={postId}
+                    commentId={comment._id}
+                    user={user}
+                    postedBy={comment.postedByUserId}
+                    fetchComments={fetchComments}
+                  />
                 </ExistingComment>
                 <CommentActions>
                   <Timestamp>{formatTimestamp(timestamp)}</Timestamp>
