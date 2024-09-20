@@ -4,6 +4,7 @@ import { UserContext } from "../services/AuthContext";
 import LikeButton from "./LikeButtonPost";
 import CommentButton from "./CommentButton";
 import CommentComponent from "./CommentComponent";
+import PostDeleteBtn from "./PostDeleteBtn";
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -37,6 +38,11 @@ const UserImg = styled.img`
 `;
 
 const PostDetails = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const UserDetails = styled.div`
   display: flex;
 `;
 
@@ -74,6 +80,7 @@ type Post = {
   name: string;
   timestamp: string;
   content: string;
+  fetchPosts: () => void;
 };
 
 export default function Post({
@@ -82,6 +89,7 @@ export default function Post({
   name,
   timestamp,
   content,
+  fetchPosts,
 }: Post) {
   const [user] = useContext(UserContext);
 
@@ -90,12 +98,20 @@ export default function Post({
       <Container>
         <Layout>
           <PostDetails>
-            <UserImg src={profileImage} />
-            <Poster>
-              <Name>{name}</Name>
-              <Timestamp>{timestamp}</Timestamp>
-            </Poster>
+            <UserDetails>
+              <UserImg src={profileImage} />
+              <Poster>
+                <Name>{name}</Name>
+                <Timestamp>{timestamp}</Timestamp>
+              </Poster>
+            </UserDetails>
+            <PostDeleteBtn
+              postId={postId}
+              user={user}
+              fetchPosts={fetchPosts}
+            />
           </PostDetails>
+
           <PostContent>{content}</PostContent>
           <ActionButtons>
             <ActionButtonContainer>

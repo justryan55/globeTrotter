@@ -36,6 +36,14 @@ const postSchema = new Schema(
     totalLikes: {
       type: Number,
     },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+    deletedAt: {
+      type: Date,
+    },
+
     comments: {
       type: [commentSchema],
       default: [],
@@ -43,6 +51,10 @@ const postSchema = new Schema(
   },
   { timestamps: true }
 );
+
+postSchema.pre("find", function () {
+  this.where({ isDeleted: { $ne: true } });
+});
 
 const postModel = mongoose.model("Post", postSchema);
 

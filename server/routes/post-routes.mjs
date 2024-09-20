@@ -221,4 +221,22 @@ router.get(
   }
 );
 
+router.delete("/:userId/:postId/deletePost", async (req, res) => {
+  try {
+    const { userId, postId } = req.params;
+
+    const post = await postModel.findByIdAndUpdate(postId, {
+      isDeleted: true,
+      deletedAt: new Date(),
+    });
+
+    return res.status(200).json({
+      success: true,
+      message: "Post deleted",
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 export default router;
