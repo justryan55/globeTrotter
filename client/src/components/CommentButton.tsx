@@ -10,17 +10,22 @@ const ActionButton = styled.svg`
   } */
 `;
 
-export default function CommentButton(postId: string) {
+type CommentButtonProps = {
+  postId: string;
+};
+
+export default function CommentButton({ postId }: CommentButtonProps) {
   const [totalComments, setTotalComments] = useState(0);
 
   useEffect(() => {
     const getCommentCount = async () => {
-      const res = await fetchData(`${postId.postId}/getComments`, "GET");
+      const res = await fetchData(`${postId}/getComments`, "GET");
       const data = await res?.json();
       setTotalComments(data.message.length);
     };
 
     getCommentCount();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
