@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { UserContext } from "../services/AuthContext";
 import { fetchData } from "../services/helpers";
+import Avvvatars from "avvvatars-react";
 
 const Layout = styled.div`
   display: flex;
@@ -193,13 +194,13 @@ export default function ProfileCard() {
     fetchFollowers();
   }, []);
 
+  const name = user.firstName + " " + user.lastName;
+  const displayName = user.firstName[0] + user.lastName[0];
+
   return (
     <Layout>
-      <AvatarImg src="/images/avatar.png" />
-      <Header>
-        {user.firstName} {user.lastName}
-      </Header>
-
+      <Avvvatars value={name} size={200} displayValue={displayName} />
+      <Header>{name}</Header>
       <LocationLayout>
         <LocationIcon src="images/map-pin.svg" />
 

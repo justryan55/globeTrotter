@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import styled from "styled-components";
 import { UserContext } from "../services/AuthContext";
+import Avvvatars from "avvvatars-react";
 
 const Layout = styled.div`
   display: flex;
@@ -42,6 +43,7 @@ const Column = styled.div`
 `;
 
 const Text = styled.p`
+  padding-left: 20px;
   font-weight: 500;
 `;
 
@@ -61,12 +63,14 @@ const AvatarImg = styled.img`
 
 export default function UserSnapshot() {
   const [user] = useContext(UserContext);
+  const displayName = user.firstName[0] + user.lastName[0];
+  const name = user.firstName + " " + user.lastName;
 
   return (
     <Layout>
       <Box>
         <FirstRow>
-          <AvatarImg src="/images/avatar.png" />
+          <Avvvatars value={name} size={100} displayValue={displayName} />
           <Text>
             {user.firstName} {user.lastName}
           </Text>

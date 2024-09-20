@@ -5,6 +5,7 @@ import LikeButton from "./LikeButtonPost";
 import CommentButton from "./CommentButton";
 import CommentComponent from "./CommentComponent";
 import PostDeleteBtn from "./PostDeleteBtn";
+import Avvvatars from "avvvatars-react";
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -46,7 +47,9 @@ const UserDetails = styled.div`
   display: flex;
 `;
 
-const Poster = styled.div``;
+const Poster = styled.div`
+  margin-left: 1rem;
+`;
 
 const Name = styled.p`
   margin-bottom: 0px;
@@ -94,13 +97,16 @@ export default function Post({
 }: Post) {
   const [user] = useContext(UserContext);
 
+  const nameParts = name.split(" ");
+  const displayName = nameParts[0][0] + nameParts[1][0];
+
   return (
     postId && (
       <Container>
         <Layout>
           <PostDetails>
             <UserDetails>
-              <UserImg src={profileImage} />
+              <Avvvatars value={name} size={100} displayValue={displayName} />
               <Poster>
                 <Name>{name}</Name>
                 <Timestamp>{timestamp}</Timestamp>
