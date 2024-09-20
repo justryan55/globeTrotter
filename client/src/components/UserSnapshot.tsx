@@ -79,8 +79,6 @@ export default function UserSnapshot() {
     fetchCountries();
   }, []);
 
-  console.log(user);
-
   return (
     <Layout>
       <Box>

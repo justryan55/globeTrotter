@@ -173,7 +173,6 @@ export default function CommentComponent({ postId }: postId) {
       {comments && comments.length > 0 && (
         <ExistingComments>
           {comments.map((comment) => {
-            console.log(comment);
             const postedBy = comment.postedBy;
             const timestamp = comment.createdAt;
             const message = comment.comment;
