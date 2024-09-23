@@ -3,6 +3,7 @@ import { fetchData } from "../services/helpers";
 import styled from "styled-components";
 import FollowFriend from "./FollowFriend";
 import { UserContext } from "../services/AuthContext";
+import Avvvatars from "avvvatars-react";
 
 const Container = styled.div`
   display: flex;
@@ -31,10 +32,6 @@ const User = styled.div`
 const Name = styled.div`
   display: flex;
   gap: 5px;
-`;
-
-const ProfileImage = styled.img`
-  width: 100px;
 `;
 
 const Layout = styled.div`
@@ -86,7 +83,10 @@ export default function FriendFinder() {
       <Container>
         {users.map((user: User) => (
           <User key={user.id}>
-            <ProfileImage src="../images/avatar.png" />
+            <Avvvatars
+              value={`${user.firstName[0]}${user.lastName[0]}`}
+              size={100}
+            />
             <Name>
               <p>{user.firstName}</p>
               <p>{user.lastName}</p>
