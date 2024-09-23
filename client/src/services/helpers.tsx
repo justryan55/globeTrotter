@@ -19,7 +19,7 @@ export const fetchData = async (
       method: method,
       headers: new Headers({
         "Content-Type": "application/json",
-        Authorisation: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       }),
       token: token,
       ...(method !== "GET" && { body: JSON.stringify(payload) }),
@@ -42,7 +42,7 @@ export const fetchCountriesVisited = async (userId: string) => {
     const params = {
       method: "GET",
       headers: new Headers({
-        Authorisation: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       }),
       token: token,
     };
