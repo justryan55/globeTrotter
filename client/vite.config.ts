@@ -7,4 +7,14 @@ export default defineConfig({
   optimizeDeps: {
     include: ["avvvatars-react"],
   },
+  server: {
+    proxy: {
+      "/api": "https://travel-project-eight-phi.vercel.app/",
+    },
+    host: true,
+    port: 3000,
+    watch: {
+      usePolling: true,
+    },
+  },
 });
