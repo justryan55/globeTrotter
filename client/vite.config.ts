@@ -9,7 +9,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      "/api": "https://travel-project-eight-phi.vercel.app/",
+      "/api": "https://travel-project-eight-phi.vercel.app",
     },
     host: true,
     port: 3000,

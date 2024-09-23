@@ -61,7 +61,7 @@ export default function UserSnapshot() {
   const [user] = useContext(UserContext) || [];
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_countriesVisited, setCountriesVisited] = useState([]);
-  const displayName = user ? `${user.firstName[0]}${user.lastName[0]}` : "";
+  const displayName = user ? `${user.firstName}${user.lastName}` : "";
   const name = user ? `${user.firstName} ${user.lastName}` : "User";
 
   useEffect(() => {

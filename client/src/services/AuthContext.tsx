@@ -72,6 +72,8 @@ export default function AuthContext({ children }: AuthContextProps) {
     <>
       {isLoading ? (
         <p>Loading...</p>
+      ) : !user?.userId ? (
+        <p>Error: User data not available</p>
       ) : (
         <UserContext.Provider value={[user, setUser]}>
           {children}
