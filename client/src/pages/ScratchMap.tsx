@@ -30,14 +30,19 @@ const CountryCard = styled.div`
   }
 `;
 
-type Country = {
+type HandleClickProps = {
   countryName: string;
   countryCode: string;
 };
 
+type CountriesMapProps = {
+  name: string;
+  code: string;
+};
+
 export default function ScratchMap() {
   const [user] = useContext(UserContext);
-  const [countries, setCountries] = useState<string[]>([]);
+  const [countries, setCountries] = useState<CountriesMapProps[]>([]);
   const [countriesVisited, setCountriesVisited] = useState<string[]>([]);
 
   useEffect(() => {
@@ -64,13 +69,17 @@ export default function ScratchMap() {
     } catch (err) {
       console.log(err);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const hasVisited = (countryName: string) => {
     return countriesVisited.includes(countryName);
   };
 
-  const handleClick = async ({ countryName, countryCode }: Country) => {
+  const handleClick = async ({
+    countryName,
+    countryCode,
+  }: HandleClickProps) => {
     try {
       const res = await fetchData(`toggleCountry`, "POST", {
         countryName,
@@ -86,7 +95,7 @@ export default function ScratchMap() {
             prevVisited.filter((name) => name !== countryName)
           );
           user.countriesVisited = user.countriesVisited.filter(
-            (name) => name !== countryName
+            (name: string) => name !== countryName
           );
         }
       }
@@ -103,7 +112,7 @@ export default function ScratchMap() {
     <PageLayout>
       <NavigationBar />
       <CardLayout>
-        {countries.map((country) => {
+        {countries.map((country: CountriesMapProps) => {
           const countryName = country.name;
           const countryCode = country.code;
           return (

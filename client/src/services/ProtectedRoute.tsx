@@ -1,13 +1,16 @@
 import { jwtDecode } from "jwt-decode";
-import { useEffect } from "react";
+import { ReactNode, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router";
 import AuthContext from "./AuthContext";
 
-export default function ProtectedRoute({ children }) {
+type ProtectedRouteProps = {
+  children: ReactNode;
+};
+export default function ProtectedRoute({ children }: ProtectedRouteProps) {
   const token = window.localStorage.getItem("token");
   const navigate = useNavigate();
 
-  const isTokenExpired = (token) => {
+  const isTokenExpired = (token: string) => {
     if (!token) {
       return true;
     }
@@ -15,7 +18,12 @@ export default function ProtectedRoute({ children }) {
     try {
       const decodedToken = jwtDecode(token);
       const currentTime = Date.now() / 1000;
-      return decodedToken.exp < currentTime;
+
+      if (decodedToken.exp !== undefined) {
+        return decodedToken.exp < currentTime;
+      }
+
+      return true;
     } catch (err) {
       console.log("Error decoding token:", err);
       return true;

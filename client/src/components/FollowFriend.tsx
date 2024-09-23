@@ -28,9 +28,23 @@ const Button = styled.button`
   }
 `;
 
-export default function FollowFriend(Id) {
+type FollowFriendProps = {
+  Id: string;
+};
+
+type User = {
+  userId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  countriesVisited: string[];
+  friends: string[];
+  followers: string[];
+};
+
+export default function FollowFriend(Id: FollowFriendProps) {
   const [user, setUser] = useContext(UserContext);
-  const [following, setFollowing] = useState([]);
+  const [following, setFollowing] = useState<string[]>([]);
   const userId = user.userId;
   const friendId = Id.Id;
 
@@ -53,16 +67,16 @@ export default function FollowFriend(Id) {
       const data = await res?.json();
 
       if (data.message === "Following user") {
-        setUser((prevUser) => ({
+        setUser((prevUser: User) => ({
           ...prevUser,
           friends: [...prevUser.friends, friendId],
         }));
       }
 
       if (data.message === "Unfollowing user") {
-        setUser((prevUser) => ({
+        setUser((prevUser: User) => ({
           ...prevUser,
-          friends: prevUser.friends.filter((id) => id !== friendId),
+          friends: prevUser.friends.filter((id: string) => id !== friendId),
         }));
       }
     } catch (err) {

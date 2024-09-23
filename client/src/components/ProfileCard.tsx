@@ -87,8 +87,12 @@ const LocationText = styled.p`
   }
 `;
 
+type CountryProp = {
+  name: string;
+};
+
 export default function ProfileCard() {
-  const [user] = useContext(UserContext);
+  const [user] = useContext(UserContext) || [];
   const [isEditing, setIsEditing] = useState(false);
   const [isEditingLocation, setIsEditingLocation] = useState(false);
   const [countries, setCountries] = useState([]);
@@ -130,7 +134,9 @@ export default function ProfileCard() {
     await fetchData(`${userId}/updateBio`, "PUT", bio);
   };
 
-  const updateCurrentLocation = async (e) => {
+  const updateCurrentLocation = async (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     const res = await fetchData(`${userId}/updateCurrentLocation`, "PUT", {
       country: e.target.value,
     });
@@ -198,7 +204,7 @@ export default function ProfileCard() {
               value={selectedCountry.country}
               onChange={updateCurrentLocation}
             >
-              {countries.map((country) => (
+              {countries.map((country: CountryProp) => (
                 <option value={country.name}>{country.name}</option>
               ))}
             </select>

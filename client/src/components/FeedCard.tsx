@@ -119,7 +119,6 @@ export default function FeedCard() {
               <Post
                 key={post.postId}
                 postId={post.postId}
-                profileImage="/images/avatar.png"
                 name={post.postedBy}
                 timestamp={formatTimestamp(post.createdAt)}
                 content={post.content}

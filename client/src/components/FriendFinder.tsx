@@ -60,10 +60,11 @@ type User = {
   id: string;
   firstName: string;
   lastName: string;
+  userId: string;
 };
 
 export default function FriendFinder() {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<User[]>([]);
   const user = useContext(UserContext);
   const userId = user && user[0] ? user[0].userId : null;
 

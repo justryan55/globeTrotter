@@ -58,9 +58,9 @@ const CounterTitle = styled.p`
 `;
 
 export default function UserSnapshot() {
-  const [user] = useContext(UserContext);
+  const [user] = useContext(UserContext) || [];
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [countriesVisited, setCountriesVisited] = useState([]);
+  const [_countriesVisited, setCountriesVisited] = useState([]);
   const displayName = user.firstName[0] + user.lastName[0];
   const name = user.firstName + " " + user.lastName;
 
@@ -68,8 +68,11 @@ export default function UserSnapshot() {
     const fetchCountries = async () => {
       const res = await fetchCountriesVisited(user.userId);
       const data = await res?.json();
-      setCountriesVisited(data.message);
-      user.countriesVisited = data.message;
+
+      if (res?.ok) {
+        setCountriesVisited(data.message);
+        user.countriesVisited = data.message;
+      }
     };
 
     fetchCountries();

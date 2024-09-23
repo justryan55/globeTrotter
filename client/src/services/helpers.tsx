@@ -1,7 +1,12 @@
+type Payload = {
+  token?: string;
+  [key: string]: string | number | boolean | undefined;
+};
+
 export const fetchData = async (
   url: string,
   method: string,
-  payload: object = {}
+  payload: Payload = {}
 ) => {
   try {
     const token = window.localStorage.getItem("token");
@@ -17,11 +22,8 @@ export const fetchData = async (
         Authorisation: `Bearer ${token}`,
       }),
       token: token,
+      ...(method !== "GET" && { body: JSON.stringify(payload) }),
     };
-
-    if (method !== "GET") {
-      params.body = JSON.stringify(payload);
-    }
 
     const backendURL = import.meta.env.VITE_BACKEND_URL;
 

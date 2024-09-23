@@ -96,7 +96,8 @@ export const AuthForm = ({ auth }: { auth: string }) => {
         setError(data);
       } else {
         const data = await res?.json();
-        const token = window.localStorage.setItem("token", data.token);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        window.localStorage.setItem("token", data.token);
         navigate("/home");
         console.log("Logged in!");
       }

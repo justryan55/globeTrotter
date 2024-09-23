@@ -1,20 +1,36 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { fetchData } from "./helpers";
 
-export const UserContext = createContext(null);
+type User = {
+  userId: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  countriesVisited: string[];
+  friends: string[];
+  followers: string[];
+};
 
-export default function AuthContext({ children }) {
+type AuthContextProps = {
+  children: ReactNode;
+};
+
+export const UserContext = createContext<
+  [User, React.Dispatch<React.SetStateAction<User>>] | null
+>(null);
+
+export default function AuthContext({ children }: AuthContextProps) {
   const [isLoading, setIsLoading] = useState(true);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const [user, setUser] = useState({
+  const [user, setUser] = useState<User>({
     userId: "",
     firstName: "",
     lastName: "",
     email: "",
-    countriesVisited: "",
-    friends: "",
-    followers: "",
+    countriesVisited: [],
+    friends: [],
+    followers: [],
   });
 
   const getUserData = async () => {
