@@ -104,7 +104,7 @@ export default function ProfileCard() {
       "A travel enthusiast sharing my adventures, tips, and travel stories to inspire your next journey.",
   });
 
-  const userId = user.userId;
+  const userId = user?.userId;
 
   const fetchBio = async () => {
     const res = await fetchData(`${userId}/getUserBio`, "GET");
@@ -187,8 +187,8 @@ export default function ProfileCard() {
     fetchFollowers();
   }, []);
 
-  const name = user.firstName + " " + user.lastName;
-  const displayName = user.firstName[0] + user.lastName[0];
+  const name = user?.firstName + " " + user?.lastName;
+  const displayName = user ? `${user.firstName[0]}${user.lastName[0]}` : "";
 
   return (
     <Layout>
@@ -229,15 +229,15 @@ export default function ProfileCard() {
       </Text>
       <FirstRow>
         <Column>
-          <Counter>{user.countriesVisited.length}</Counter>
+          <Counter>{user?.countriesVisited.length}</Counter>
           <CounterTitle>Countries</CounterTitle>
         </Column>
         <Column>
-          <Counter>{user.followers.length}</Counter>
+          <Counter>{user?.followers.length}</Counter>
           <CounterTitle>Followers</CounterTitle>
         </Column>
         <Column>
-          <Counter>{user.friends.length}</Counter>
+          <Counter>{user?.friends.length}</Counter>
           <CounterTitle>Following</CounterTitle>
         </Column>
       </FirstRow>

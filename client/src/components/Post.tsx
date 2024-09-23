@@ -89,7 +89,7 @@ export default function Post({
   postUserId,
   fetchPosts,
 }: Post) {
-  const [user] = useContext(UserContext);
+  const [user] = useContext(UserContext) || [];
 
   const nameParts = name.split(" ");
   const displayName = nameParts[0][0] + nameParts[1][0];
@@ -106,7 +106,7 @@ export default function Post({
                 <Timestamp>{timestamp}</Timestamp>
               </Poster>
             </UserDetails>
-            {user.userId === postUserId && (
+            {user?.userId === postUserId && (
               <PostDeleteBtn
                 postId={postId}
                 user={user}

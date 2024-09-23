@@ -41,7 +41,7 @@ type CountriesMapProps = {
 };
 
 export default function ScratchMap() {
-  const [user] = useContext(UserContext);
+  const [user] = useContext(UserContext) || [];
   const [countries, setCountries] = useState<CountriesMapProps[]>([]);
   const [countriesVisited, setCountriesVisited] = useState<string[]>([]);
 
@@ -59,12 +59,14 @@ export default function ScratchMap() {
       };
 
       const getCountriesVisitedByUser = async () => {
-        const res = await fetchCountriesVisited(user.userId);
-        const data = await res?.json();
-        setCountriesVisited(data.message);
-      };
+        if (user?.userId) {
+          const res = await fetchCountriesVisited(user?.userId);
+          const data = await res?.json();
+          setCountriesVisited(data.message);
+        }
 
-      getData();
+        getData();
+      };
       getCountriesVisitedByUser();
     } catch (err) {
       console.log(err);
@@ -86,7 +88,7 @@ export default function ScratchMap() {
         countryCode,
       });
 
-      if (res?.ok) {
+      if (user && res?.ok) {
         if (!hasVisited(countryName)) {
           setCountriesVisited((prevVisited) => [...prevVisited, countryName]);
           user.countriesVisited = [...user.countriesVisited, countryName];

@@ -17,11 +17,11 @@ type postId = {
 };
 
 export default function LikeButton({ postId }: postId) {
-  const [user] = useContext(UserContext);
+  const [user] = useContext(UserContext) || [];
   const [postLikes, setPostLikes] = useState();
   const [colour, setColour] = useState("none");
 
-  const userId = user.userId;
+  const userId = user?.userId;
 
   const handleClick = async () => {
     const res = await fetchData(`${postId}/updatePostLikes`, "PUT");

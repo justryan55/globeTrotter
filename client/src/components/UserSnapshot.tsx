@@ -61,21 +61,23 @@ export default function UserSnapshot() {
   const [user] = useContext(UserContext) || [];
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_countriesVisited, setCountriesVisited] = useState([]);
-  const displayName = user.firstName[0] + user.lastName[0];
-  const name = user.firstName + " " + user.lastName;
+  const displayName = user ? `${user.firstName[0]}${user.lastName[0]}` : "";
+  const name = user ? `${user.firstName} ${user.lastName}` : "User";
 
   useEffect(() => {
-    const fetchCountries = async () => {
-      const res = await fetchCountriesVisited(user.userId);
-      const data = await res?.json();
+    if (user?.userId) {
+      const fetchCountries = async () => {
+        const res = await fetchCountriesVisited(user?.userId);
+        const data = await res?.json();
 
-      if (res?.ok) {
-        setCountriesVisited(data.message);
-        user.countriesVisited = data.message;
-      }
-    };
+        if (res?.ok) {
+          setCountriesVisited(data.message);
+          user.countriesVisited = data.message;
+        }
+      };
+      fetchCountries();
+    }
 
-    fetchCountries();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -85,20 +87,20 @@ export default function UserSnapshot() {
         <FirstRow>
           <Avvvatars value={name} size={100} displayValue={displayName} />
           <Text>
-            {user.firstName} {user.lastName}
+            {user?.firstName} {user?.lastName}
           </Text>
         </FirstRow>
         <SecondRow>
           <Column>
-            <Counter>{user.countriesVisited.length}</Counter>
+            <Counter>{user?.countriesVisited.length}</Counter>
             <CounterTitle>Countries</CounterTitle>
           </Column>
           <Column>
-            <Counter>{user.followers.length}</Counter>
+            <Counter>{user?.followers.length}</Counter>
             <CounterTitle>Followers</CounterTitle>
           </Column>
           <Column>
-            <Counter>{user.friends.length}</Counter>
+            <Counter>{user?.friends.length}</Counter>
             <CounterTitle>Following</CounterTitle>
           </Column>
         </SecondRow>

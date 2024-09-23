@@ -50,8 +50,8 @@ export default function FeedCard() {
     friendsPosts: [],
   });
 
-  const [user] = useContext(UserContext);
-  const userid = user.userId;
+  const [user] = useContext(UserContext) || [];
+  const userid = user?.userId;
 
   const fetchPosts = async () => {
     const res = await fetchData(`${userid}/getPosts`, "GET");
