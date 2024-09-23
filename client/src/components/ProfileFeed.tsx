@@ -9,17 +9,21 @@ const Layout = styled.div`
   background-color: white;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   flex-basis: 25%;
-  max-height: 90vh;
+  max-height: 100vh;
 `;
 
 const SubLayout = styled.div`
+  max-height: 70vh;
+  overflow-y: scroll;
+`;
+
+const PostContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  max-height: 70vh;
-  overflow-y: scroll;
+  min-height: 70vh;
 `;
 
 const Header = styled.div`
@@ -68,9 +72,9 @@ type PostType = {
 
 export default function ProfileFeed() {
   const [content, setContent] = useState([]);
-  const [user] = useContext(UserContext);
+  const [user] = useContext(UserContext) || [];
 
-  const userid = user.userId;
+  const userid = user?.userId;
 
   const handlePostClick = async () => {
     const res = await fetchData(`${userid}/getPosts`, "GET");
@@ -106,31 +110,33 @@ export default function ProfileFeed() {
     handlePostClick();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <Layout>
       <Header>
-        {/* <HeaderText onClick={() => handleClick("Posts")}>Posts</HeaderText> */}
         <HeaderText onClick={handlePostClick}>Posts</HeaderText>
         <HeaderTextCross>Comments</HeaderTextCross>
         <HeaderTextCross>Likes</HeaderTextCross>
         <HeaderTextCross>Itineraries</HeaderTextCross>
       </Header>
       <SubLayout>
-        {content.length > 0 ? (
-          content.map((post: PostType) => (
-            <Post
-              key={post.postId}
-              postId={post.postId}
-              name={post.postedBy}
-              timestamp={formatTimestamp(post.createdAt)}
-              content={post.content}
-              postUserId={post.postUserId}
-              fetchPosts={handlePostClick}
-            />
-          ))
-        ) : (
-          <NoPostText>You have made no posts.</NoPostText>
-        )}
+        <PostContainer>
+          {content.length > 0 ? (
+            content.map((post: PostType) => (
+              <Post
+                key={post.postId}
+                postId={post.postId}
+                name={post.postedBy}
+                timestamp={formatTimestamp(post.createdAt)}
+                content={post.content}
+                postUserId={post.postUserId}
+                fetchPosts={handlePostClick}
+              />
+            ))
+          ) : (
+            <NoPostText>You have made no posts.</NoPostText>
+          )}
+        </PostContainer>
       </SubLayout>
     </Layout>
   );
