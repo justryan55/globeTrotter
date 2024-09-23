@@ -96,7 +96,7 @@ export default function NavigationBar() {
     <Layout>
       <LogoLayout>
         <LogoImg src="/images/globe.svg" />
-        <LogoText>Globe Trotter</LogoText>
+        <LogoText>GlobeTrotter</LogoText>
       </LogoLayout>
       <UserSnapshot />
       <LineLayout>
