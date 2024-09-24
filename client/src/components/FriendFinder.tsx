@@ -28,6 +28,10 @@ const User = styled.div`
   height: 25%;
   padding: 2rem;
   margin: 1rem;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Name = styled.div`
@@ -76,7 +80,6 @@ export default function FriendFinder() {
       const res = await fetchData(`/${userId}/getUsers`, "GET");
       const data = await res?.json();
       setUsers(data.message);
-      console.log(users);
     };
 
     fetchUsers();
@@ -93,12 +96,12 @@ export default function FriendFinder() {
       <Line />
       <Container>
         {users.map((user: User) => (
-          <User key={user.id}>
+          <User key={user.id} onClick={() => handleClick(user.id)}>
             <Avvvatars
               value={`${user.firstName[0]}${user.lastName[0]}`}
               size={100}
             />
-            <Name onClick={() => handleClick(user.id)}>
+            <Name>
               <p>{user.firstName}</p>
               <p>{user.lastName}</p>
             </Name>
