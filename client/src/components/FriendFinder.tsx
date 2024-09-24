@@ -28,11 +28,19 @@ const User = styled.div`
   height: 25%;
   padding: 2rem;
   margin: 1rem;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Name = styled.div`
   display: flex;
   gap: 5px;
+`;
+
+const ProfileImage = styled.img`
+  width: 100px;
 `;
 
 const Layout = styled.div`
@@ -78,7 +86,7 @@ export default function FriendFinder() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleClick = (userId: string) => {
+  const handleClick = (userId) => {
     navigate(`/profile/${userId}`);
   };
 
@@ -88,12 +96,12 @@ export default function FriendFinder() {
       <Line />
       <Container>
         {users.map((user: User) => (
-          <User key={user.id}>
+          <User key={user.id} onClick={() => handleClick(user.id)}>
             <Avvvatars
               value={`${user.firstName[0]}${user.lastName[0]}`}
               size={100}
             />
-            <Name onClick={() => handleClick(user.id)}>
+            <Name>
               <p>{user.firstName}</p>
               <p>{user.lastName}</p>
             </Name>
