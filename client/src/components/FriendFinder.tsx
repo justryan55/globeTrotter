@@ -39,10 +39,6 @@ const Name = styled.div`
   gap: 5px;
 `;
 
-const ProfileImage = styled.img`
-  width: 100px;
-`;
-
 const Layout = styled.div`
   margin: 3rem;
   padding: 1rem;
@@ -86,7 +82,7 @@ export default function FriendFinder() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleClick = (userId) => {
+  const handleClick = (userId: string) => {
     navigate(`/profile/${userId}`);
   };
 
