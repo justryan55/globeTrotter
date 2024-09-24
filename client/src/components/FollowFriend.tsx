@@ -43,7 +43,8 @@ type User = {
 };
 
 export default function FollowFriend(Id: FollowFriendProps) {
-  const [user, setUser] = useContext(UserContext);
+  const context = useContext(UserContext);
+  const [user, setUser] = context || [{}, () => {}];
   const [following, setFollowing] = useState<string[]>([]);
   const userId = user.userId;
   const friendId = Id.Id;

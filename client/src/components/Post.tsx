@@ -105,7 +105,7 @@ export default function Post({
   const nameParts = name.split(" ");
   const displayName = nameParts[0][0] + nameParts[1][0];
 
-  const handleClick = (postUserId) => {
+  const handleClick = (postUserId: string) => {
     navigate(`/profile/${postUserId}`);
   };
 
