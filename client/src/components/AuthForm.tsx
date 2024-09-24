@@ -115,6 +115,23 @@ export const AuthForm = ({ auth }: { auth: string }) => {
     }
   };
 
+  const handleGuestClick = async (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault();
+
+    const guestFormData = {
+      firstName: "",
+      lastName: "",
+      email: "john.smith@gmail.com",
+      password: "password12345",
+      confirmPassword: "",
+    };
+
+    const res = await fetchData(`auth/login`, "POST", guestFormData);
+    const data = await res?.json();
+    window.localStorage.setItem("token", data.token);
+    navigate("/home");
+  };
+
   return (
     <CredentialsLayout>
       <Header>Welcome to GlobeTrotter</Header>
@@ -171,12 +188,13 @@ export const AuthForm = ({ auth }: { auth: string }) => {
       {auth === "login" && (
         <Text style={{ color: "blue" }}>Forgotten password?</Text>
       )}
+
       <ErrorText>{error}</ErrorText>
 
       <Text>
         {auth === "login" ? (
           <>
-            Not a member?{" "}
+            Not a member?
             <Link
               to="/register"
               style={{ textDecoration: "none", color: "blue" }}
@@ -186,12 +204,22 @@ export const AuthForm = ({ auth }: { auth: string }) => {
           </>
         ) : (
           <>
-            Already a member?{" "}
+            Already a member?
             <Link to="/" style={{ textDecoration: "none", color: "blue" }}>
               Login
             </Link>
           </>
         )}
+      </Text>
+      <Text>
+        Continue as a Guest -
+        <Link
+          to="/"
+          style={{ textDecoration: "none", color: "blue", marginLeft: "5px" }}
+          onClick={handleGuestClick}
+        >
+          Login
+        </Link>
       </Text>
     </CredentialsLayout>
   );
