@@ -3,6 +3,20 @@ import userModel from "../models/userModel.mjs";
 
 const router = express.Router();
 
+router.get("/:userId/getUser", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const user = await userModel.findById(userId).select("-password");
+
+    return res.status(200).json({
+      success: true,
+      message: user,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 router.get("/:userId/getUsers", async (req, res) => {
   try {
     const { userId } = req.params;
