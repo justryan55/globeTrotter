@@ -43,9 +43,10 @@ type User = {
 };
 
 export default function FollowFriend(Id: FollowFriendProps) {
-  const [user, setUser] = useContext(UserContext);
+  const context = useContext(UserContext);
+  const [user, setUser] = context || [{}, () => {}];
   const [following, setFollowing] = useState<string[]>([]);
-  const userId = user.userId;
+  const userId = user?.userId;
   const friendId = Id.Id;
 
   useEffect(() => {
@@ -57,7 +58,7 @@ export default function FollowFriend(Id: FollowFriendProps) {
 
     fetchFriends();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user.friends]);
+  }, [user?.friends]);
 
   const handleClick = async () => {
     try {

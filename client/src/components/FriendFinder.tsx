@@ -78,7 +78,7 @@ export default function FriendFinder() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleClick = (userId) => {
+  const handleClick = (userId: string) => {
     navigate(`/profile/${userId}`);
   };
 

@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { fetchData } from "../services/helpers";
-import { UserContext } from "../services/AuthContext";
 import Post from "./Post";
 import { useParams } from "react-router";
 

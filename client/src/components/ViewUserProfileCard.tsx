@@ -101,7 +101,7 @@ export default function ViewUserProfileCard() {
       <Avvvatars value={name} size={200} displayValue={displayName} />
       <NameContainer>
         <Header>{name}</Header>
-        <FollowFriend Id={userId} />
+        {userId && <FollowFriend Id={userId} />}
       </NameContainer>
       <LocationLayout>
         <LocationIcon src="../images/map-pin.svg" />
