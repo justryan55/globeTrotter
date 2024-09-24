@@ -4,6 +4,7 @@ import styled from "styled-components";
 import FollowFriend from "./FollowFriend";
 import { UserContext } from "../services/AuthContext";
 import Avvvatars from "avvvatars-react";
+import { useNavigate } from "react-router";
 
 const Container = styled.div`
   display: flex;
@@ -64,6 +65,7 @@ export default function FriendFinder() {
   const [users, setUsers] = useState<User[]>([]);
   const user = useContext(UserContext);
   const userId = user && user[0] ? user[0].userId : null;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -76,6 +78,10 @@ export default function FriendFinder() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleClick = (userId) => {
+    navigate(`/profile/${userId}`);
+  };
+
   return (
     <Layout>
       <Header>Find a Travel Buddy</Header>
@@ -87,7 +93,7 @@ export default function FriendFinder() {
               value={`${user.firstName[0]}${user.lastName[0]}`}
               size={100}
             />
-            <Name>
+            <Name onClick={() => handleClick(user.id)}>
               <p>{user.firstName}</p>
               <p>{user.lastName}</p>
             </Name>

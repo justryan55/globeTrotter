@@ -6,6 +6,7 @@ import CommentButton from "./CommentButton";
 import CommentComponent from "./CommentComponent";
 import PostDeleteBtn from "./PostDeleteBtn";
 import Avvvatars from "avvvatars-react";
+import { useNavigate } from "react-router";
 
 const Container = styled.div`
   box-sizing: border-box;
@@ -48,6 +49,9 @@ const Poster = styled.div`
 
 const Name = styled.p`
   margin-bottom: 0px;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const Timestamp = styled.p`
@@ -72,6 +76,12 @@ const ActionButton = styled.svg`
   }
 `;
 
+const AvatarContainer = styled.div`
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
 type Post = {
   postId: string;
   name: string;
@@ -90,9 +100,14 @@ export default function Post({
   fetchPosts,
 }: Post) {
   const [user] = useContext(UserContext) || [];
+  const navigate = useNavigate();
 
   const nameParts = name.split(" ");
   const displayName = nameParts[0][0] + nameParts[1][0];
+
+  const handleClick = (postUserId) => {
+    navigate(`/profile/${postUserId}`);
+  };
 
   return (
     postId && (
@@ -100,9 +115,11 @@ export default function Post({
         <Layout>
           <PostDetails>
             <UserDetails>
-              <Avvvatars value={name} size={100} displayValue={displayName} />
+              <AvatarContainer onClick={() => handleClick(postUserId)}>
+                <Avvvatars value={name} size={100} displayValue={displayName} />
+              </AvatarContainer>
               <Poster>
-                <Name>{name}</Name>
+                <Name onClick={() => handleClick(postUserId)}>{name}</Name>
                 <Timestamp>{timestamp}</Timestamp>
               </Poster>
             </UserDetails>

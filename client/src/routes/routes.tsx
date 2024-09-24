@@ -10,6 +10,7 @@ import ProtectedRoute from "../services/ProtectedRoute";
 import ScratchMap from "../pages/ScratchMap";
 import RestaurantFinder from "../pages/RestaurantPage";
 import TravelBuddyPage from "../pages/TravelBuddyPage";
+import ViewUserProfilePage from "../pages/ViewUserProfilePage";
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -50,6 +51,14 @@ const Router = () => {
       element: (
         <ProtectedRoute>
           <ProfilePage />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/profile/:userId",
+      element: (
+        <ProtectedRoute>
+          <ViewUserProfilePage />
         </ProtectedRoute>
       ),
     },
