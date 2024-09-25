@@ -5,6 +5,10 @@ const PageLayout = styled.div`
   height: 100vh;
   display: grid;
   grid-template-columns: 1fr 1fr;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 5fr;
+  }
 `;
 
 const LeftColumn = styled.div`
