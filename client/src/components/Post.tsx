@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { UserContext } from "../services/AuthContext";
 import LikeButton from "./LikeButtonPost";
@@ -32,6 +32,7 @@ const Layout = styled.div`
 
   @media (max-width: 768px) {
     min-width: 100%;
+    padding: 0rem;
   }
 `;
 
@@ -70,6 +71,10 @@ const Timestamp = styled.p`
 const ActionButtons = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+
+  @media (max-width: 768px) {
+    padding: 2rem 0rem 1rem 0rem;
+  }
 `;
 
 const ActionButtonContainer = styled.div`
@@ -109,6 +114,7 @@ export default function Post({
 }: Post) {
   const [user] = useContext(UserContext) || [];
   const navigate = useNavigate();
+  const [avatarSize, setAvatarSize] = useState(100);
 
   const nameParts = name.split(" ");
   const displayName = nameParts[0][0] + nameParts[1][0];
@@ -117,6 +123,22 @@ export default function Post({
     navigate(`/profile/${postUserId}`);
   };
 
+  useEffect(() => {
+    const updateAvatarSize = () => {
+      if (window.innerWidth < 768) {
+        setAvatarSize(80);
+      } else {
+        setAvatarSize(100);
+      }
+    };
+
+    updateAvatarSize();
+
+    window.addEventListener("resize", updateAvatarSize);
+
+    return () => window.removeEventListener("resize", updateAvatarSize);
+  }, []);
+
   return (
     postId && (
       <Container>
@@ -124,7 +146,11 @@ export default function Post({
           <PostDetails>
             <UserDetails>
               <AvatarContainer onClick={() => handleClick(postUserId)}>
-                <Avvvatars value={name} size={100} displayValue={displayName} />
+                <Avvvatars
+                  value={name}
+                  size={avatarSize}
+                  displayValue={displayName}
+                />
               </AvatarContainer>
               <Poster>
                 <Name onClick={() => handleClick(postUserId)}>{name}</Name>

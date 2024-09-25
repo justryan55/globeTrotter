@@ -11,6 +11,10 @@ const Layout = styled.div`
   width: 100%;
   padding: 1rem;
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    padding: 0rem;
+  }
 `;
 
 const TextBox = styled.textarea`
@@ -30,6 +34,10 @@ const TextBox = styled.textarea`
   &:focus {
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
   }
+
+  @media (max-width: 768px) {
+    min-height: 60px;
+  }
 `;
 
 type CreateNewPostProps = {
@@ -38,6 +46,8 @@ type CreateNewPostProps = {
 
 export default function CreateNewPost({ onPostCreated }: CreateNewPostProps) {
   const [user] = useContext(UserContext);
+  const [avatarSize, setAvatarSize] = useState(100);
+
   const [content, setContent] = useState({
     userId: "",
     postedBy: "",
@@ -69,11 +79,29 @@ export default function CreateNewPost({ onPostCreated }: CreateNewPostProps) {
   const displayName = user.firstName[0] + user.lastName[0];
   const username = user.firstName + " " + user.lastName;
 
+  useEffect(() => {
+    const updateAvatarSize = () => {
+      if (window.innerWidth < 768) {
+        setAvatarSize(80);
+      } else {
+        setAvatarSize(100);
+      }
+    };
+
+    updateAvatarSize();
+
+    window.addEventListener("resize", updateAvatarSize);
+
+    return () => window.removeEventListener("resize", updateAvatarSize);
+  }, []);
   return (
     <>
       <Layout>
-        <Avvvatars value={username} size={100} displayValue={displayName} />
-        {/* <UserImg src="/images/avatar.png" /> */}
+        <Avvvatars
+          value={username}
+          size={avatarSize}
+          displayValue={displayName}
+        />
         <TextBox
           placeholder={`What's on your mind, ${user.firstName} ?`}
           onKeyDown={handleSubmit}
