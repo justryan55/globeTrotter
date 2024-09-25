@@ -17,10 +17,19 @@ const PageLayout = styled.div`
 const CardLayout = styled.div`
   display: grid;
   grid-template-columns: 1fr 2fr;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    width: 100%;
+  }
 `;
 
 const CardContainer = styled.div`
   max-width: 100%;
+
+  @media (max-width: 768px) {
+    max-width: 100%;
+  }
 `;
 
 export default function ViewUserProfilePage() {

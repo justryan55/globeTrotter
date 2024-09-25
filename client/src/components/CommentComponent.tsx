@@ -21,6 +21,12 @@ const ExistingComments = styled.div`
   outline: none;
   resize: none;
   background-color: white;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+    border: none;
+    border-top: 1px solid #ccc;
+  }
 `;
 
 const ExistingComment = styled.div`

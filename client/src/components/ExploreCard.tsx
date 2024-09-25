@@ -10,6 +10,10 @@ const Layout = styled.div`
   &:hover {
     cursor: pointer;
   }
+
+  @media (max-width: 927px) {
+    flex-basis: 80%;
+  }
 `;
 
 const SubLayout = styled.div`
