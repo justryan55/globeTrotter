@@ -8,6 +8,10 @@ const PageLayout = styled.div`
   display: grid;
   grid-template-columns: 1fr 5fr;
   background-color: #f8f8ff;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 5fr;
+  }
 `;
 
 const CardLayout = styled.div`

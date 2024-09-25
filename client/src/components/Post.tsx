@@ -15,6 +15,10 @@ const Container = styled.div`
   margin-bottom: 4rem;
   padding: 1rem;
   border: 0.5px rgb(0, 0, 0, 0.2) solid;
+
+  @media (max-width: 768px) {
+    min-width: 100%;
+  }
 `;
 
 const Layout = styled.div`
@@ -25,6 +29,10 @@ const Layout = styled.div`
   width: 100%;
   padding: 1rem;
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    min-width: 100%;
+  }
 `;
 
 const PostContent = styled.div`
