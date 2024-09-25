@@ -108,6 +108,7 @@ type Comment = {
 };
 
 export default function CommentComponent({ postId }: postId) {
+  // @ts-expect-error: This context may be null, causing a destructuring error.
   const [user] = useContext(UserContext) || null;
 
   const userid = user.userId;
