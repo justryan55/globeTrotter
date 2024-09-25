@@ -12,6 +12,10 @@ const Layout = styled.div`
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   flex-basis: 25%;
   overflow-y: scroll;
+
+  @media (max-width: 768px) {
+    margin: 0.5rem;
+  }
 `;
 
 const SubLayout = styled.div`
