@@ -12,6 +12,12 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   padding: 3rem;
+
+  flex-wrap: wrap;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
 `;
 
 const User = styled.div`
@@ -22,10 +28,9 @@ const User = styled.div`
 
   background-color: white;
   border: 1px rgb(0, 0, 0, 0.3) solid;
-  /* box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24); */
+  width: 100%;
+  max-width: 300px;
 
-  width: 25%;
-  height: 25%;
   padding: 2rem;
   margin: 1rem;
 
