@@ -12,7 +12,7 @@ const Layout = styled.div`
   max-height: 100vh;
 
   @media (max-width: 768px) {
-    margin: 3rem;
+    margin: 1rem;
   }
 `;
 
@@ -25,25 +25,29 @@ const PostContainer = styled.div`
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
   min-height: 70vh;
 `;
 
 const Header = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(1, 1fr);
 `;
 
 const HeaderText = styled.p`
+  text-align: center;
   padding: 30px;
   font-size: 1.25rem;
-  border-right: 1px rgb(0, 0, 0, 0.25) solid;
   border-bottom: 1px rgb(0, 0, 0, 0.25) solid;
 
   &:hover {
     border-bottom: 1px rgb(0, 0, 0, 1) solid;
     cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    margin: 1rem;
   }
 `;
 
@@ -118,10 +122,10 @@ export default function ProfileFeed() {
   return (
     <Layout>
       <Header>
-        <HeaderText onClick={handlePostClick}>Posts</HeaderText>
-        <HeaderTextCross>Comments</HeaderTextCross>
+        <HeaderText onClick={handlePostClick}>Your Posts</HeaderText>
+        {/* <HeaderTextCross>Comments</HeaderTextCross>
         <HeaderTextCross>Likes</HeaderTextCross>
-        <HeaderTextCross>Itineraries</HeaderTextCross>
+        <HeaderTextCross>Itineraries</HeaderTextCross> */}
       </Header>
       <SubLayout>
         <PostContainer>
