@@ -12,7 +12,7 @@ const Layout = styled.div`
   max-height: 100vh;
 
   @media (max-width: 768px) {
-    margin: 3rem;
+    margin: 1rem;
   }
 `;
 
@@ -32,18 +32,22 @@ const PostContainer = styled.div`
 
 const Header = styled.div`
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(1, 1fr);
 `;
 
 const HeaderText = styled.p`
+  text-align: center;
   padding: 30px;
   font-size: 1.25rem;
-  border-right: 1px rgb(0, 0, 0, 0.25) solid;
   border-bottom: 1px rgb(0, 0, 0, 0.25) solid;
 
   &:hover {
     border-bottom: 1px rgb(0, 0, 0, 1) solid;
     cursor: pointer;
+  }
+
+  @media (max-width: 768px) {
+    margin: 1rem;
   }
 `;
 
@@ -77,12 +81,19 @@ type PostType = {
 export default function ViewUserProfileFeed() {
   const [content, setContent] = useState([]);
   const { userId } = useParams();
+  const [name, setName] = useState("");
 
   const fetchPosts = async () => {
     const res = await fetchData(`${userId}/getPosts`, "GET");
     const data = await res?.json();
 
     setContent(data.usersPosts);
+  };
+
+  const fetchUser = async () => {
+    const res = await fetchData(`${userId}/getUser`, "GET");
+    const data = await res?.json();
+    setName(data.message.firstName + " " + data.message.lastName);
   };
 
   const formatTimestamp = (timestamp: Date) => {
@@ -110,15 +121,17 @@ export default function ViewUserProfileFeed() {
 
   useEffect(() => {
     fetchPosts();
+    fetchUser();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <Layout>
       <Header>
-        <HeaderText onClick={fetchPosts}>Posts</HeaderText>
-        <HeaderTextCross>Comments</HeaderTextCross>
+        <HeaderText onClick={fetchPosts}>{name}'s Posts</HeaderText>
+        {/* <HeaderTextCross>Comments</HeaderTextCross>
         <HeaderTextCross>Likes</HeaderTextCross>
-        <HeaderTextCross>Itineraries</HeaderTextCross>
+        <HeaderTextCross>Itineraries</HeaderTextCross> */}
       </Header>
       <SubLayout>
         <PostContainer>
@@ -135,7 +148,7 @@ export default function ViewUserProfileFeed() {
               />
             ))
           ) : (
-            <NoPostText>You have made no posts.</NoPostText>
+            <NoPostText>{name} has made no posts.</NoPostText>
           )}
         </PostContainer>
       </SubLayout>

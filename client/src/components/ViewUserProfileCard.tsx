@@ -16,6 +16,10 @@ const Layout = styled.div`
   background-color: white;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
   flex-basis: 25%;
+
+  @media (max-width: 768px) {
+    margin: 1rem;
+  }
 `;
 
 const Header = styled.p`

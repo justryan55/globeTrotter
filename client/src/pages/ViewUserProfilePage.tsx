@@ -20,15 +20,15 @@ const CardLayout = styled.div`
 
   @media (max-width: 768px) {
     grid-template-columns: 1fr;
-    width: 100%;
+    width: 100vw;
   }
 `;
 
 const CardContainer = styled.div`
-  max-width: 100%;
+  max-width: 100vw;
 
   @media (max-width: 768px) {
-    max-width: 100%;
+    max-width: 100vw;
   }
 `;
 
