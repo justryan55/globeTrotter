@@ -76,6 +76,11 @@ Error generating stack: `+o.message+`
   border-radius: 1rem;
   min-width: 50%;
   min-height: 50%;
+
+  @media (max-width: 768px) {
+    min-width: 80%;
+    min-height: 80%;
+  }
 `,H6=D.form`
   display: flex;
   flex-direction: column;
@@ -116,12 +121,16 @@ Error generating stack: `+o.message+`
   grid-template-columns: 1fr 1fr;
 
   @media (max-width: 768px) {
-    grid-template-columns: 5fr;
+    grid-template-columns: 1fr;
   }
 `,Q6=D.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `,Y6=D.img`
   object-fit: cover;
   width: 100%;
