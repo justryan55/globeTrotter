@@ -12,6 +12,11 @@ const CredentialsLayout = styled.div`
   border-radius: 1rem;
   min-width: 50%;
   min-height: 50%;
+
+  @media (max-width: 768px) {
+    min-width: 80%;
+    min-height: 80%;
+  }
 `;
 
 const Form = styled.form`

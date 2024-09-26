@@ -7,7 +7,7 @@ const PageLayout = styled.div`
   grid-template-columns: 1fr 1fr;
 
   @media (max-width: 768px) {
-    grid-template-columns: 5fr;
+    grid-template-columns: 1fr;
   }
 `;
 
@@ -15,6 +15,10 @@ const LeftColumn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const Image = styled.img`
