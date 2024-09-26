@@ -145,12 +145,16 @@ Error generating stack: `+o.message+`
   grid-template-columns: 1fr 1fr;
 
   @media (max-width: 768px) {
-    grid-template-columns: 5fr;
+    grid-template-columns: 1fr;
   }
 `,e8=D.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `,t8=D.img`
   object-fit: cover;
   width: 100%;
