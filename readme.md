@@ -1,4 +1,12 @@
-# Travel Project
+# GlobeTrotter
+
+## Technologies Used
+- **Frontend**: HTML, CSS, JavaScript, React, Vite
+- **Backend**: Node.js, Express 
+- **Database**: MongoDB 
+- **Deployment**: Deployed using Vercel
+
+---
 
 ## First time setup
 
