@@ -5,7 +5,9 @@ import cors from "cors";
 import authRoutes from "./routes/auth-routes.mjs";
 import countryRoutes from "./routes/country-routes.mjs";
 import postRoutes from "./routes/post-routes.mjs";
-import userRoutes from "./routes/user.routes.mjs";
+import userRoutes from "./routes/user-routes.mjs";
+import chatRoutes from "./routes/chat-routes.mjs";
+import messagesRoutes from "./routes/messages-routes.mjs";
 
 const app = express();
 const port = 3000;
@@ -23,9 +25,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api", countryRoutes);
 app.use("/api", postRoutes);
 app.use("/api", userRoutes);
+app.use("/api", chatRoutes);
+app.use("/api", messagesRoutes);
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
-
-// https://stackoverflow.com/a/37309212/2518608
