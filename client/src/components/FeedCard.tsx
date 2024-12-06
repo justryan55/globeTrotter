@@ -103,7 +103,6 @@ export default function FeedCard() {
       <Line />
       <CreateNewPost onPostCreated={fetchPosts} />
       <SubLayout>
-        {/* Currently not working due to posts.friendPosts arrays being empty but still showing  */}
         {allPosts.length === 0 ? (
           <p>There are no posts in your feed.</p>
         ) : (

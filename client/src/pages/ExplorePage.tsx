@@ -23,11 +23,17 @@ export default function ExplorePage() {
     <PageLayout>
       <NavigationBar />
       <CardContainer>
-        <ExploreCard
+        {/* <ExploreCard
           title="Itinerary Creator"
           image="/images/list.svg"
           description="Plan your next adventure."
           link="itinerary-creator"
+        /> */}
+        <ExploreCard
+          title="Find a Travel Buddy"
+          image="/images/users.svg"
+          description="Find a travel buddy for your next adventure."
+          link="travel-buddy-finder"
         />
         <ExploreCard
           title="Restaurant Finder"
@@ -41,18 +47,13 @@ export default function ExplorePage() {
           description="Highlight all the places you have travelled."
           link="scratch-map"
         />
-        <ExploreCard
-          title="Find a Travel Buddy"
-          image="/images/users.svg"
-          description="Find a travel buddy for your next adventure."
-          link="travel-buddy-finder"
-        />
-        <ExploreCard
+
+        {/* <ExploreCard
           title="Travel Journal"
           image="/images/book-open.svg"
           description="Document your travel adventures."
           link="travel-journal"
-        />
+        /> */}
       </CardContainer>
     </PageLayout>
   );

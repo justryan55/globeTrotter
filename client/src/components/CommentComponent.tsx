@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
@@ -21,6 +22,12 @@ const ExistingComments = styled.div`
   outline: none;
   resize: none;
   background-color: white;
+
+  @media (max-width: 768px) {
+    padding: 1rem;
+    border: none;
+    border-top: 1px solid #ccc;
+  }
 
   @media (max-width: 768px) {
     padding: 1rem;
@@ -108,7 +115,7 @@ type Comment = {
 };
 
 export default function CommentComponent({ postId }: postId) {
-  // @ts-expect-error: This context may be null, causing a destructuring error.
+  // @ts-expect-error
   const [user] = useContext(UserContext) || null;
 
   const userid = user.userId;

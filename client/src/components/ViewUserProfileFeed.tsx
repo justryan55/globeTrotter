@@ -117,9 +117,6 @@ export default function ViewUserProfileFeed() {
     <Layout>
       <Header>
         <HeaderText onClick={fetchPosts}>{name}'s Posts</HeaderText>
-        {/* <HeaderTextCross>Comments</HeaderTextCross>
-        <HeaderTextCross>Likes</HeaderTextCross>
-        <HeaderTextCross>Itineraries</HeaderTextCross> */}
       </Header>
       <SubLayout>
         <PostContainer>

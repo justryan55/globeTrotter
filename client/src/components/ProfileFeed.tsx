@@ -37,6 +37,7 @@ const Header = styled.div`
 
 const HeaderText = styled.p`
   text-align: center;
+  text-align: center;
   padding: 30px;
   font-size: 1.25rem;
   border-bottom: 1px rgb(0, 0, 0, 0.25) solid;
@@ -48,7 +49,7 @@ const HeaderText = styled.p`
 
   @media (max-width: 768px) {
     margin: 1rem;
-  }
+
 `;
 
 const NoPostText = styled.p`
@@ -111,9 +112,6 @@ export default function ProfileFeed() {
     <Layout>
       <Header>
         <HeaderText onClick={handlePostClick}>Your Posts</HeaderText>
-        {/* <HeaderTextCross>Comments</HeaderTextCross>
-        <HeaderTextCross>Likes</HeaderTextCross>
-        <HeaderTextCross>Itineraries</HeaderTextCross> */}
       </Header>
       <SubLayout>
         <PostContainer>
