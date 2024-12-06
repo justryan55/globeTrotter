@@ -30,14 +30,6 @@ const MessageTop = styled.div`
   align-items: center;
 `;
 
-// const MessageImg = styled.img<ContainerProps>`
-//   width: 40px;
-//   height: 40px;
-//   margin-right: ${(props) => (props.own ? "0" : "10px")};
-//   margin-left: ${(props) => (props.own ? "10px" : "0")};
-//   margin-top: 15px;
-// `;
-
 const MessageText = styled.p<ContainerProps>`
   padding: 10px;
   border-radius: 20px;
