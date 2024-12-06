@@ -12,6 +12,15 @@ import messagesRoutes from "./routes/messages-routes.mjs";
 const app = express();
 const port = 3000;
 
+// app.use(
+//   cors({
+//     origin: "https://travel-project-eight-phi.vercel.app",
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     allowedHeaders: ["Content-Type", "Authorization"],
+//     credentials: true,
+//   })
+// );
+
 app.use(bodyParser.json());
 app.use(cors());
 

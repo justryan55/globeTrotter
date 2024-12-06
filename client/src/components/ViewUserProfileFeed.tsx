@@ -51,18 +51,6 @@ const HeaderText = styled.p`
   }
 `;
 
-const HeaderTextCross = styled.p`
-  padding: 30px;
-  font-size: 1.25rem;
-  border-right: 1px rgb(0, 0, 0, 0.25) solid;
-  border-bottom: 1px rgb(0, 0, 0, 0.25) solid;
-
-  &:hover {
-    border-bottom: 1px rgb(0, 0, 0, 1) solid;
-    cursor: url("../images/slash.svg"), auto;
-  }
-`;
-
 const NoPostText = styled.p`
   text-align: center;
 `;
@@ -129,9 +117,6 @@ export default function ViewUserProfileFeed() {
     <Layout>
       <Header>
         <HeaderText onClick={fetchPosts}>{name}'s Posts</HeaderText>
-        {/* <HeaderTextCross>Comments</HeaderTextCross>
-        <HeaderTextCross>Likes</HeaderTextCross>
-        <HeaderTextCross>Itineraries</HeaderTextCross> */}
       </Header>
       <SubLayout>
         <PostContainer>

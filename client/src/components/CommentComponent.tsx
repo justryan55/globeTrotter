@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
@@ -108,6 +109,7 @@ type Comment = {
 };
 
 export default function CommentComponent({ postId }: postId) {
+  // @ts-expect-error
   const [user] = useContext(UserContext) || null;
 
   const userid = user.userId;

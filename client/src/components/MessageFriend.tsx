@@ -1,7 +1,22 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from "styled-components";
 import { fetchData } from "../services/helpers";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../services/AuthContext";
+
+interface User {
+  userId: string;
+  firstName: string;
+  lastName: string;
+}
+
+interface MessageDetailsPayload {
+  conversationId: string;
+  sender: User;
+  text: string;
+  [key: string]: any;
+}
 
 const Button = styled.button`
   background-color: #2196f3;
@@ -30,16 +45,6 @@ const Button = styled.button`
 
 type FollowFriendProps = {
   Id: string;
-};
-
-type User = {
-  userId: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  countriesVisited: string[];
-  friends: string[];
-  followers: string[];
 };
 
 const ModalOverlay = styled.div`
@@ -93,17 +98,18 @@ const Btn = styled.button`
 
 export default function FollowFriend(Id: FollowFriendProps) {
   const context = useContext(UserContext);
-  const [user, setUser] = context || [{}, () => {}];
+  const [user] = context || [{}, () => {}];
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [messageSent, setMessageSent] = useState(false);
-  const userId = user.userId;
+  // @ts-ignore
+  const userId = user?.userId ?? "";
   const friendId = Id.Id;
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const payload = {
@@ -119,12 +125,12 @@ export default function FollowFriend(Id: FollowFriendProps) {
       if (res?.ok) {
         const data = await res?.json();
 
-        const messageDetails = {
+        const messageDetails: MessageDetailsPayload = {
           conversationId: data.message._id,
           sender: {
-            userId: userId,
-            firstName: user.firstName,
-            lastName: user.lastName,
+            userId: userId ?? "",
+            firstName: (user as { firstName: string }).firstName ?? "Unknown",
+            lastName: (user as { lastName: string }).lastName ?? "User",
           },
           text: message,
         };

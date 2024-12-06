@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { fetchData } from "../services/helpers";
@@ -8,6 +9,22 @@ type Snapshot = {
   name: string;
   timestamp: string;
   lastMessage: string;
+};
+
+interface Message {
+  text: string;
+  createdAt: string;
+  senderId: string;
+}
+
+type SnapshotProps = {
+  conversation: any;
+  currentUser: any;
+};
+
+type User = {
+  firstName: string;
+  lastName: string;
 };
 
 const ConversationDetails = styled.div`
@@ -85,15 +102,15 @@ const MessageSentImage = styled.img`
   }
 `;
 
-export default function Snapshot({ conversation, currentUser }) {
-  const [user, setUser] = useState(null);
-  const [lastMessage, setLastMessage] = useState("");
+export default function Snapshot({ conversation, currentUser }: SnapshotProps) {
+  const [user, setUser] = useState<User | null>(null);
+  const [lastMessage, setLastMessage] = useState<Message | null>(null);
   const [timestamp, setTimestamp] = useState("");
 
-  const formatTimestamp = (timestamp) => {
+  const formatTimestamp = (timestamp: string) => {
     const current = new Date();
     const provided = new Date(timestamp);
-    const timeDifference = current - provided;
+    const timeDifference = current.getTime() - provided.getTime();
     const minutes = Math.floor(timeDifference / (1000 * 60));
     const hours = Math.floor(timeDifference / (1000 * 60 * 60));
     const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
@@ -109,7 +126,7 @@ export default function Snapshot({ conversation, currentUser }) {
     }
   };
 
-  const truncateMessage = (message, wordLimit = 5) => {
+  const truncateMessage = (message: string, wordLimit = 5) => {
     const words = message.split(" ");
     if (words.length > wordLimit) {
       return words.slice(0, wordLimit).join(" ") + "...";
@@ -118,7 +135,9 @@ export default function Snapshot({ conversation, currentUser }) {
   };
 
   useEffect(() => {
-    const friendId = conversation.members.find((m) => m !== currentUser.userId);
+    const friendId = conversation.members.find(
+      (m: string) => m !== currentUser.userId
+    );
 
     const getUser = async () => {
       const res = await fetchData(`/getUser/${friendId}`, "GET");
@@ -142,12 +161,6 @@ export default function Snapshot({ conversation, currentUser }) {
       }
     };
     fetchLastMessage();
-  }, [conversation, currentUser]);
-
-  useEffect(() => {
-    if (lastMessage?.createdAt) {
-      setTimestamp(formatTimestamp(lastMessage.createdAt));
-    }
   }, [conversation, currentUser]);
 
   if (!user) {

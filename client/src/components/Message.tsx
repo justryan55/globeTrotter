@@ -2,7 +2,23 @@ import Avvvatars from "avvvatars-react";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 
-const Container = styled.div`
+interface ContainerProps {
+  own?: boolean;
+}
+
+interface MessageProps {
+  message: {
+    createdAt: string;
+    sender: {
+      firstName: string;
+      lastName: string;
+    };
+    text: string;
+  };
+  own?: boolean;
+}
+
+const Container = styled.div<ContainerProps>`
   display: flex;
   flex-direction: column;
   align-items: ${(props) => (props.own ? "flex-end" : "flex-start")};
@@ -14,15 +30,15 @@ const MessageTop = styled.div`
   align-items: center;
 `;
 
-const MessageImg = styled.img`
-  width: 40px;
-  height: 40px;
-  margin-right: ${(props) => (props.own ? "0" : "10px")};
-  margin-left: ${(props) => (props.own ? "10px" : "0")};
-  margin-top: 15px;
-`;
+// const MessageImg = styled.img<ContainerProps>`
+//   width: 40px;
+//   height: 40px;
+//   margin-right: ${(props) => (props.own ? "0" : "10px")};
+//   margin-left: ${(props) => (props.own ? "10px" : "0")};
+//   margin-top: 15px;
+// `;
 
-const MessageText = styled.p`
+const MessageText = styled.p<ContainerProps>`
   padding: 10px;
   border-radius: 20px;
   background-color: ${(props) => (props.own ? "#90ee90" : "#ffde9d")};
@@ -30,17 +46,19 @@ const MessageText = styled.p`
   max-width: 300px;
 `;
 
-const MessageBottom = styled.div`
+const MessageBottom = styled.div<ContainerProps>`
   font-size: 12px;
   text-align: ${(props) => (props.own ? "right" : "left")};
 `;
 
-export default function Message({ message, own }) {
+export default function Message({ message, own }: MessageProps) {
   const [timestamp, setTimestamp] = useState("");
-  const formatTimestamp = (timestamp) => {
+  const formatTimestamp = (timestamp: string) => {
     const current = new Date();
     const provided = new Date(timestamp);
-    const timeDifference = current - provided;
+    // const timeDifference = current - provided;
+    const timeDifference: number = current.getTime() - provided.getTime();
+
     const minutes = Math.floor(timeDifference / (1000 * 60));
     const hours = Math.floor(timeDifference / (1000 * 60 * 60));
     const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));

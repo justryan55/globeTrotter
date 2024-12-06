@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import styled from "styled-components";
 import { useContext, useEffect, useState } from "react";
 import { fetchData } from "../services/helpers";
@@ -10,6 +11,24 @@ type Snapshot = {
   name: string;
   timestamp: string;
   lastMessage: string;
+};
+
+type Conversation = {
+  _id: string;
+  name: string;
+  lastMessage: string;
+};
+
+type Sender = {
+  userId: string | undefined;
+  firstName: string | undefined;
+  lastName: string | undefined;
+};
+
+type MessagePayload = {
+  sender: Sender;
+  text: string;
+  conversationId: string | undefined;
 };
 
 const Wrapper = styled.div`
@@ -148,24 +167,25 @@ const Text = styled.p`
 `;
 
 export default function Messenger() {
-  const [conversations, setConversations] = useState([]);
-  const [currentChat, setCurrentChat] = useState(null);
-  const [messages, setMessages] = useState([null]);
-  const [newMessage, setNewMessage] = useState("");
+  const [conversations, setConversations] = useState<Conversation[]>([]);
+  const [currentChat, setCurrentChat] = useState<Conversation | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [messages, setMessages] = useState<any[]>([]);
+  const [newMessage, setNewMessage] = useState<string>("");
   const [user] = useContext(UserContext) || [];
   const userId = user?.userId;
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.MouseEvent<SVGSVGElement>) => {
     e.preventDefault();
 
-    const message = {
+    const message: MessagePayload = {
       sender: {
         userId,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        firstName: user?.firstName,
+        lastName: user?.lastName,
       },
       text: newMessage,
-      conversationId: currentChat._id,
+      conversationId: currentChat?._id,
     };
 
     if (message.text === "") {
@@ -173,9 +193,9 @@ export default function Messenger() {
     }
     try {
       const res = await fetchData(
-        `${currentChat._id}/newMessage`,
+        `${currentChat?._id}/newMessage`,
         "POST",
-        message
+        message as any
       );
       const data = await res?.json();
       setMessages([...messages, data.message]);
@@ -207,7 +227,7 @@ export default function Messenger() {
     getMessages();
   }, [currentChat]);
 
-  const handleDelete = async (currentChat) => {
+  const handleDelete = async (currentChat: Conversation) => {
     try {
       const res = await fetchData(
         `${currentChat._id}/deleteConversation`,
@@ -216,7 +236,7 @@ export default function Messenger() {
       );
 
       if (res?.ok) {
-        const data = await res?.json();
+        await res?.json();
 
         setConversations(
           conversations.filter(
