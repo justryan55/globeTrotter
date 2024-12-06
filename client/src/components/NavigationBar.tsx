@@ -10,7 +10,6 @@ const Layout = styled.div`
   background-color: white;
   border-right: 0.5px rgb(0, 0, 0, 0.2) solid;
   border-radius: 1.5rem;
-
   @media (max-width: 768px) {
     display: none;
   }
@@ -91,6 +90,10 @@ const BurgerIcon = styled.div`
     align-items: center;
     cursor: pointer;
     padding: 1rem;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 20;
   }
   svg {
     width: 50px;

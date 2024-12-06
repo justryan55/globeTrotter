@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import { WelcomePage } from "../pages/WelcomePage";
 import RegisterPage from "../pages/RegisterPage";
 import HomePage from "../pages/HomePage";
+import MessagingPage from "../pages/MessagingPage";
 import ExplorePage from "../pages/ExplorePage";
 import ConstructionPage from "../pages/ConstructionPage";
 import ProfilePage from "../pages/ProfilePage";
@@ -42,7 +43,7 @@ const Router = () => {
       path: "/messages",
       element: (
         <ProtectedRoute>
-          <ConstructionPage />
+          <MessagingPage />
         </ProtectedRoute>
       ),
     },

@@ -5,6 +5,7 @@ import { fetchData } from "../services/helpers";
 import Avvvatars from "avvvatars-react";
 import { useParams } from "react-router";
 import FollowFriend from "./FollowFriend";
+import MessageFriend from "./MessageFriend";
 
 const Layout = styled.div`
   display: flex;
@@ -69,8 +70,13 @@ const LocationText = styled.p``;
 
 const NameContainer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+const BtnDiv = styled.div`
+  display: flex;
   gap: 10px;
 `;
 
@@ -105,7 +111,10 @@ export default function ViewUserProfileCard() {
       <Avvvatars value={name} size={200} displayValue={displayName} />
       <NameContainer>
         <Header>{name}</Header>
-        {userId && <FollowFriend Id={userId} />}
+        <BtnDiv>
+          {userId && <FollowFriend Id={userId} />}
+          {userId && <MessageFriend Id={userId} />}
+        </BtnDiv>
       </NameContainer>
       <LocationLayout>
         <LocationIcon src="../images/map-pin.svg" />
