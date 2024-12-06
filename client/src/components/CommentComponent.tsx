@@ -28,12 +28,6 @@ const ExistingComments = styled.div`
     border: none;
     border-top: 1px solid #ccc;
   }
-
-  @media (max-width: 768px) {
-    padding: 1rem;
-    border: none;
-    border-top: 1px solid #ccc;
-  }
 `;
 
 const ExistingComment = styled.div`

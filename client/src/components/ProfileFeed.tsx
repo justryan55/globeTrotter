@@ -49,7 +49,7 @@ const HeaderText = styled.p`
 
   @media (max-width: 768px) {
     margin: 1rem;
-
+  }
 `;
 
 const NoPostText = styled.p`
