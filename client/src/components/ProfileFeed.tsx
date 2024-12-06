@@ -111,9 +111,6 @@ export default function ProfileFeed() {
     <Layout>
       <Header>
         <HeaderText onClick={handlePostClick}>Your Posts</HeaderText>
-        {/* <HeaderTextCross>Comments</HeaderTextCross>
-        <HeaderTextCross>Likes</HeaderTextCross>
-        <HeaderTextCross>Itineraries</HeaderTextCross> */}
       </Header>
       <SubLayout>
         <PostContainer>
