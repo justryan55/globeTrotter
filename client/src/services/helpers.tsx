@@ -19,14 +19,13 @@ export const fetchData = async (
       method: method,
       headers: new Headers({
         "Content-Type": "application/json",
-        Authorisation: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       }),
       token: token,
       ...(method !== "GET" && { body: JSON.stringify(payload) }),
     };
 
-    const backendURL = import.meta.env.VITE_BACKEND_URL;
-
+    const backendURL = import.meta.env.VITE_BACKEND_URL.replace(/\/+$/, "");
     const res = await fetch(`${backendURL}/api/${url}`, params);
 
     return res;
@@ -42,7 +41,7 @@ export const fetchCountriesVisited = async (userId: string) => {
     const params = {
       method: "GET",
       headers: new Headers({
-        Authorisation: `Bearer ${token}`,
+        Authorization: `Bearer ${token}`,
       }),
       token: token,
     };
