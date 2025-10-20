@@ -15,7 +15,7 @@ const port = 3000;
 app.use(
   cors({
     origin:
-      "https://travel-project-a7pfbrmkb-ryans-projects-20a8834f.vercel.app/",
+      "https://travel-project-a7pfbrmkb-ryans-projects-20a8834f.vercel.app",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
