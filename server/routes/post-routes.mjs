@@ -94,7 +94,7 @@ router.get(`/:postId/getPostLikes`, async (req, res) => {
 router.put("/:postId/updatePostLikes", async (req, res) => {
   try {
     const { postId } = req.params;
-    const authHeader = req.headers["authorisation"];
+    const authHeader = req.headers["authorization"];
 
     const { userId } = await checkToken(authHeader);
     const user = userId;

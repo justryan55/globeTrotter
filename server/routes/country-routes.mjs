@@ -25,7 +25,7 @@ router.get("/getCountry", async (req, res) => {
 });
 
 router.get("/getCountriesVisited", async (req, res) => {
-  const authHeader = req.headers["authorisation"];
+  const authHeader = req.headers["authorization"];
 
   try {
     const { email } = await checkToken(authHeader);

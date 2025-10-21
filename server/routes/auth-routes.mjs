@@ -109,7 +109,7 @@ router.post("/login", async (req, res) => {
 });
 
 router.get("/getUser", async (req, res) => {
-  const authHeader = req.headers["authorisation"];
+  const authHeader = req.headers["authorization"];
   const {
     userId,
     firstName,
