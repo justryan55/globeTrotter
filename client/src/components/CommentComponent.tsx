@@ -109,7 +109,7 @@ type Comment = {
 };
 
 export default function CommentComponent({ postId }: postId) {
-  //@ts-expect-error to fix
+  //@ts-ignore
   const [user] = useContext(UserContext) || null;
 
   const userid = user.userId;
