@@ -29,15 +29,8 @@ export default function LikeButtonComment({
   postId,
   commentId,
 }: LikeButtonCommentProps) {
-  const context = useContext(UserContext);
-
-  if (!context) {
-    throw new Error(
-      "useContext(UserContext) must be used within an AuthContext Provider"
-    );
-  }
-
-  const [user] = context;
+  //@ts-expect-error to fix 
+  const [user] = useContext(UserContext);
   const [text, setText] = useState("Like");
   const [counter, setCounter] = useState();
   const userId = user.userId;

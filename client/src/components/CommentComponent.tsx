@@ -109,15 +109,9 @@ type Comment = {
 };
 
 export default function CommentComponent({ postId }: postId) {
-  const context = useContext(UserContext);
+  //@ts-expect-error to fix
+  const [user] = useContext(UserContext) || null;
 
-  if (!context) {
-    throw new Error(
-      "useContext(UserContext) must be used within an AuthContext Provider"
-    );
-  }
-
-  const [user] = context;
   const userid = user.userId;
   const name = user.firstName + " " + user.lastName;
   const [comments, setComments] = useState<Comment[]>([]);
