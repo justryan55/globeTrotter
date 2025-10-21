@@ -29,7 +29,15 @@ export default function LikeButtonComment({
   postId,
   commentId,
 }: LikeButtonCommentProps) {
-  const [user] = useContext(UserContext);
+  const context = useContext(UserContext);
+
+  if (!context) {
+    throw new Error(
+      "useContext(UserContext) must be used within an AuthContext Provider"
+    );
+  }
+
+  const [user] = context;
   const [text, setText] = useState("Like");
   const [counter, setCounter] = useState();
   const userId = user.userId;
