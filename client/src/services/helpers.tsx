@@ -46,7 +46,7 @@ export const fetchCountriesVisited = async (userId: string) => {
       token: token,
     };
 
-    const backendURL = import.meta.env.VITE_BACKEND_URL;
+    const backendURL = import.meta.env.VITE_BACKEND_URL.replace(/\/+$/, "");
 
     const res = await fetch(
       `${backendURL}/api/${userId}/getCountriesVisisted`,
